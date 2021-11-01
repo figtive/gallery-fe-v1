@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { AuthManager } from '$lib/auth';
-
-	const auth = new AuthManager();
+	import { auth } from '$lib/auth';
+	import Button from '$lib/components/Button.svelte';
 
 	onMount(() => {
 		if (!auth.isAuthenticated()) goto('/login', { replaceState: true });
@@ -12,11 +11,11 @@
 
 <h1>Courses</h1>
 
-<btn
-	on:click={() => {
+<Button
+	onClick={() => {
 		auth.deauthenticate();
 		goto('/', { replaceState: true });
 	}}
 >
 	Logout
-</btn>
+</Button>

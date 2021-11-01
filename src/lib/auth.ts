@@ -4,6 +4,10 @@ import api from '$lib/api';
 const PATH_KEY = 'galleryppl:path';
 const TOKEN_KEY = 'galleryppl:token';
 
+export type Response = {
+	credential: string;
+};
+
 export class AuthManager {
 	authenticate(auth: Response): Promise<void> {
 		this.setToken(auth.credential);
@@ -21,7 +25,6 @@ export class AuthManager {
 			})
 			.catch(() => {
 				this.setToken('');
-				alert('/');
 				return Promise.reject();
 			});
 	}
@@ -49,6 +52,4 @@ export class AuthManager {
 	}
 }
 
-export type Response = {
-	credential: string;
-};
+export const auth = new AuthManager();
