@@ -42,7 +42,7 @@
 			</p>
 			<div class="navs">
 				<Button>Produk PPL</Button>
-				<Button>Produk Propensi</Button>
+				<Button color="secondary">Produk Propensi</Button>
 			</div>
 			<div class="auths">
 				<div id="google-signin" />

@@ -2,11 +2,10 @@ export type Color = 'primary' | 'secondary' | 'disabled' | 'info' | 'success' | 
 
 export const colorSet: { [key in Color]: string } = {
 	primary: '#615CC1',
-	secondary: '#FC94D8',
-	disabled: '#A0A0A0',
-	// TODO
-	info: '#0070f3',
-	success: '#0070f3',
-	warning: '#f0f0f0',
-	error: '#f0f0f0'
+	secondary: '#CF66AA',
+	disabled: '#C4C4C4',
+	success: '#1FA835',
+	info: '#266DD9',
+	warning: '#E5B812',
+	error: '#BC1836'
 };
