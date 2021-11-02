@@ -50,12 +50,12 @@
 		display: flex;
 		flex-direction: column;
 		min-height: calc(100vh - var(--navbar-height) - var(--footer-height));
-		overflow: hidden;
+		overflow: visible;
 	}
 
 	.container {
 		width: 100%;
-		max-width: 960px;
+		max-width: 70%;
 		margin: 0 auto;
 		padding: 0 1rem;
 	}

@@ -42,7 +42,7 @@
 				<NavLink link="/bookmark">Bookmarks</NavLink>
 			{/if}
 			<NavLink link="/leaderboard">Leaderboard</NavLink>
-			<NavLink link="/product">Product</NavLink>
+			<NavLink link="/project">Project</NavLink>
 			<NavLink link="/blog">Blog</NavLink>
 			<div id="google-signin" class={$isAuthenticated && 'hidden'} />
 		</div>

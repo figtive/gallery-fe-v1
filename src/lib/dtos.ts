@@ -1,3 +1,5 @@
+import type { BlogCategoryType, ProjectFieldType } from '$lib/constant';
+
 export interface APIResponse<T> {
 	code: number;
 	data: T;
@@ -11,12 +13,13 @@ export interface Project {
 	description: string;
 	thumbnail: string;
 	active: boolean;
-	field: string;
-	createdAt: number;
+	field: ProjectFieldType;
+	createdAt: string;
 }
 
 export interface Blog {
 	id: string;
 	title: string;
-	createdAt: number;
+	category: BlogCategoryType;
+	createdAt: string;
 }

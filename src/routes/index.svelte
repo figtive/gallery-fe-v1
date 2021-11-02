@@ -25,7 +25,7 @@
 				atau typesetting. Lorem Ipsum telah menjadi standar contoh teks sejak tahun 1500an.
 			</p>
 			<div class="navs">
-				<Button onClick={() => goto('/product')}>Lihat Produk</Button>
+				<Button onClick={() => goto('/project')}>Lihat Proyek</Button>
 				{#if $isAuthenticated}
 					<Button onClick={() => auth.deauthenticate()} color="error">Logout</Button>
 				{/if}
