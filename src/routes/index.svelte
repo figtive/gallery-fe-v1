@@ -10,27 +10,23 @@
 <main>
 	<div class="content">
 		<div class="image">
-			<img src="{assets}/key-art.png" alt="Gallery PPL" />
-			<div class="background glow-1" />
-			<div class="background glow-2" />
-			<div class="background glow-3" />
+			<img src="{assets}/key-art.png" alt="Gallery Fasilkom UI" />
+			<div class="glow-1" />
+			<div class="glow-2" />
+			<div class="glow-3" />
 		</div>
 		<div class="text">
 			<h1 class="title">Gallery Karya Fasilkom UI</h1>
-			<div class="background glow-4" />
+			<div class="glow-4" />
 			<p class="description">
 				PPL dan Propensi adalah contoh teks atau dummy dalam industri percetakan dan penataan huruf
 				atau typesetting. Lorem Ipsum telah menjadi standar contoh teks sejak tahun 1500an.
 			</p>
 			<div class="navs">
-				<Button onClick={() => goto('/produk')}>Produk PPL</Button>
-				<Button color="secondary">Produk Propensi</Button>
-			</div>
-			<div class="auths">
+				<Button onClick={() => goto('/product')}>Lihat Produk</Button>
 				{#if $isAuthenticated}
 					<Button onClick={() => auth.deauthenticate()} color="error">Logout</Button>
 				{/if}
-				<div id="google-signin" class={$isAuthenticated && 'hidden'} />
 			</div>
 		</div>
 	</div>
@@ -76,7 +72,8 @@
 	}
 
 	.text .navs {
-		margin-bottom: 2rem;
+		position: absolute;
+		display: flex;
 	}
 
 	.text .navs > :global(*) {
@@ -87,17 +84,9 @@
 		margin-right: 0;
 	}
 
-	.text .auths {
-		position: absolute;
-		margin-bottom: 2rem;
-	}
-
-	.background {
+	.glow-1 {
 		position: absolute;
 		z-index: -1;
-	}
-
-	.glow-1 {
 		width: 285px;
 		height: 285px;
 		left: 30%;
@@ -108,6 +97,8 @@
 	}
 
 	.glow-2 {
+		position: absolute;
+		z-index: -1;
 		width: 302px;
 		height: 302px;
 		left: 10%;
@@ -117,6 +108,8 @@
 	}
 
 	.glow-3 {
+		position: absolute;
+		z-index: -1;
 		width: 287px;
 		height: 287px;
 		right: 10%;
@@ -126,6 +119,8 @@
 	}
 
 	.glow-4 {
+		position: absolute;
+		z-index: -1;
 		width: 330px;
 		height: 330px;
 		left: 0px;
