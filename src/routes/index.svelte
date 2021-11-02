@@ -1,28 +1,10 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { assets } from '$app/paths';
-	import { auth, Response } from '$lib/auth';
+	import { auth } from '$lib/auth';
 	import Button from '$lib/components/Button.svelte';
 
-	onMount(() => {
-		// @ts-ignore
-		google.accounts.id.initialize({
-			client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-			callback: (response: Response) => {
-				auth.authenticate(response);
-			}
-		});
-		// @ts-ignore
-		google.accounts.id.renderButton(document.getElementById('google-signin'), {
-			theme: 'outline',
-			shape: 'pill',
-			size: 'large'
-		});
-		// @ts-ignore
-		google.accounts.id.prompt();
-		if (auth.isAuthenticated()) goto('/courses', { replaceState: true });
-	});
+	let isAuthenticated = auth.isAuthenticated();
 </script>
 
 <main>
@@ -41,11 +23,14 @@
 				atau typesetting. Lorem Ipsum telah menjadi standar contoh teks sejak tahun 1500an.
 			</p>
 			<div class="navs">
-				<Button>Produk PPL</Button>
+				<Button onClick={() => goto('/produk')}>Produk PPL</Button>
 				<Button color="secondary">Produk Propensi</Button>
 			</div>
 			<div class="auths">
-				<div id="google-signin" />
+				{#if $isAuthenticated}
+					<Button onClick={() => auth.deauthenticate()} color="error">Logout</Button>
+				{/if}
+				<div id="google-signin" class={$isAuthenticated && 'hidden'} />
 			</div>
 		</div>
 	</div>
