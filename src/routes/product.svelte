@@ -4,7 +4,6 @@
 	import ProjectItem from '$lib/components/ProjectItem.svelte';
 	import { ClassType, ClassTypeLabel, FieldType, FieldTypeLabel } from '$lib/constant';
 	import type { Project } from '$lib/dtos';
-	import { append } from 'svelte/internal';
 
 	let projects: Project[] = [
 		{
@@ -12,7 +11,7 @@
 			name: 'Test Project 1',
 			team: 'Team 1',
 			description: 'Desc 1',
-			thumbnail: 'https://picsum.photos/seed/asd/200/256',
+			thumbnail: 'https://picsum.photos/seed/asd1/200/256',
 			active: true,
 			field: 'Social',
 			createdAt: 1633788000000
@@ -22,7 +21,7 @@
 			name: 'Test Project 2',
 			team: 'Team 2',
 			description: 'Desc 2',
-			thumbnail: 'https://picsum.photos/seed/qwe/200/256',
+			thumbnail: 'https://picsum.photos/seed/asd2/200/256',
 			active: false,
 			field: 'E-commerce',
 			createdAt: 1602252000000
@@ -32,17 +31,7 @@
 			name: 'Test Project 3',
 			team: 'Team 3',
 			description: 'Desc 3',
-			thumbnail: 'https://picsum.photos/seed/asdqwe/200/256',
-			active: true,
-			field: 'Social',
-			createdAt: 1633788000000
-		},
-		{
-			id: 'uuid5',
-			name: 'Test Project 3',
-			team: 'Team 3',
-			description: 'Desc 3',
-			thumbnail: 'https://picsum.photos/seed/asdqwe/200/256',
+			thumbnail: 'https://picsum.photos/seed/asd3/200/256',
 			active: true,
 			field: 'Social',
 			createdAt: 1633788000000
@@ -52,7 +41,17 @@
 			name: 'Test Project 4',
 			team: 'Team 4',
 			description: 'Desc 4',
-			thumbnail: 'https://picsum.photos/seed/qweasd/200/256',
+			thumbnail: 'https://picsum.photos/seed/asd4/200/256',
+			active: true,
+			field: 'Social',
+			createdAt: 1633788000000
+		},
+		{
+			id: 'uuid5',
+			name: 'Test Project 5',
+			team: 'Team 4',
+			description: 'Desc 4',
+			thumbnail: 'https://picsum.photos/seed/asd5/200/256',
 			active: false,
 			field: 'E-commerce',
 			createdAt: 1602252000000
@@ -104,10 +103,6 @@
 </main>
 
 <style lang="css">
-	* {
-		/* border: 1px solid red; */
-	}
-
 	form > * {
 		margin-right: 0.5rem;
 	}

@@ -21,9 +21,6 @@
 </div>
 
 <style>
-	* {
-		/* border: 1px solid blue; */
-	}
 	.card {
 		display: flex;
 		flex-direction: column;
