@@ -28,13 +28,13 @@ class AuthManager {
 	}
 
 	authenticate(auth: Response, redirect?: string): Promise<void> {
-		this.token.set(auth.credential);
 		return api.auth
-			.login()
+			.login(auth.credential)
 			.then(() => {
+				this.token.set(auth.credential);
 				const prevPath = localStorage.getItem(PATH_KEY);
 				localStorage.removeItem(PATH_KEY);
-				goto(prevPath || redirect || '/', { replaceState: true });
+				if (prevPath || redirect) goto(prevPath || redirect, { replaceState: true });
 				return Promise.resolve();
 			})
 			.catch(() => {

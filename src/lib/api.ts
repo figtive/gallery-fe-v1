@@ -4,8 +4,8 @@ import type { APIResponse } from './dtos';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL || '';
 
-const withAuth = (): HeadersInit => ({
-	Authorization: `Bearer ${get(auth.getToken())}`
+const withAuth = (token?: string): HeadersInit => ({
+	Authorization: `Bearer ${token || get(auth.getToken())}`
 });
 
 const handleResponse = (response: Response) => {
@@ -20,11 +20,11 @@ const handleResponse = (response: Response) => {
 
 const api = {
 	auth: {
-		login(): Promise<APIResponse<undefined>> {
+		login(token: string): Promise<APIResponse<undefined>> {
 			return fetch(`${BASE_URL}/api/v1/auth/login`, {
 				method: 'POST',
 				headers: {
-					...withAuth()
+					...withAuth(token)
 				}
 			}).then(handleResponse);
 		},
