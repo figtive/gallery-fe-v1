@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { auth } from '$lib/auth';
+	import { auth, requireAuth } from '$lib/auth';
 	import BlogList from '$lib/components/BlogList.svelte';
 	import CourseworkTab from '$lib/components/CourseworkTab.svelte';
 	import ProjectList from '$lib/components/ProjectList.svelte';
@@ -8,6 +8,8 @@
 	import { blogs, projects } from '$lib/dummy';
 
 	let name = auth.getUserInfo().given_name;
+
+	requireAuth();
 </script>
 
 <Title title="Dashboard" />

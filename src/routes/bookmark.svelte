@@ -1,7 +1,11 @@
 <script lang="ts">
+	import { requireAuth } from '$lib/auth';
+
 	import BlogList from '$lib/components/BlogList.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import { blogs } from '$lib/dummy';
+
+	requireAuth();
 </script>
 
 <Title title="Bookmarks" />

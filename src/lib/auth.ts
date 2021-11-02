@@ -4,6 +4,7 @@ import { goto } from '$app/navigation';
 import api from '$lib/api';
 import jwtDecode from 'jwt-decode';
 import persistentStore from './store';
+import { browser } from '$app/env';
 
 const PATH_KEY = 'galleryppl:path';
 const TOKEN_KEY = 'galleryppl:token';
@@ -80,7 +81,7 @@ class AuthManager {
 export const auth = new AuthManager();
 
 export const requireAuth = (path?: string): void => {
-	if (!auth.isAuthenticated()) {
+	if (browser && !get(auth.isAuthenticated())) {
 		goto(path || '/', { replaceState: true });
 	}
 };
