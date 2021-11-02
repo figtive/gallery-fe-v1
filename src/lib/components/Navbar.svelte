@@ -69,8 +69,6 @@
 	}
 
 	a {
-		text-decoration: none;
-		color: #333;
 		display: flex;
 		align-items: center;
 	}
