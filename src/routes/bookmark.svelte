@@ -1,5 +1,5 @@
 <script lang="ts">
-	import BlogItem from '$lib/components/BlogItem.svelte';
+	import BlogList from '$lib/components/BlogList.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import { blogs } from '$lib/dummy';
 </script>
@@ -11,30 +11,13 @@
 			<h1 class="page-title">Bookmarked Blogs</h1>
 		</div>
 		<div class="body">
-			<div class="list">
-				{#each blogs as blog (blog.id)}
-					<BlogItem {blog} />
-				{/each}
-			</div>
+			<BlogList {blogs} />
 		</div>
 	</div>
 	<div class="glow-1" />
 </main>
 
 <style lang="css">
-	.list {
-		display: flex;
-		flex-wrap: wrap;
-	}
-
-	.list > :global(*) {
-		border-bottom: 1px solid #cccc;
-	}
-
-	.list > :global(*):last-child {
-		border-bottom: none;
-	}
-
 	.glow-1 {
 		position: fixed;
 		z-index: -1;

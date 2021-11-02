@@ -1,5 +1,6 @@
 <script lang="ts">
 	import BlogItem from '$lib/components/BlogItem.svelte';
+	import BlogList from '$lib/components/BlogList.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import { BlogCategoryType, BlogCategoryTypeLabel } from '$lib/constant';
@@ -32,11 +33,7 @@
 			</form>
 		</div>
 		<div class="body">
-			<div class="list">
-				{#each blogs as blog (blog.id)}
-					<BlogItem {blog} allowBookmark />
-				{/each}
-			</div>
+			<BlogList {blogs} allowBookmark />
 		</div>
 	</div>
 	<div class="glow-1" />
@@ -51,19 +48,6 @@
 
 	form > :global(*) {
 		margin: 0.25rem;
-	}
-
-	.list {
-		display: flex;
-		flex-wrap: wrap;
-	}
-
-	.list > :global(*) {
-		border-bottom: 1px solid #cccc;
-	}
-
-	.list > :global(*):last-child {
-		border-bottom: none;
 	}
 
 	.glow-1 {

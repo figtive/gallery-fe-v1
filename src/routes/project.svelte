@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import Button from '$lib/components/Button.svelte';
-	import ProjectItem from '$lib/components/ProjectItem.svelte';
+	import ProjectList from '$lib/components/ProjectList.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import {
 		ClassType,
@@ -46,11 +45,7 @@
 			</form>
 		</div>
 		<div class="body">
-			<div class="list">
-				{#each projects as project (project.id)}
-					<ProjectItem {project} />
-				{/each}
-			</div>
+			<ProjectList {projects} />
 		</div>
 	</div>
 	<div class="glow-1" />
@@ -65,17 +60,6 @@
 
 	form > :global(*) {
 		margin: 0.25rem;
-	}
-
-	.list {
-		display: flex;
-		flex-wrap: wrap;
-		margin: -1rem;
-		justify-content: center;
-	}
-
-	.list > :global(*) {
-		margin: 1rem;
 	}
 
 	.glow-1 {
