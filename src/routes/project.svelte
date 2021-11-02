@@ -48,7 +48,7 @@
 		<div class="body">
 			<div class="list">
 				{#each projects as project (project.id)}
-					<ProjectItem {project} onClick={() => goto(`/Project/${project.id}`)} />
+					<ProjectItem {project} />
 				{/each}
 			</div>
 		</div>

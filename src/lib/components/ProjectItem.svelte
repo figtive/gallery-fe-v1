@@ -1,19 +1,12 @@
 <script lang="ts">
 	import { ProjectFieldTypeLabel } from '$lib/constant';
-
 	import type { Project } from '$lib/dtos';
 	import Tag from './Tag.svelte';
 
 	export let project: Project;
-	export let onClick: () => void = () => {};
 </script>
 
-<div
-	class="card"
-	on:click={onClick}
-	on:keydown={(e) => e.key === 'Enter' && onClick()}
-	tabindex="0"
->
+<a class="card" href="/project/{project.id}">
 	<div class="image">
 		<img src={project.thumbnail} alt={project.name} />
 	</div>
@@ -29,7 +22,7 @@
 		</div>
 		<p class="description">{project.description}</p>
 	</div>
-</div>
+</a>
 
 <style>
 	.card {
@@ -77,6 +70,7 @@
 
 	.card .content .team {
 		margin-bottom: 12px;
+		color: var(--color-text-secondary);
 	}
 
 	.card .content .tags {

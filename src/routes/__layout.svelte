@@ -16,6 +16,8 @@
 	:root {
 		--navbar-height: 64px;
 		--footer-height: 128px;
+		--color-text-primary: #333;
+		--color-text-secondary: #888;
 	}
 
 	html,
@@ -26,7 +28,7 @@
 		font-size: 100%;
 		font: inherit;
 		vertical-align: baseline;
-		color: #333;
+		color: var(--color-text-primary);
 		overflow-x: hidden;
 	}
 
@@ -44,6 +46,11 @@
 	p {
 		font-family: 'Open Sans', sans-serif;
 		margin: 0;
+	}
+
+	a {
+		text-decoration: none;
+		color: inherit;
 	}
 
 	main {
