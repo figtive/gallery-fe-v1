@@ -40,17 +40,19 @@
 	h6 {
 		font-family: 'Raleway', sans-serif;
 		margin: 0;
+		color: inherit;
 	}
 
 	a,
-	p {
+	p,
+	button {
 		font-family: 'Open Sans', sans-serif;
 		margin: 0;
+		color: inherit;
 	}
 
 	a {
 		text-decoration: none;
-		color: inherit;
 	}
 
 	main {
