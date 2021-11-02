@@ -10,9 +10,8 @@
 
 <style lang="css">
 	a {
-		text-decoration: none;
-		color: #333;
 		position: relative;
+		font-weight: 600;
 		z-index: 1;
 	}
 
