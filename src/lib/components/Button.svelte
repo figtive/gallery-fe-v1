@@ -1,26 +1,29 @@
 <script lang="ts">
 	import { Color, colorSet } from '$lib/color';
 
+	export let type: string = '';
 	export let onClick: () => void = () => {};
 	export let className: string = '';
 	export let color: Color = 'primary';
 </script>
 
-<button on:click={onClick} class={className} style="--color: {colorSet[color]}">
+<button {type} on:click={onClick} class={className} style="--color: {colorSet[color]}">
 	<slot />
 </button>
 
 <style lang="css">
 	button {
 		color: white;
+		height: fit-content;
 		border: 0px solid transparent;
 		border-radius: 120px;
 		cursor: pointer;
-		padding: 0.75rem 1.5rem;
+		padding: 0 1.5rem;
+		height: 40px;
 		font-family: 'Open Sans', sans-serif;
 		font-weight: 600;
 		background: var(--color);
-		transition: 250ms;
+		transition: 100ms;
 	}
 
 	button:hover,
@@ -30,6 +33,5 @@
 
 	button:active {
 		filter: brightness(0.8);
-		transform: scale(0.975);
 	}
 </style>
