@@ -36,21 +36,17 @@
 </div>
 
 <style>
-	* {
-		/* border: 1px solid red; */
-	}
 	.row {
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
 		width: 100%;
-		padding: 0;
+		padding: 1.2rem;
 	}
 
 	.row .content {
 		display: flex;
 		flex-direction: column;
-		padding: 1rem 1.2rem 1.2rem 1.2rem;
 	}
 
 	.row .content .title {

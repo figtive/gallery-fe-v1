@@ -15,7 +15,7 @@
 <style lang="css">
 	.list {
 		display: flex;
-		flex-wrap: wrap;
+		flex-direction: column;
 	}
 
 	.list > :global(*) {

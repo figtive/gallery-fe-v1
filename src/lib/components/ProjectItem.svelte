@@ -34,7 +34,7 @@
 		border-radius: 1.5rem;
 		overflow: hidden;
 		cursor: pointer;
-		box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.25);
+		box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 		transition: box-shadow 0.2s ease-in-out;
 	}
 

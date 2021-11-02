@@ -25,7 +25,6 @@
 		margin: 0;
 		padding: 0;
 		border: 0;
-		font-size: 100%;
 		font: inherit;
 		vertical-align: baseline;
 		color: var(--color-text-primary);
@@ -70,7 +69,7 @@
 	}
 
 	.head {
-		margin-top: 3rem;
+		margin-top: 5rem;
 		margin-bottom: 3rem;
 	}
 
