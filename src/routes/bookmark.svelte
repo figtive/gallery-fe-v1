@@ -12,11 +12,11 @@
 	};
 </script>
 
-<Title title="Blog" />
+<Title title="Bookmarks" />
 <main>
 	<div class="container">
 		<div class="head">
-			<h1 class="page-title">Blog</h1>
+			<h1 class="page-title">Bookmarked Blogs</h1>
 		</div>
 		<div class="head">
 			<form on:submit|preventDefault={handleQuery}>
@@ -34,7 +34,7 @@
 		<div class="body">
 			<div class="list">
 				{#each blogs as blog (blog.id)}
-					<BlogItem {blog} allowBookmark />
+					<BlogItem {blog} />
 				{/each}
 			</div>
 		</div>

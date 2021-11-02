@@ -5,6 +5,7 @@
 
 	export let blog: Blog;
 	export let onClick: () => void = () => {};
+	export let allowBookmark: boolean = false;
 
 	const bookmark: () => void = () => console.log(blog.id);
 </script>
@@ -26,9 +27,11 @@
 		</div>
 	</div>
 	<div class="action">
-		<button class="bookmark" on:click={bookmark} tabindex="0">
-			<span class="material-icons">bookmark_border</span>
-		</button>
+		{#if allowBookmark}
+			<button class="bookmark" on:click={bookmark} tabindex="0">
+				<span class="material-icons">bookmark_border</span>
+			</button>
+		{/if}
 	</div>
 </div>
 
