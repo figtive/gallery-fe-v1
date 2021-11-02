@@ -1,9 +1,11 @@
 <script lang="ts">
+	import Title from '$lib/components/Title.svelte';
 	import type { Blog } from '$lib/dtos';
 
 	let blogs: Blog[] = [];
 </script>
 
+<Title title="Blog" />
 <main>
 	<div class="container">
 		<div class="head">

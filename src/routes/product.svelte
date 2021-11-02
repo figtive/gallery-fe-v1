@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import Button from '$lib/components/Button.svelte';
 	import ProjectItem from '$lib/components/ProjectItem.svelte';
+	import Title from '$lib/components/Title.svelte';
 	import { ClassType, ClassTypeLabel, FieldType, FieldTypeLabel } from '$lib/constant';
 	import type { Project } from '$lib/dtos';
 
@@ -66,6 +67,7 @@
 	};
 </script>
 
+<Title title="Product" />
 <main>
 	<div class="container">
 		<div class="head">

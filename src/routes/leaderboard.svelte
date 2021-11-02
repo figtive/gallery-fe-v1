@@ -1,6 +1,8 @@
 <script lang="ts">
+	import Title from '$lib/components/Title.svelte';
 </script>
 
+<Title title="Leaderboard" />
 <main>
 	<div class="container">
 		<div class="head">

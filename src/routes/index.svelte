@@ -3,10 +3,12 @@
 	import { assets } from '$app/paths';
 	import { auth } from '$lib/auth';
 	import Button from '$lib/components/Button.svelte';
+	import Title from '$lib/components/Title.svelte';
 
 	let isAuthenticated = auth.isAuthenticated();
 </script>
 
+<Title />
 <main>
 	<div class="content">
 		<div class="image">
