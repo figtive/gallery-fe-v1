@@ -48,7 +48,7 @@
 			<ProjectList {projects} />
 		</div>
 	</div>
-	<div class="glow-1" />
+	<div class="glow-left glow-purple" />
 </main>
 
 <style lang="css">
@@ -60,18 +60,5 @@
 
 	form > :global(*) {
 		margin: 0.25rem;
-	}
-
-	.glow-1 {
-		position: fixed;
-		z-index: -1;
-		width: 80vh;
-		height: 80vh;
-		bottom: 0;
-		left: 0;
-		border-radius: 100%;
-		background: #bebbff;
-		filter: blur(20vh);
-		transform: translate(-50%, 50%);
 	}
 </style>

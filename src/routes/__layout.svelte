@@ -118,4 +118,36 @@
 		-webkit-appearance: none;
 		-moz-appearance: none;
 	}
+
+	.glow-left {
+		position: fixed;
+		z-index: -1;
+		width: 80vh;
+		height: 80vh;
+		bottom: 0;
+		left: 0;
+		border-radius: 100%;
+		filter: blur(20vh);
+		transform: translate(-50%, 50%);
+	}
+
+	.glow-right {
+		position: fixed;
+		z-index: -1;
+		width: 80vh;
+		height: 80vh;
+		bottom: 0;
+		right: 0;
+		border-radius: 100%;
+		filter: blur(20vh);
+		transform: translate(50%, 50%);
+	}
+
+	.glow-purple {
+		background-color: #bebbff;
+	}
+
+	.glow-yellow {
+		background-color: #f9eab3;
+	}
 </style>

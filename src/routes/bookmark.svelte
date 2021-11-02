@@ -14,20 +14,5 @@
 			<BlogList {blogs} />
 		</div>
 	</div>
-	<div class="glow-1" />
+	<div class="glow-right glow-purple" />
 </main>
-
-<style lang="css">
-	.glow-1 {
-		position: fixed;
-		z-index: -1;
-		width: 80vh;
-		height: 80vh;
-		bottom: 0;
-		right: 0;
-		border-radius: 100%;
-		background: #f9eab3;
-		filter: blur(20vh);
-		transform: translate(50%, 50%);
-	}
-</style>
