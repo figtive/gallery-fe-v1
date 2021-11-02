@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ProjectFieldTypeLabel } from '$lib/constant';
+	import { ClassTypeLabel, ProjectFieldTypeLabel } from '$lib/constant';
 	import type { Project } from '$lib/dtos';
 	import Tag from './Tag.svelte';
 
@@ -18,6 +18,7 @@
 			<Tag color={project.active ? 'success' : 'disabled'}>
 				{project.active ? 'Active' : 'Archived'}
 			</Tag>
+			<Tag color="warning">{ClassTypeLabel[project.class]}</Tag>
 			<Tag color="info">{ProjectFieldTypeLabel[project.field]}</Tag>
 		</div>
 		<p class="description">{project.description}</p>
@@ -28,7 +29,7 @@
 	.card {
 		display: flex;
 		flex-direction: column;
-		width: 360px;
+		width: 440px;
 		padding: 0;
 		border-radius: 1.5rem;
 		overflow: hidden;

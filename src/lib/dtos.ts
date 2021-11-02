@@ -1,4 +1,4 @@
-import type { BlogCategoryType, ProjectFieldType } from '$lib/constant';
+import type { BlogCategoryType, ClassType, ProjectFieldType } from '$lib/constant';
 
 export interface APIResponse<T> {
 	code: number;
@@ -13,6 +13,7 @@ export interface Project {
 	description: string;
 	thumbnail: string;
 	active: boolean;
+	class: ClassType;
 	field: ProjectFieldType;
 	createdAt: string;
 }

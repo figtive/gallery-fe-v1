@@ -70,12 +70,12 @@
 	.list {
 		display: flex;
 		flex-wrap: wrap;
-		margin: -2rem;
-		justify-content: space-evenly;
+		margin: -1rem;
+		justify-content: center;
 	}
 
 	.list > :global(*) {
-		margin: 2rem;
+		margin: 1rem;
 	}
 
 	.glow-1 {
