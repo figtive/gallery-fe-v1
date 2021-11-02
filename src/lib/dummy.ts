@@ -1,5 +1,5 @@
-import { ProjectFieldType } from './constant';
-import type { Project } from './dtos';
+import { BlogCategoryType, ProjectFieldType } from './constant';
+import type { Blog, Project } from './dtos';
 
 export const projects: Project[] = [
 	{
@@ -54,6 +54,30 @@ export const projects: Project[] = [
 		thumbnail: 'https://picsum.photos/seed/asd5/200/256',
 		active: false,
 		field: ProjectFieldType.NewInnovation,
+		createdAt: '2021-11-02T11:27:03.709Z'
+	}
+];
+
+export const blogs: Blog[] = [
+	{
+		id: 'uuid1',
+		title: 'タイトル　１',
+		author: 'User 1',
+		category: BlogCategoryType.Agile,
+		createdAt: '2021-11-02T11:27:03.709Z'
+	},
+	{
+		id: 'uuid2',
+		title: 'タイトル　２',
+		author: 'User 2',
+		category: BlogCategoryType.Deployment,
+		createdAt: '2021-11-02T11:27:03.709Z'
+	},
+	{
+		id: 'uuid3',
+		title: 'タイトル　３',
+		author: 'User 3',
+		category: BlogCategoryType.Engineering,
 		createdAt: '2021-11-02T11:27:03.709Z'
 	}
 ];

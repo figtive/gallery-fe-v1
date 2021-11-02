@@ -1,17 +1,9 @@
 <script lang="ts">
+	import BlogItem from '$lib/components/BlogItem.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import { BlogCategoryType, BlogCategoryTypeLabel } from '$lib/constant';
-	import type { Blog } from '$lib/dtos';
-
-	let blogs: Blog[] = [
-		{
-			id: 'uuid1',
-			title: 'タイトル',
-			category: BlogCategoryType.Agile,
-			createdAt: '2021-11-02T11:27:03.709Z'
-		}
-	];
+	import { blogs } from '$lib/dummy';
 
 	let queryString: string = '';
 	let queryCategory: BlogCategoryType;
@@ -41,7 +33,9 @@
 		</div>
 		<div class="body">
 			<div class="list">
-				{#each blogs as blog (blog.id)}{/each}
+				{#each blogs as blog (blog.id)}
+					<BlogItem {blog} />
+				{/each}
 			</div>
 		</div>
 	</div>
@@ -62,11 +56,14 @@
 	.list {
 		display: flex;
 		flex-wrap: wrap;
-		margin: 0 -2rem;
 	}
 
 	.list > :global(*) {
-		margin: 2rem;
+		border-bottom: 1px solid #cccc;
+	}
+
+	.list > :global(*):last-child {
+		border-bottom: none;
 	}
 
 	.glow-1 {

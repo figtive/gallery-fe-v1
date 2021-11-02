@@ -20,6 +20,7 @@ export interface Project {
 export interface Blog {
 	id: string;
 	title: string;
+	author: string;
 	category: BlogCategoryType;
 	createdAt: string;
 }
