@@ -43,13 +43,13 @@
 		box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.35);
 	}
 
-	.card .image {
+	.image {
 		background-color: #eee;
 		height: 220px;
 		overflow: hidden;
 	}
 
-	.card .image img {
+	.image img {
 		display: block;
 		width: 100%;
 		height: 100%;
@@ -57,31 +57,31 @@
 		object-position: center center;
 	}
 
-	.card .content {
+	.content {
 		background-color: #fff;
 		flex-grow: 1;
 		padding: 1rem 1.2rem 1.2rem 1.2rem;
 	}
 
-	.card .content .name {
+	.name {
 		font-size: 1.5rem;
 		font-weight: 600;
 		margin-bottom: 4px;
 	}
 
-	.card .content .team {
+	.team {
 		margin-bottom: 12px;
 		color: var(--color-text-secondary);
 	}
 
-	.card .content .tags {
+	.tags {
 		display: flex;
 		flex-wrap: wrap;
 		margin: -4px -4px;
 		margin-bottom: 8px;
 	}
 
-	.card .content .tags > :global(*) {
+	.tags > :global(*) {
 		margin: 4px;
 	}
 </style>

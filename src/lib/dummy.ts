@@ -4,14 +4,20 @@ import type { Blog, Project } from './dtos';
 export const projects: Project[] = [
 	{
 		id: 'uuid1',
-		name: 'Test Project 1',
-		team: 'Team 1',
+		name: 'Gallery PPL 2122',
+		team: 'Figtive',
 		description:
 			"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
 		thumbnail: 'https://picsum.photos/seed/asd1/200/256',
 		active: true,
 		class: ClassType.PPL,
 		field: ProjectFieldType.Social,
+		metadata: JSON.stringify({
+			partner: 'Fight Interactive',
+			productOwner: ['mpitsky'],
+			scrumMaster: [],
+			developmentTeam: ['daystram', 'ilmannafian', 'irbahhana']
+		}),
 		createdAt: '2021-11-02T11:27:03.709Z'
 	},
 	{

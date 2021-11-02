@@ -41,7 +41,7 @@
 						</option>
 					{/each}
 				</select>
-				<Button type="submit">Search</Button>
+				<Button type="submit" beforeIcon="search">Search</Button>
 			</form>
 		</div>
 		<div class="body">

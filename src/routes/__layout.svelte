@@ -44,7 +44,10 @@
 
 	a,
 	p,
-	button {
+	button,
+	ul,
+	ol,
+	li {
 		font-family: 'Open Sans', sans-serif;
 		margin: 0;
 		color: inherit;
@@ -94,6 +97,13 @@
 		height: 24px;
 		background: #f9eab3;
 		z-index: -1;
+	}
+
+	.page-subtitle {
+		font-size: 2rem;
+		width: fit-content;
+		font-weight: 600;
+		color: var(--color-text-secondary);
 	}
 
 	input,

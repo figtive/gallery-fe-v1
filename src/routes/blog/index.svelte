@@ -1,5 +1,4 @@
 <script lang="ts">
-	import BlogItem from '$lib/components/BlogItem.svelte';
 	import BlogList from '$lib/components/BlogList.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Title from '$lib/components/Title.svelte';
@@ -29,7 +28,7 @@
 						</option>
 					{/each}
 				</select>
-				<Button type="submit">Search</Button>
+				<Button type="submit" beforeIcon="search">Search</Button>
 			</form>
 		</div>
 		<div class="body">

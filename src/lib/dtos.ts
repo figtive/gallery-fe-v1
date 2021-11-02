@@ -15,7 +15,15 @@ export interface Project {
 	active: boolean;
 	class: ClassType;
 	field: ProjectFieldType;
+	metadata?: string;
 	createdAt: string;
+}
+
+export interface ProjectMetadata {
+	partner: string;
+	productOwner: string[];
+	scrumMaster: string[];
+	developmentTeam: string[];
 }
 
 export interface Blog {

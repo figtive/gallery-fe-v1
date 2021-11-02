@@ -16,7 +16,6 @@
 		height: fit-content;
 		border: 0px solid transparent;
 		border-radius: 120px;
-		cursor: pointer;
 		padding: 0.2rem 1rem;
 		font-size: 0.8rem;
 		font-family: 'Open Sans', sans-serif;
