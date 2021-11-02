@@ -38,8 +38,7 @@
 		<div class="links">
 			{#if $isAuthenticated}
 				<NavLink link="/dashboard">Dashboard</NavLink>
-				<NavLink link="/my-vote">My Votes</NavLink>
-				<NavLink link="/bookmark">Bookmarks</NavLink>
+				<NavLink link="/bookmark">Bookmark</NavLink>
 			{/if}
 			<NavLink link="/leaderboard">Leaderboard</NavLink>
 			<NavLink link="/project">Project</NavLink>

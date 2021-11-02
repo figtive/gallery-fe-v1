@@ -15,6 +15,8 @@ export interface Response {
 export interface UserInfo {
 	sub: string;
 	name: string;
+	given_name: string;
+	family_name: string;
 	email: string;
 	avatar: string;
 }
@@ -54,6 +56,8 @@ class AuthManager {
 			: {
 					sub: '',
 					name: '',
+					given_name: '',
+					family_name: '',
 					email: '',
 					avatar: ''
 			  };

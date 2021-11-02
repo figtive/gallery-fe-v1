@@ -1,14 +1,17 @@
 <script lang="ts">
+	import { auth } from '$lib/auth';
 	import BlogItem from '$lib/components/BlogItem.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import { blogs } from '$lib/dummy';
+
+	let name = auth.getUserInfo().given_name;
 </script>
 
-<Title title="Bookmarks" />
+<Title title="Dashboard" />
 <main>
 	<div class="container">
 		<div class="head">
-			<h1 class="page-title">Bookmarked Blogs</h1>
+			<h1 class="page-title">Hi{name && ', '}{name}!</h1>
 		</div>
 		<div class="body">
 			<div class="list">
@@ -17,8 +20,8 @@
 				{/each}
 			</div>
 		</div>
+		<div class="glow-1" />
 	</div>
-	<div class="glow-1" />
 </main>
 
 <style lang="css">
