@@ -1,12 +1,20 @@
 import { goto } from '$app/navigation';
 import api from '$lib/api';
+import jwtDecode from 'jwt-decode';
 
 const PATH_KEY = 'galleryppl:path';
 const TOKEN_KEY = 'galleryppl:token';
 
-export type Response = {
+export interface Response {
 	credential: string;
-};
+}
+
+export interface UserInfo {
+	sub: string;
+	name: string;
+	email: string;
+	avatar: string;
+}
 
 export class AuthManager {
 	authenticate(auth: Response): Promise<void> {
@@ -37,6 +45,10 @@ export class AuthManager {
 		localStorage.setItem(TOKEN_KEY, token);
 	}
 
+	getUserInfo(): UserInfo {
+		return jwtDecode<UserInfo>(this.getToken());
+	}
+
 	isAuthenticated(): boolean {
 		return !!this.getToken();
 	}
@@ -53,3 +65,9 @@ export class AuthManager {
 }
 
 export const auth = new AuthManager();
+
+export const requireAuth = (path?: string): void => {
+	if (!auth.isAuthenticated()) {
+		goto(path || '/', { replaceState: true });
+	}
+};
