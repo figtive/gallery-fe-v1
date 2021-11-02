@@ -1,6 +1,9 @@
+import { derived, get } from 'svelte/store';
+import type { Readable, Writable } from 'svelte/store';
 import { goto } from '$app/navigation';
 import api from '$lib/api';
 import jwtDecode from 'jwt-decode';
+import persistentStore from './store';
 
 const PATH_KEY = 'galleryppl:path';
 const TOKEN_KEY = 'galleryppl:token';
@@ -15,42 +18,49 @@ export interface UserInfo {
 	email: string;
 	avatar: string;
 }
+class AuthManager {
+	private token: Writable<string>;
+	private authState: Readable<boolean>;
 
-export class AuthManager {
-	authenticate(auth: Response): Promise<void> {
-		this.setToken(auth.credential);
+	constructor() {
+		this.token = persistentStore(TOKEN_KEY, undefined);
+		this.authState = derived(this.token, (token) => !!token);
+	}
+
+	authenticate(auth: Response, redirect?: string): Promise<void> {
+		this.token.set(auth.credential);
 		return api.auth
 			.login()
 			.then(() => {
-				const path = localStorage.getItem(PATH_KEY);
+				const prevPath = localStorage.getItem(PATH_KEY);
 				localStorage.removeItem(PATH_KEY);
-				if (path) {
-					goto(path, { replaceState: true });
-				} else {
-					goto('/courses', { replaceState: true });
-				}
+				goto(prevPath || redirect || '/', { replaceState: true });
 				return Promise.resolve();
 			})
 			.catch(() => {
-				this.setToken('');
+				this.token.set(undefined);
 				return Promise.reject();
 			});
 	}
 
-	getToken(): string {
-		return localStorage.getItem(TOKEN_KEY);
-	}
-
-	private setToken(token: string): void {
-		localStorage.setItem(TOKEN_KEY, token);
+	getToken(): Readable<string> {
+		return this.token;
 	}
 
 	getUserInfo(): UserInfo {
-		return jwtDecode<UserInfo>(this.getToken());
+		const token = get(this.token);
+		return token
+			? jwtDecode<UserInfo>(token)
+			: {
+					sub: '',
+					name: '',
+					email: '',
+					avatar: ''
+			  };
 	}
 
-	isAuthenticated(): boolean {
-		return !!this.getToken();
+	isAuthenticated(): Readable<boolean> {
+		return this.authState;
 	}
 
 	reauthenticate(): void {
@@ -59,8 +69,7 @@ export class AuthManager {
 	}
 
 	deauthenticate(): void {
-		this.setToken('');
-		goto('/', { replaceState: true });
+		this.token.set(undefined);
 	}
 }
 

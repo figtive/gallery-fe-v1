@@ -1,16 +1,17 @@
-import { AuthManager } from './auth';
+import { get } from 'svelte/store';
+import { auth } from './auth';
 import type { APIResponse } from './dtos';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL || '';
 
 const withAuth = (): HeadersInit => ({
-	Authorization: `Bearer ${new AuthManager().getToken()}`
+	Authorization: `Bearer ${get(auth.getToken())}`
 });
 
 const handleResponse = (response: Response) => {
 	if (!response.ok) {
 		if (response.status === 401) {
-			new AuthManager().reauthenticate();
+			new auth.reauthenticate();
 		}
 		throw new Error(response.statusText);
 	}
