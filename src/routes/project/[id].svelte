@@ -65,7 +65,9 @@
 				</div>
 				<div class="detail">
 					<div class="actions">
-						<Button beforeIcon="link" style="outline">Link to Project</Button>
+						<a href="https://figtive.dev" target="_blank" rel="noopener noreferrer">
+							<Button beforeIcon="link" style="outline">Link to Project</Button>
+						</a>
 						<Button beforeIcon="share" style="outline" color="info">Share</Button>
 						{#if $isAuthenticated && isVoted !== undefined}
 							<Button

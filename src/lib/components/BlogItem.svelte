@@ -7,12 +7,9 @@
 
 	let isAuthenticated = auth.isAuthenticated();
 
-	export let onClick: () => void = () => {
-		/* noop */
-	};
 	export let allowBookmark = false;
-
 	export let blog: Blog;
+
 	let isVoted: boolean = undefined;
 
 	const handleVote = () => {
@@ -32,14 +29,11 @@
 
 <div class="row">
 	<div class="content">
-		<p
-			class="title"
-			on:click={onClick}
-			on:keydown={(e) => e.key === 'Enter' && onClick()}
-			tabindex="0"
-		>
-			{blog.title}
-		</p>
+		<a href="https://figtive.dev" target="_blank" rel="noopener noreferrer">
+			<p class="title">
+				{blog.title}
+			</p>
+		</a>
 		<p class="author">by {blog.author}</p>
 		<div class="tags">
 			<Tag color="secondary">{new Date(blog.createdAt).getFullYear()}</Tag>
