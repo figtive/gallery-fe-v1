@@ -11,7 +11,7 @@
 		google.accounts.id.initialize({
 			client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
 			callback: (response: Response) => {
-				auth.authenticate(response);
+				auth.authenticate(response).catch((e) => console.error(e));
 			}
 		});
 		auth.isAuthenticated().subscribe((authed) => {

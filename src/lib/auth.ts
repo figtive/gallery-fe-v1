@@ -40,9 +40,9 @@ class AuthManager {
 				if (prevPath || redirect) goto(prevPath || redirect, { replaceState: true });
 				return Promise.resolve();
 			})
-			.catch(() => {
+			.catch((e) => {
 				this.token.set(undefined);
-				return Promise.reject();
+				return Promise.reject(e);
 			});
 	}
 

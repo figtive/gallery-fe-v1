@@ -9,14 +9,19 @@ const withAuth = (token?: string): HeadersInit => ({
 	Authorization: `Bearer ${token || get(auth.getToken())}`
 });
 
-const handleResponse = async <T>(response: Response) => {
-	const jsonResponse: APIResponse<T> = await response.json();
+const handleResponse = async <T>(response: Response): Promise<T> => {
+	let jsonResponse: APIResponse<T>;
+	try {
+		jsonResponse = await response.json();
+	} catch (e) {
+		throw new Error(e);
+	}
 	if (!response.ok) {
 		if (response.status === 401) {
 			auth.deauthenticate();
 			throw new Error('Please sign in again');
 		}
-		throw new Error(jsonResponse.error);
+		throw new Error(jsonResponse.error || response.statusText || response.status.toString());
 	}
 	return jsonResponse.data;
 };
