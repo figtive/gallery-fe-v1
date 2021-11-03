@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { auth } from '$lib/auth';
 	import Button from '$lib/components/Button.svelte';
 	import Tag from '$lib/components/Tag.svelte';
 	import Title from '$lib/components/Title.svelte';
@@ -8,7 +9,17 @@
 	import { projects } from '$lib/dummy';
 
 	$: project = projects.filter((project: Project): boolean => project.id === $page.params.id)[0];
-	$: metadata = JSON.parse(project.metadata) as ProjectMetadata;
+	$: metadata = project.metadata && (JSON.parse(project.metadata) as ProjectMetadata);
+	let isAuthenticated = auth.isAuthenticated();
+
+	isAuthenticated.subscribe(() => {
+		// TODO: refetch project
+	});
+
+	const handleVote = () => {
+		// TODO: impl vote
+		project.isVoted = !project.isVoted;
+	};
 </script>
 
 <Title title="Project" />
@@ -26,7 +37,16 @@
 				<div class="actions">
 					<Button beforeIcon="link" style="outline">Link to Project</Button>
 					<Button beforeIcon="share" style="outline" color="info">Share</Button>
-					<Button beforeIcon="how_to_vote" style="outline" color="success">Vote</Button>
+					{#if $isAuthenticated}
+						<Button
+							beforeIcon="how_to_vote"
+							style="outline"
+							color={project.isVoted ? 'error' : 'success'}
+							onClick={handleVote}
+						>
+							{project.isVoted ? 'Unvote' : 'Vote'}
+						</Button>
+					{/if}
 				</div>
 				<div class="tags">
 					<Tag color="secondary">{new Date(project.createdAt).getFullYear()}</Tag>
@@ -37,44 +57,46 @@
 					<Tag color="info">{ProjectFieldTypeLabel[project.field]}</Tag>
 				</div>
 				<p class="description">{project.description}</p>
-				<div class="metadata">
-					{#if metadata.partner}
-						<div>
-							<h3>Partner</h3>
-							<p>{metadata.partner}</p>
-						</div>
-					{/if}
-					{#if metadata.productOwner.length}
-						<div>
-							<h3>Product Owner</h3>
-							<ul>
-								{#each metadata.productOwner as name}
-									<li>{name}</li>
-								{/each}
-							</ul>
-						</div>
-					{/if}
-					{#if metadata.scrumMaster.length}
-						<div>
-							<h3>Scrum Master</h3>
-							<ul>
-								{#each metadata.scrumMaster as name}
-									<li>{name}</li>
-								{/each}
-							</ul>
-						</div>
-					{/if}
-					{#if metadata.developmentTeam.length}
-						<div>
-							<h3>Development Team</h3>
-							<ul>
-								{#each metadata.developmentTeam as name}
-									<li>{name}</li>
-								{/each}
-							</ul>
-						</div>
-					{/if}
-				</div>
+				{#if metadata}
+					<div class="metadata">
+						{#if metadata.partner}
+							<div>
+								<h3>Partner</h3>
+								<p>{metadata.partner}</p>
+							</div>
+						{/if}
+						{#if metadata.productOwner.length}
+							<div>
+								<h3>Product Owner</h3>
+								<ul>
+									{#each metadata.productOwner as name}
+										<li>{name}</li>
+									{/each}
+								</ul>
+							</div>
+						{/if}
+						{#if metadata.scrumMaster.length}
+							<div>
+								<h3>Scrum Master</h3>
+								<ul>
+									{#each metadata.scrumMaster as name}
+										<li>{name}</li>
+									{/each}
+								</ul>
+							</div>
+						{/if}
+						{#if metadata.developmentTeam.length}
+							<div>
+								<h3>Development Team</h3>
+								<ul>
+									{#each metadata.developmentTeam as name}
+										<li>{name}</li>
+									{/each}
+								</ul>
+							</div>
+						{/if}
+					</div>
+				{/if}
 			</div>
 		</div>
 	</div>
@@ -115,16 +137,7 @@
 		flex-grow: 1;
 	}
 
-	.actions {
-		display: flex;
-		margin: -4px -4px;
-		margin-bottom: 8px;
-	}
-
-	.actions > :global(*) {
-		margin: 4px;
-	}
-
+	.actions,
 	.tags {
 		display: flex;
 		flex-wrap: wrap;
@@ -132,6 +145,7 @@
 		margin-bottom: 8px;
 	}
 
+	.actions > :global(*),
 	.tags > :global(*) {
 		margin: 4px;
 	}

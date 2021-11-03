@@ -16,6 +16,7 @@ export interface Project {
 	class: ClassType;
 	field: ProjectFieldType;
 	metadata?: string;
+	isVoted?: boolean;
 	createdAt: string;
 }
 
