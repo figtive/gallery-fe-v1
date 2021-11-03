@@ -1,5 +1,6 @@
 import { get } from 'svelte/store';
 import { auth } from './auth';
+import type { CourseType, ProjectFieldType } from './constant';
 import type { APIResponse, Project } from './dtos';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL || '';
@@ -38,7 +39,7 @@ const api = {
 					method: 'GET'
 				}).then((resp) => handleResponse<Project>(resp));
 			},
-			getAll(query: string, course: string, field: string): Promise<Project[]> {
+			getAll(query: string, course: CourseType, field: ProjectFieldType): Promise<Project[]> {
 				return fetch(
 					`${BASE_URL}/api/v1/coursework/project?${new URLSearchParams({ query, course, field })}`,
 					{

@@ -24,7 +24,7 @@
 	let isLoaded: boolean = false;
 	let error: Error;
 
-	const getProject = async (query, course, field): Promise<Project[]> => {
+	const getProjects = async (query, course, field): Promise<Project[]> => {
 		return await api.coursework.project.getAll(query, course, field);
 	};
 
@@ -36,7 +36,7 @@
 			{ replaceState: true, noscroll: true }
 		);
 		try {
-			projects = await getProject(searchQuery, searchCourse, searchField);
+			projects = await getProjects(searchQuery, searchCourse, searchField);
 		} catch (e) {
 			error = e;
 		} finally {
@@ -46,7 +46,7 @@
 
 	onMount(async () => {
 		try {
-			projects = await getProject(searchQuery, searchCourse, searchField);
+			projects = await getProjects(searchQuery, searchCourse, searchField);
 		} catch (e) {
 			console.error(e);
 			error = e;
@@ -87,7 +87,7 @@
 				<ProjectList {projects} />
 			</div>
 		{:else if error}
-			<h1>Failed loading project!</h1>
+			<p>Failed loading projects!</p>
 		{:else}
 			<Spinner />
 		{/if}
