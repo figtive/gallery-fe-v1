@@ -24,6 +24,6 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           context: .
-          cache-from: figtive/gallery-api:nightly
+          cache-from: figtive/gallery-fe-v1:nightly
           tags: |
-            figtive/gallery-api:nightly
+            figtive/gallery-fe-v1:nightly

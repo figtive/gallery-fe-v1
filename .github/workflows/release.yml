@@ -34,9 +34,9 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           context: .
-          cache-from: figtive/gallery-api:latest
+          cache-from: figtive/gallery-fe-v1:latest
           tags: |
-            figtive/gallery-api:latest
-            figtive/gallery-api:${{ steps.semver_parser.outputs.major }}
-            figtive/gallery-api:${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}
-            figtive/gallery-api:${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}.${{ steps.semver_parser.outputs.patch }}
+            figtive/gallery-fe-v1:latest
+            figtive/gallery-fe-v1:${{ steps.semver_parser.outputs.major }}
+            figtive/gallery-fe-v1:${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}
+            figtive/gallery-fe-v1:${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}.${{ steps.semver_parser.outputs.patch }}
