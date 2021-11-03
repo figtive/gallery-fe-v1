@@ -3,7 +3,7 @@
 	import BlogItem from './BlogItem.svelte';
 
 	export let blogs: Blog[];
-	export let allowBookmark: boolean = false;
+	export let allowBookmark = false;
 </script>
 
 <div class="list">

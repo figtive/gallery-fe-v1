@@ -4,8 +4,10 @@
 	import Tag from './Tag.svelte';
 
 	export let blog: Blog;
-	export let onClick: () => void = () => {};
-	export let allowBookmark: boolean = false;
+	export let onClick: () => void = () => {
+		/* noop */
+	};
+	export let allowBookmark = false;
 
 	const bookmark: () => void = () => console.log(blog.id);
 </script>

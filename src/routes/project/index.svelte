@@ -21,7 +21,7 @@
 	let searchCourse: CourseType = ($page.query.get('course') || CourseType.PPL) as CourseType;
 	let searchField: ProjectFieldType = ($page.query.get('field') || '') as ProjectFieldType;
 
-	let isLoaded: boolean = false;
+	let isLoaded = false;
 	let error: Error;
 
 	const getProjects = async (query, course, field): Promise<Project[]> => {

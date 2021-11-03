@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Color, colorSet } from '$lib/color';
 
-	export let className: string = '';
+	export let className = '';
 	export let color: Color = 'primary';
 </script>
 

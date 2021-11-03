@@ -1,4 +1,6 @@
 <script lang="ts">
+	/* eslint-disable @typescript-eslint/ban-ts-comment */
+	/* eslint-disable no-undef */
 	import { onMount } from 'svelte';
 	import { assets } from '$app/paths';
 	import { auth, Response } from '$lib/auth';

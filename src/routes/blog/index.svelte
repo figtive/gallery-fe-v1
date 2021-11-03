@@ -15,7 +15,7 @@
 	let searchQuery: string = $page.query.get('query') || '';
 	let searchCategory: BlogCategoryType = ($page.query.get('category') || '') as BlogCategoryType;
 
-	let isLoaded: boolean = false;
+	let isLoaded = false;
 	let error: Error;
 
 	const getBlogs = async (query, category): Promise<Blog[]> => {

@@ -12,16 +12,16 @@
 	<Footer />
 {/if}
 
-<style lang="css" global>
-	:root {
+<style lang="css">
+	:global(:root) {
 		--navbar-height: 64px;
 		--footer-height: 128px;
 		--color-text-primary: #333;
 		--color-text-secondary: #888;
 	}
 
-	html,
-	body {
+	:global(html),
+	:global(body) {
 		margin: 0;
 		padding: 0;
 		border: 0;
@@ -31,63 +31,63 @@
 		overflow-x: hidden;
 	}
 
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
+	:global(h1),
+	:global(h2),
+	:global(h3),
+	:global(h4),
+	:global(h5),
+	:global(h6) {
 		font-family: 'Raleway', sans-serif;
 		margin: 0;
 		color: inherit;
 	}
 
-	a,
-	p,
-	button,
-	ul,
-	ol,
-	li {
+	:global(a),
+	:global(p),
+	:global(button),
+	:global(ul),
+	:global(ol),
+	:global(li) {
 		font-family: 'Open Sans', sans-serif;
 		margin: 0;
 		color: inherit;
 	}
 
-	a {
+	:global(a) {
 		text-decoration: none;
 	}
 
-	main {
+	:global(main) {
 		display: flex;
 		flex-direction: column;
 		min-height: calc(100vh - var(--navbar-height) - var(--footer-height));
 		overflow: visible;
 	}
 
-	.container {
+	:global(.container) {
 		width: 100%;
 		max-width: 70%;
 		margin: 0 auto;
 		padding: 0 1rem;
 	}
 
-	.head {
+	:global(.head) {
 		margin-top: 5rem;
 		margin-bottom: 3rem;
 	}
 
-	.hidden {
+	:global(.hidden) {
 		display: none;
 	}
 
-	.page-title {
+	:global(.page-title) {
 		font-size: 3.5rem;
 		width: fit-content;
 		position: relative;
 		font-weight: 800;
 	}
 
-	.page-title::before {
+	:global(.page-title::before) {
 		content: '';
 		display: block;
 		position: absolute;
@@ -99,15 +99,15 @@
 		z-index: -1;
 	}
 
-	.page-subtitle {
+	:global(.page-subtitle) {
 		font-size: 2rem;
 		width: fit-content;
 		font-weight: 600;
 		color: var(--color-text-secondary);
 	}
 
-	input,
-	select {
+	:global(input),
+	:global(select) {
 		height: 40px;
 		padding: 0 1.2rem;
 		margin: 0;
@@ -119,7 +119,7 @@
 		-moz-box-sizing: border-box;
 		box-sizing: border-box;
 	}
-	select {
+	:global(select) {
 		padding-right: 2.4rem;
 		background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
 		background-repeat: no-repeat;
@@ -129,7 +129,7 @@
 		-moz-appearance: none;
 	}
 
-	.glow-left {
+	:global(.glow-left) {
 		position: fixed;
 		z-index: -1;
 		width: 80vh;
@@ -141,7 +141,7 @@
 		transform: translate(-50%, 50%);
 	}
 
-	.glow-right {
+	:global(.glow-right) {
 		position: fixed;
 		z-index: -1;
 		width: 80vh;
@@ -153,11 +153,11 @@
 		transform: translate(50%, 50%);
 	}
 
-	.glow-purple {
+	:global(.glow-purple) {
 		background-color: #bebbff;
 	}
 
-	.glow-yellow {
+	:global(.glow-yellow) {
 		background-color: #f9eab3;
 	}
 </style>

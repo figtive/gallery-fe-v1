@@ -1,14 +1,16 @@
 <script lang="ts">
 	import { Color, colorSet } from '$lib/color';
 
-	export let type: string = '';
-	export let onClick: () => void = () => {};
-	export let className: string = '';
-	export let disabled: boolean = false;
+	export let type = '';
+	export let onClick: () => void = () => {
+		/* noop */
+	};
+	export let className = '';
+	export let disabled = false;
 	export let color: Color = 'primary';
 	export let style: 'solid' | 'outline' = 'solid';
-	export let beforeIcon: string = '';
-	export let afterIcon: string = '';
+	export let beforeIcon = '';
+	export let afterIcon = '';
 </script>
 
 <button
