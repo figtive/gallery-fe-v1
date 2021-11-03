@@ -1,13 +1,31 @@
 <script lang="ts">
+	import { auth } from '$lib/auth';
 	import { BlogCategoryTypeLabel } from '$lib/constant';
 	import type { Blog } from '$lib/dtos';
+	import Button from './Button.svelte';
 	import Tag from './Tag.svelte';
 
-	export let blog: Blog;
+	let isAuthenticated = auth.isAuthenticated();
+
 	export let onClick: () => void = () => {
 		/* noop */
 	};
 	export let allowBookmark = false;
+
+	export let blog: Blog;
+	let isVoted: boolean = undefined;
+
+	const handleVote = () => {
+		// TODO: impl vote
+		isVoted = !isVoted;
+	};
+
+	$: if ($isAuthenticated) {
+		//TODO: fetch vote status
+		setTimeout(() => {
+			isVoted = false;
+		}, 1000);
+	}
 
 	const bookmark: () => void = () => console.log(blog.id);
 </script>
@@ -28,7 +46,17 @@
 			<Tag color="info">{BlogCategoryTypeLabel[blog.category]}</Tag>
 		</div>
 	</div>
-	<div class="action">
+	<div class="actions">
+		{#if $isAuthenticated && isVoted !== undefined}
+			<Button
+				beforeIcon="how_to_vote"
+				style="outline"
+				color={isVoted ? 'error' : 'success'}
+				onClick={handleVote}
+			>
+				{isVoted ? 'Unvote' : 'Vote'}
+			</Button>
+		{/if}
 		{#if allowBookmark}
 			<button class="bookmark" on:click={bookmark} tabindex="0">
 				<span class="material-icons">bookmark_border</span>
@@ -46,40 +74,48 @@
 		padding: 1.2rem;
 	}
 
-	.row .content {
+	.content {
 		display: flex;
 		flex-direction: column;
 	}
 
-	.row .content .title {
+	.title {
 		font-size: 1.5rem;
 		font-weight: 600;
 		margin-bottom: 4px;
 		cursor: pointer;
 	}
 
-	.row .content .author {
+	.author {
 		margin-bottom: 12px;
 		color: var(--color-text-secondary);
 	}
 
-	.row .content .tags {
+	.tags {
 		display: flex;
 		flex-wrap: wrap;
 		margin: -4px -4px;
 	}
 
-	.row .content .tags > :global(*) {
+	.tags > :global(*) {
 		margin: 4px;
 	}
 
-	.row .action {
+	.actions {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 	}
 
-	.row .action .bookmark {
+	.actions > :global(*) {
+		margin-right: 16px;
+	}
+
+	.actions > :global(*):last-child {
+		margin-right: 0;
+	}
+
+	.bookmark {
 		border: none;
 		background: none;
 		width: 3rem;
@@ -92,16 +128,16 @@
 		cursor: pointer;
 	}
 
-	.row .action .bookmark:hover,
-	.row .action .bookmark:focus {
+	.bookmark:hover,
+	.bookmark:focus {
 		background-color: #8882;
 	}
 
-	.row .action .bookmark:active {
+	.bookmark:active {
 		background-color: #4442;
 	}
 
-	.row .action .bookmark > span {
+	.bookmark > span {
 		font-size: 1.5rem;
 		-moz-user-select: none;
 		-webkit-user-select: none;
