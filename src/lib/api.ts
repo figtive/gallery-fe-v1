@@ -1,7 +1,7 @@
 import { get } from 'svelte/store';
 import { auth } from './auth';
-import type { CourseType, ProjectFieldType } from './constant';
-import type { APIResponse, Project } from './dtos';
+import type { BlogCategoryType, CourseType, ProjectFieldType } from './constant';
+import type { APIResponse, Blog, Project } from './dtos';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL || '';
 
@@ -46,6 +46,21 @@ const api = {
 						method: 'GET'
 					}
 				).then((resp) => handleResponse<Project[]>(resp));
+			}
+		},
+		blog: {
+			getOne(id: string): Promise<Blog> {
+				return fetch(`${BASE_URL}/api/v1/coursework/blog/${id}`, {
+					method: 'GET'
+				}).then((resp) => handleResponse<Blog>(resp));
+			},
+			getAll(query: string, category: BlogCategoryType): Promise<Blog[]> {
+				return fetch(
+					`${BASE_URL}/api/v1/coursework/blog?${new URLSearchParams({ query, category })}`,
+					{
+						method: 'GET'
+					}
+				).then((resp) => handleResponse<Blog[]>(resp));
 			}
 		}
 	}
