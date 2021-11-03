@@ -1,21 +1,59 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+	import api from '$lib/api';
 	import Button from '$lib/components/Button.svelte';
 	import ProjectList from '$lib/components/ProjectList.svelte';
+	import Spinner from '$lib/components/Spinner.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import {
-		ClassType,
-		ClassTypeLabel,
+		CourseType,
+		CourseTypeLabel,
 		ProjectFieldType,
 		ProjectFieldTypeLabel
 	} from '$lib/constant';
-	import { projects } from '$lib/dummy';
+	import type { Project } from '$lib/dtos';
+	import { onMount } from 'svelte';
 
-	let queryString: string = '';
-	let queryClass: ClassType;
-	let queryField: ProjectFieldType;
-	const handleQuery = () => {
-		console.log(queryString, queryClass, queryField);
+	let projects: Project[];
+
+	let searchQuery: string = $page.query.get('query') || '';
+	let searchCourse: CourseType = ($page.query.get('course') || CourseType.PPL) as CourseType;
+	let searchField: ProjectFieldType = ($page.query.get('field') || '') as ProjectFieldType;
+
+	let isLoaded: boolean = false;
+	let error: Error;
+
+	const getProject = async (query, course, field): Promise<Project[]> => {
+		return await api.coursework.project.getAll(query, course, field);
 	};
+
+	const handleSearch = async () => {
+		isLoaded = false;
+		error = undefined;
+		goto(
+			`?${new URLSearchParams({ query: searchQuery, course: searchCourse, field: searchField })}`,
+			{ replaceState: true, noscroll: true }
+		);
+		try {
+			projects = await getProject(searchQuery, searchCourse, searchField);
+		} catch (e) {
+			error = e;
+		} finally {
+			isLoaded = true;
+		}
+	};
+
+	onMount(async () => {
+		try {
+			projects = await getProject(searchQuery, searchCourse, searchField);
+		} catch (e) {
+			console.error(e);
+			error = e;
+		} finally {
+			isLoaded = true;
+		}
+	});
 </script>
 
 <Title title="Project" />
@@ -25,16 +63,16 @@
 			<h1 class="page-title">Project</h1>
 		</div>
 		<div class="head">
-			<form on:submit|preventDefault={handleQuery}>
-				<input bind:value={queryString} placeholder="Name" />
-				<select bind:value={queryClass}>
-					{#each Object.values(ClassType) as c}
+			<form on:submit|preventDefault={handleSearch}>
+				<input bind:value={searchQuery} placeholder="Name" />
+				<select bind:value={searchCourse}>
+					{#each Object.values(CourseType) as c}
 						<option value={c}>
-							{ClassTypeLabel[c]}
+							{CourseTypeLabel[c]}
 						</option>
 					{/each}
 				</select>
-				<select bind:value={queryField}>
+				<select bind:value={searchField}>
 					{#each Object.values(ProjectFieldType) as f}
 						<option value={f}>
 							{ProjectFieldTypeLabel[f]}
@@ -44,9 +82,15 @@
 				<Button type="submit" beforeIcon="search" style="outline">Search</Button>
 			</form>
 		</div>
-		<div class="body">
-			<ProjectList {projects} />
-		</div>
+		{#if isLoaded && !error}
+			<div class="body">
+				<ProjectList {projects} />
+			</div>
+		{:else if error}
+			<h1>Failed loading project!</h1>
+		{:else}
+			<Spinner />
+		{/if}
 	</div>
 	<div class="glow-left glow-purple" />
 </main>
