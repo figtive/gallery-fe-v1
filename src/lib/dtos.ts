@@ -1,4 +1,4 @@
-import type { BlogCategoryType, ClassType, ProjectFieldType } from '$lib/constant';
+import type { BlogCategoryType, CourseType, ProjectFieldType } from '$lib/constant';
 
 export interface APIResponse<T> {
 	code: number;
@@ -13,10 +13,9 @@ export interface Project {
 	description: string;
 	thumbnail: string;
 	active: boolean;
-	class: ClassType;
+	course: CourseType;
 	field: ProjectFieldType;
-	metadata?: string;
-	isVoted?: boolean;
+	metadata?: string; // stringified JSON of ProjectMetadata
 	createdAt: string;
 }
 

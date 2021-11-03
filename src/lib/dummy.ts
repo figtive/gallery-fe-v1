@@ -1,4 +1,4 @@
-import { BlogCategoryType, ClassType, ProjectFieldType } from './constant';
+import { BlogCategoryType, CourseType, ProjectFieldType } from './constant';
 import type { Blog, Project } from './dtos';
 
 export const projects: Project[] = [
@@ -10,7 +10,7 @@ export const projects: Project[] = [
 			"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
 		thumbnail: 'https://picsum.photos/seed/asd1/200/256',
 		active: true,
-		class: ClassType.PPL,
+		course: CourseType.PPL,
 		field: ProjectFieldType.Social,
 		metadata: JSON.stringify({
 			partner: 'Fasilkom UI',
@@ -28,7 +28,7 @@ export const projects: Project[] = [
 			"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
 		thumbnail: 'https://picsum.photos/seed/asd2/200/256',
 		active: false,
-		class: ClassType.PPL,
+		course: CourseType.PPL,
 		field: ProjectFieldType.Government,
 		createdAt: '2021-11-02T11:27:03.709Z'
 	},
@@ -40,7 +40,7 @@ export const projects: Project[] = [
 			"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
 		thumbnail: 'https://picsum.photos/seed/asd3/200/256',
 		active: true,
-		class: ClassType.PPL,
+		course: CourseType.PPL,
 		field: ProjectFieldType.NewInnovation,
 		createdAt: '2021-11-02T11:27:03.709Z'
 	},
@@ -52,7 +52,7 @@ export const projects: Project[] = [
 			"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
 		thumbnail: 'https://picsum.photos/seed/asd4/200/256',
 		active: true,
-		class: ClassType.PPL,
+		course: CourseType.PPL,
 		field: ProjectFieldType.Startup,
 		createdAt: '2021-11-02T11:27:03.709Z'
 	},
@@ -63,7 +63,7 @@ export const projects: Project[] = [
 		description: 'lorem',
 		thumbnail: 'https://picsum.photos/seed/asd5/200/256',
 		active: false,
-		class: ClassType.PPL,
+		course: CourseType.PPL,
 		field: ProjectFieldType.NewInnovation,
 		createdAt: '2021-11-02T11:27:03.709Z'
 	}

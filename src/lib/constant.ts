@@ -1,11 +1,11 @@
-export enum ClassType {
+export enum CourseType {
 	PPL = 'ppl',
 	Propensi = 'propensi'
 }
 
-export const ClassTypeLabel: { [key in ClassType]: string } = {
-	[ClassType.PPL]: 'PPL',
-	[ClassType.Propensi]: 'Propensi'
+export const CourseTypeLabel: { [key in CourseType]: string } = {
+	[CourseType.PPL]: 'PPL',
+	[CourseType.Propensi]: 'Propensi'
 };
 
 export enum ProjectFieldType {

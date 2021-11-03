@@ -1,104 +1,143 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import api from '$lib/api';
 	import { auth } from '$lib/auth';
 	import Button from '$lib/components/Button.svelte';
+	import Spinner from '$lib/components/Spinner.svelte';
 	import Tag from '$lib/components/Tag.svelte';
 	import Title from '$lib/components/Title.svelte';
-	import { ClassTypeLabel, ProjectFieldTypeLabel } from '$lib/constant';
+	import { CourseTypeLabel, ProjectFieldTypeLabel } from '$lib/constant';
 	import type { Project, ProjectMetadata } from '$lib/dtos';
-	import { projects } from '$lib/dummy';
+	import { onMount } from 'svelte';
 
-	$: project = projects.filter((project: Project): boolean => project.id === $page.params.id)[0];
-	$: metadata = project.metadata && (JSON.parse(project.metadata) as ProjectMetadata);
 	let isAuthenticated = auth.isAuthenticated();
 
-	isAuthenticated.subscribe(() => {
-		// TODO: refetch project
-	});
+	let project: Project;
+	let metadata: ProjectMetadata;
+	let isVoted: boolean = undefined;
+
+	let isLoaded = false;
+	let error: Error;
+
+	const getProject = async (): Promise<Project> => {
+		return await api.coursework.project.getOne($page.params.id);
+	};
 
 	const handleVote = () => {
 		// TODO: impl vote
-		project.isVoted = !project.isVoted;
+		isVoted = !isVoted;
 	};
+
+	$: if ($isAuthenticated) {
+		//TODO: fetch vote status
+		setTimeout(() => {
+			isVoted = false;
+		}, 1000);
+	}
+
+	onMount(async () => {
+		try {
+			project = await getProject();
+			metadata = JSON.parse(project.metadata || '') as ProjectMetadata;
+		} catch (e) {
+			console.error(e);
+			error = e;
+		} finally {
+			isLoaded = true;
+		}
+	});
 </script>
 
 <Title title="Project" />
 <main>
 	<div class="container">
-		<div class="head">
-			<h1 class="page-title">{project.name}</h1>
-			<h2 class="page-subtitle">{project.team}</h2>
-		</div>
-		<div class="body">
-			<div class="image">
-				<img src={project.thumbnail} alt="project thumbnail" />
+		{#if isLoaded && !error}
+			<div class="head">
+				<h1 class="page-title">{project.name}</h1>
+				<h2 class="page-subtitle">{project.team}</h2>
 			</div>
-			<div class="detail">
-				<div class="actions">
-					<Button beforeIcon="link" style="outline">Link to Project</Button>
-					<Button beforeIcon="share" style="outline" color="info">Share</Button>
-					{#if $isAuthenticated}
-						<Button
-							beforeIcon="how_to_vote"
-							style="outline"
-							color={project.isVoted ? 'error' : 'success'}
-							onClick={handleVote}
-						>
-							{project.isVoted ? 'Unvote' : 'Vote'}
-						</Button>
-					{/if}
+			<div class="body">
+				<div class="image">
+					<img src={project.thumbnail} alt="project thumbnail" />
+					<div class="placeholder">
+						<Spinner />
+					</div>
 				</div>
-				<div class="tags">
-					<Tag color="secondary">{new Date(project.createdAt).getFullYear()}</Tag>
-					<Tag color={project.active ? 'success' : 'disabled'}>
-						{project.active ? 'Active' : 'Archived'}
-					</Tag>
-					<Tag color="warning">{ClassTypeLabel[project.class]}</Tag>
-					<Tag color="info">{ProjectFieldTypeLabel[project.field]}</Tag>
-				</div>
-				<p class="description">{project.description}</p>
-				{#if metadata}
-					<div class="metadata">
-						{#if metadata.partner}
-							<div>
-								<h3>Partner</h3>
-								<p>{metadata.partner}</p>
-							</div>
-						{/if}
-						{#if metadata.productOwner.length}
-							<div>
-								<h3>Product Owner</h3>
-								<ul>
-									{#each metadata.productOwner as name}
-										<li>{name}</li>
-									{/each}
-								</ul>
-							</div>
-						{/if}
-						{#if metadata.scrumMaster.length}
-							<div>
-								<h3>Scrum Master</h3>
-								<ul>
-									{#each metadata.scrumMaster as name}
-										<li>{name}</li>
-									{/each}
-								</ul>
-							</div>
-						{/if}
-						{#if metadata.developmentTeam.length}
-							<div>
-								<h3>Development Team</h3>
-								<ul>
-									{#each metadata.developmentTeam as name}
-										<li>{name}</li>
-									{/each}
-								</ul>
-							</div>
+				<div class="detail">
+					<div class="actions">
+						<Button beforeIcon="link" style="outline">Link to Project</Button>
+						<Button beforeIcon="share" style="outline" color="info">Share</Button>
+						{#if $isAuthenticated && isVoted !== undefined}
+							<Button
+								beforeIcon="how_to_vote"
+								style="outline"
+								color={isVoted ? 'error' : 'success'}
+								onClick={handleVote}
+							>
+								{isVoted ? 'Unvote' : 'Vote'}
+							</Button>
 						{/if}
 					</div>
-				{/if}
+					<div class="tags">
+						<Tag color="secondary">{new Date(project.createdAt).getFullYear()}</Tag>
+						<Tag color={project.active ? 'success' : 'disabled'}>
+							{project.active ? 'Active' : 'Archived'}
+						</Tag>
+						<Tag color="warning">{CourseTypeLabel[project.course]}</Tag>
+						<Tag color="info">{ProjectFieldTypeLabel[project.field]}</Tag>
+					</div>
+					<p class="description">{project.description}</p>
+					{#if metadata}
+						<div class="metadata">
+							{#if metadata.partner}
+								<div>
+									<h3>Partner</h3>
+									<p>{metadata.partner}</p>
+								</div>
+							{/if}
+							{#if metadata.productOwner.length}
+								<div>
+									<h3>Product Owner</h3>
+									<ul>
+										{#each metadata.productOwner as name}
+											<li>{name}</li>
+										{/each}
+									</ul>
+								</div>
+							{/if}
+							{#if metadata.scrumMaster.length}
+								<div>
+									<h3>Scrum Master</h3>
+									<ul>
+										{#each metadata.scrumMaster as name}
+											<li>{name}</li>
+										{/each}
+									</ul>
+								</div>
+							{/if}
+							{#if metadata.developmentTeam.length}
+								<div>
+									<h3>Development Team</h3>
+									<ul>
+										{#each metadata.developmentTeam as name}
+											<li>{name}</li>
+										{/each}
+									</ul>
+								</div>
+							{/if}
+						</div>
+					{/if}
+				</div>
 			</div>
-		</div>
+		{:else if error}
+			<div class="head">
+				<h1>Failed loading project!</h1>
+			</div>
+		{:else}
+			<div class="head">
+				<Spinner />
+			</div>
+		{/if}
 	</div>
 	<div class="glow-left glow-purple" />
 </main>
@@ -124,12 +163,25 @@
 		border-radius: 1.5rem;
 		overflow: hidden;
 		background-color: #eee;
+		position: relative;
+		display: flex;
 	}
 
 	.image img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		z-index: 1;
+	}
+
+	.image .placeholder {
+		position: absolute;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100%;
+		width: 100%;
+		z-index: 0;
 	}
 
 	.detail {
