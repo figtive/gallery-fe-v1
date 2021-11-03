@@ -2,15 +2,17 @@
 	import { page } from '$app/stores';
 	import Footer from '$lib/components/Footer.svelte';
 	import Navbar from '$lib/components/Navbar.svelte';
+
+	$: isLanding = $page.path.length <= 1;
 </script>
 
-{#if $page.path.length > 1}
+<div class={isLanding && 'hidden'}>
 	<Navbar />
-{/if}
+</div>
 <slot />
-{#if $page.path.length > 1}
+<div class={isLanding && 'hidden'}>
 	<Footer />
-{/if}
+</div>
 
 <style lang="css">
 	:global(:root) {
