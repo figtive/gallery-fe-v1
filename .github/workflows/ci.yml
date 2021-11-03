@@ -1,0 +1,39 @@
+name: ci
+
+on: push
+
+jobs:
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v2
+      - name: setup node.js
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 16.x
+      - name: install dependencies
+        run: npm ci
+      - name: eslint
+        run: npm run lint
+  build:
+    name: Build
+    runs-on: Ubuntu-20.04
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v2
+      - name: setup node.js
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 16.x
+      - name: install dependencies
+        run: npm ci
+      - name: build
+        run: npm run build
+      - name: archive artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: |
+            build/
