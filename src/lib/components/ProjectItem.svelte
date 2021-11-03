@@ -34,13 +34,13 @@
 		border-radius: 1.5rem;
 		overflow: hidden;
 		cursor: pointer;
-		box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-		transition: box-shadow 0.2s ease-in-out;
+		box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.15);
+		transition: box-shadow 120ms ease-in-out;
 	}
 
 	.card:hover,
 	.card:focus {
-		box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.35);
+		box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.3);
 	}
 
 	.image {
