@@ -9,10 +9,7 @@ const config = {
 
 	kit: {
 		adapter: adapter({
-			precompress: true,
-			env: {
-				port: '3000'
-			}
+			precompress: true
 		}),
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#svelte'
