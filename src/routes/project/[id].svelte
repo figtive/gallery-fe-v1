@@ -145,10 +145,6 @@
 </main>
 
 <style lang="css">
-	* {
-		/* border: 1px solid red; */
-	}
-
 	.body {
 		display: flex;
 		flex-direction: row;
