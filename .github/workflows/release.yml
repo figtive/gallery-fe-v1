@@ -27,6 +27,8 @@ jobs:
         with:
           input_string: ${{ github.ref }}
           version_extractor_regex: '\/v(.*)$'
+      - name: provide env file
+        run: echo "${{ secrets.ENV_FILE_RELEASE }}" > .env.production
       - name: build and push
         if: ${{ startsWith(github.ref, 'refs/tags') }}
         uses: docker/build-push-action@v2
