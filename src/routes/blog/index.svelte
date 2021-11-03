@@ -28,7 +28,7 @@
 						</option>
 					{/each}
 				</select>
-				<Button type="submit" beforeIcon="search">Search</Button>
+				<Button type="submit" beforeIcon="search" style="outline">Search</Button>
 			</form>
 		</div>
 		<div class="body">

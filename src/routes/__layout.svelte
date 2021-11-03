@@ -113,8 +113,8 @@
 		margin: 0;
 		border: none;
 		border-radius: 40px;
-		background: #f5f5f5;
-		border: 1px solid #ccca;
+		background: #f8f8f8ee;
+		border: 3px solid #ddde;
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing: border-box;
 		box-sizing: border-box;
