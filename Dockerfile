@@ -1,10 +1,8 @@
-FROM node:lts-buster as builder
+FROM node:16-alpine as production
 WORKDIR /build
 COPY . .
 RUN npm install
 RUN npm run build --mode production
-
-FROM node:lts-alpine3.14 as production
-COPY --from=builder /build/build /app
-EXPOSE 3000
-CMD ["node", "app"]
+EXPOSE 80
+ENV HOST=80
+ENTRYPOINT ["node", "./build"]
