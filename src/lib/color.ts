@@ -3,7 +3,7 @@ export type Color = 'primary' | 'secondary' | 'disabled' | 'info' | 'success' | 
 export const colorSet: { [key in Color]: string } = {
 	primary: '#615CC1',
 	secondary: '#CF66AA',
-	disabled: '#C4C4C4',
+	disabled: '#AAAAAA',
 	success: '#1FA835',
 	info: '#266DD9',
 	warning: '#E5B812',

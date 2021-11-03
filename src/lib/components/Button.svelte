@@ -4,6 +4,7 @@
 	export let type: string = '';
 	export let onClick: () => void = () => {};
 	export let className: string = '';
+	export let disabled: boolean = false;
 	export let color: Color = 'primary';
 	export let style: 'solid' | 'outline' = 'solid';
 	export let beforeIcon: string = '';
@@ -12,10 +13,12 @@
 
 <button
 	{type}
+	{disabled}
 	on:click={onClick}
 	class={className}
 	style="--color: {colorSet[color]}"
 	data-style={style}
+	data-disabled={disabled ? 'true' : 'false'}
 >
 	{#if beforeIcon}
 		<span class="material-icons before-icon">{beforeIcon}</span>
@@ -44,6 +47,16 @@
 		align-items: center;
 		box-sizing: border-box;
 		transition: box-shadow 120ms ease-in-out, filter 100ms ease-in-out;
+		-moz-user-select: none;
+		-webkit-user-select: none;
+	}
+
+	button:hover {
+		box-shadow: 0px 0px 4px 0px var(--color);
+	}
+
+	button:active {
+		filter: brightness(0.9);
 	}
 
 	button[data-style='solid'] {
@@ -58,12 +71,28 @@
 		border: 3px solid var(--color);
 	}
 
-	button:hover {
-		box-shadow: 0px 0px 4px 0px var(--color);
+	button[data-disabled='true'] {
+		cursor: initial;
 	}
 
-	button:active {
-		filter: brightness(0.9);
+	button[data-disabled='true']:hover {
+		box-shadow: initial;
+	}
+
+	button[data-disabled='true']:active {
+		filter: initial;
+	}
+
+	button[data-style='solid'][data-disabled='true'] {
+		color: #fff;
+		background: #aaa;
+		border: none;
+	}
+
+	button[data-style='outline'][data-disabled='true'] {
+		color: #aaa;
+		background: #eee;
+		border: 3px solid #aaa;
 	}
 
 	.before-icon {
