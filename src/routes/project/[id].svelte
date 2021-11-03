@@ -24,9 +24,9 @@
 			</div>
 			<div class="detail">
 				<div class="actions">
-					<Button beforeIcon="link">Link to Project</Button>
-					<Button beforeIcon="share" color="info">Share</Button>
-					<Button beforeIcon="how_to_vote" color="success">Vote</Button>
+					<Button beforeIcon="link" style="outline">Link to Project</Button>
+					<Button beforeIcon="share" style="outline" color="info">Share</Button>
+					<Button beforeIcon="how_to_vote" style="outline" color="success">Vote</Button>
 				</div>
 				<div class="tags">
 					<Tag color="secondary">{new Date(project.createdAt).getFullYear()}</Tag>

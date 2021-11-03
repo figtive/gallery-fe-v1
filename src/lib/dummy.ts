@@ -5,7 +5,7 @@ export const projects: Project[] = [
 	{
 		id: 'uuid1',
 		name: 'Gallery PPL 2122',
-		team: 'Figtive',
+		team: 'Fight Interactive',
 		description:
 			"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
 		thumbnail: 'https://picsum.photos/seed/asd1/200/256',
@@ -13,7 +13,7 @@ export const projects: Project[] = [
 		class: ClassType.PPL,
 		field: ProjectFieldType.Social,
 		metadata: JSON.stringify({
-			partner: 'Fight Interactive',
+			partner: 'Fasilkom UI',
 			productOwner: ['mpitsky'],
 			scrumMaster: [],
 			developmentTeam: ['daystram', 'ilmannafian', 'irbahhana']
