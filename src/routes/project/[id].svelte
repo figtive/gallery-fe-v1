@@ -55,10 +55,6 @@
 			isLoaded = true;
 		}
 	});
-
-	onDestroy(() => {
-		unNotify(errorNotification);
-	});
 </script>
 
 <Title title="Project" />
@@ -144,7 +140,7 @@
 					{/if}
 				</div>
 			</div>
-		{:else}
+		{:else if !isLoaded}
 			<div class="head">
 				<Spinner />
 			</div>

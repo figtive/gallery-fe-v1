@@ -66,10 +66,6 @@
 			isLoaded = true;
 		}
 	});
-
-	onDestroy(() => {
-		unNotify(errorNotification);
-	});
 </script>
 
 <Title title="Blog" />
@@ -88,14 +84,16 @@
 						</option>
 					{/each}
 				</select>
-				<Button type="submit" beforeIcon="search" style="outline">Search</Button>
+				<Button type="submit" beforeIcon="search" style="outline" disabled={!isLoaded}>
+					Search
+				</Button>
 			</form>
 		</div>
 		{#if isLoaded && !error}
 			<div class="body">
 				<BlogList {blogs} allowBookmark />
 			</div>
-		{:else}
+		{:else if !isLoaded}
 			<Spinner />
 		{/if}
 	</div>

@@ -69,10 +69,6 @@
 			isLoaded = true;
 		}
 	});
-
-	onDestroy(() => {
-		unNotify(errorNotification);
-	});
 </script>
 
 <Title title="Project" />
@@ -98,14 +94,16 @@
 						</option>
 					{/each}
 				</select>
-				<Button type="submit" beforeIcon="search" style="outline">Search</Button>
+				<Button type="submit" beforeIcon="search" style="outline" disabled={!isLoaded}>
+					Search
+				</Button>
 			</form>
 		</div>
 		{#if isLoaded && !error}
 			<div class="body">
 				<ProjectList {projects} />
 			</div>
-		{:else}
+		{:else if !isLoaded}
 			<Spinner />
 		{/if}
 	</div>

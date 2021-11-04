@@ -4,9 +4,15 @@
 	import { auth } from '$lib/auth';
 	import { voteQuota } from '$lib/store';
 	import BannerItem from './BannerItem.svelte';
-	import { notificationItems } from '$lib/notification';
+	import { notificationItems, unNotify } from '$lib/notification';
 
 	let isAuthenticated = auth.isAuthenticated();
+
+	page.subscribe(() => {
+		$notificationItems.forEach((item) => {
+			unNotify(item.key);
+		});
+	});
 </script>
 
 <div class="list">
