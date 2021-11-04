@@ -106,7 +106,7 @@
 									<p>{metadata.partner}</p>
 								</div>
 							{/if}
-							{#if metadata.productOwner.length}
+							{#if metadata.productOwner}
 								<div>
 									<h3>Product Owner</h3>
 									<ul>
@@ -116,7 +116,7 @@
 									</ul>
 								</div>
 							{/if}
-							{#if metadata.scrumMaster.length}
+							{#if metadata.scrumMaster}
 								<div>
 									<h3>Scrum Master</h3>
 									<ul>
@@ -126,7 +126,7 @@
 									</ul>
 								</div>
 							{/if}
-							{#if metadata.developmentTeam.length}
+							{#if metadata.developmentTeam}
 								<div>
 									<h3>Development Team</h3>
 									<ul>
