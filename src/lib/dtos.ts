@@ -33,3 +33,8 @@ export interface Blog {
 	category: BlogCategoryType;
 	createdAt: string;
 }
+
+export interface VoteQuota {
+	blog: number;
+	project: number;
+}

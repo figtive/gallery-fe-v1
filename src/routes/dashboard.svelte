@@ -6,10 +6,13 @@
 	import Tag from '$lib/components/Tag.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import { blogs, projects } from '$lib/dummy';
+	import { voteQuota } from '$lib/store';
 
 	let name = auth.getUserInfo().given_name;
 
 	requireAuth();
+
+	// TODO: refresh voteQuota
 </script>
 
 <Title title="Dashboard" />
@@ -26,11 +29,11 @@
 					<div class="vote-group">
 						<div class="vote-count">
 							<p>Project</p>
-							<Tag color="success">1</Tag>
+							<Tag color="success">{$voteQuota.project}</Tag>
 						</div>
 						<div class="vote-count">
 							<p>Blog</p>
-							<Tag color="success">1</Tag>
+							<Tag color="success">{$voteQuota.blog}</Tag>
 						</div>
 					</div>
 				</div>

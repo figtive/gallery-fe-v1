@@ -31,7 +31,7 @@
 </script>
 
 <nav>
-	<div class="content">
+	<div class="navbar">
 		<a href="/">
 			<img src="{assets}/logo-small.png" alt="Gallery Fasilkom UI" class="logo" />
 			<h3>Gallery Fasilkom UI</h3>
@@ -53,20 +53,22 @@
 <style>
 	nav {
 		display: flex;
-		align-items: center;
+		flex-direction: column;
+		align-items: stretch;
 		height: var(--navbar-height);
 		width: 100%;
 		background-color: #fff;
-		box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+		position: relative;
 	}
 
-	.content {
-		width: 100%;
+	.navbar {
+		flex-grow: 1;
 		height: 100%;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		margin: 0 32px;
+		padding: 0 32px;
+		box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 	}
 
 	a {
@@ -90,10 +92,10 @@
 	}
 
 	.links > :global(*) {
-		margin-right: 20px;
+		margin-left: 20px;
 	}
 
-	.links > :global(*):last-child {
-		margin-right: 0;
+	.links > :global(*):first-child {
+		margin-left: 0;
 	}
 </style>

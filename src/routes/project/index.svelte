@@ -47,6 +47,7 @@
 	onMount(async () => {
 		try {
 			projects = await getProjects(searchQuery, searchCourse, searchField);
+			// TODO: refresh voteQuota
 		} catch (e) {
 			console.error(e);
 			error = e;

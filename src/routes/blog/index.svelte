@@ -44,6 +44,7 @@
 	onMount(async () => {
 		try {
 			blogs = await getBlogs(searchQuery, searchCategory);
+			// TODO: refresh voteQuota
 		} catch (e) {
 			console.error(e);
 			error = e;

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import BannerList from '$lib/components/BannerList.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import Navbar from '$lib/components/Navbar.svelte';
 
@@ -9,6 +10,7 @@
 <div class={isLanding && 'hidden'}>
 	<Navbar />
 </div>
+<BannerList />
 <slot />
 <div class={isLanding && 'hidden'}>
 	<Footer />
@@ -20,6 +22,13 @@
 		--footer-height: 128px;
 		--color-text-primary: #333;
 		--color-text-secondary: #888;
+		--color-primary: #615cc1;
+		--color-secondary: #cf66aa;
+		--color-disabled: #aaaaaa;
+		--color-success: #1fa835;
+		--color-info: #266dd9;
+		--color-warning: #e5b812;
+		--color-error: #bc1836;
 	}
 
 	:global(html),

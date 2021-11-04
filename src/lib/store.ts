@@ -1,8 +1,9 @@
 import { get, writable } from 'svelte/store';
 import type { Writable } from 'svelte/store';
 import { browser } from '$app/env';
+import type { VoteQuota } from './dtos';
 
-const persistentStore = (key: string, initValue: string): Writable<string> => {
+export const persistentStore = (key: string, initValue: string): Writable<string> => {
 	const store = writable(initValue);
 	if (!browser) return store;
 
@@ -25,4 +26,4 @@ const persistentStore = (key: string, initValue: string): Writable<string> => {
 	return store;
 };
 
-export default persistentStore;
+export const voteQuota: Writable<VoteQuota> = writable({ blog: 3, project: 3 });

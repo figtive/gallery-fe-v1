@@ -3,11 +3,11 @@ import type { Readable, Writable } from 'svelte/store';
 import { goto } from '$app/navigation';
 import api from '$lib/api';
 import jwtDecode from 'jwt-decode';
-import persistentStore from './store';
+import { persistentStore } from './store';
 import { browser } from '$app/env';
 
-const PATH_KEY = 'galleryppl:path';
-const TOKEN_KEY = 'galleryppl:token';
+const PATH_KEY = 'gallery:path';
+const TOKEN_KEY = 'gallery:token';
 
 export interface Response {
 	credential: string;

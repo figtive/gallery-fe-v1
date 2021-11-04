@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import api from '$lib/api';
 	import { auth } from '$lib/auth';
@@ -8,7 +9,7 @@
 	import Title from '$lib/components/Title.svelte';
 	import { CourseTypeLabel, ProjectFieldTypeLabel } from '$lib/constant';
 	import type { Project, ProjectMetadata } from '$lib/dtos';
-	import { onMount } from 'svelte';
+	import { voteQuota } from '$lib/store';
 
 	let isAuthenticated = auth.isAuthenticated();
 
@@ -26,6 +27,7 @@
 	const handleVote = () => {
 		// TODO: impl vote
 		isVoted = !isVoted;
+		voteQuota.set({ ...$voteQuota, project: $voteQuota.project - 1 });
 	};
 
 	$: if ($isAuthenticated) {
