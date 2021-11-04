@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import api from '$lib/api';
@@ -9,6 +9,7 @@
 	import { BlogCategoryType, BlogCategoryTypeLabel } from '$lib/constant';
 	import type { Blog } from '$lib/dtos';
 	import Spinner from '$lib/components/Spinner.svelte';
+	import { notify, unNotify } from '$lib/notification';
 
 	let blogs: Blog[];
 
@@ -17,6 +18,7 @@
 
 	let isLoaded = false;
 	let error: Error;
+	let errorNotification: number;
 
 	const getBlogs = async (query, category): Promise<Blog[]> => {
 		return await api.coursework.blog.getAll(query, category);
@@ -25,6 +27,7 @@
 	const handleSearch = async () => {
 		isLoaded = false;
 		error = undefined;
+		unNotify(errorNotification);
 		goto(
 			`?${new URLSearchParams({
 				query: searchQuery,
@@ -35,6 +38,12 @@
 		try {
 			blogs = await getBlogs(searchQuery, searchCategory);
 		} catch (e) {
+			console.error(e);
+			errorNotification = notify({
+				message: 'Failed to load projects!',
+				type: 'error',
+				autoClose: false
+			});
 			error = e;
 		} finally {
 			isLoaded = true;
@@ -47,10 +56,19 @@
 			// TODO: refresh voteQuota
 		} catch (e) {
 			console.error(e);
+			errorNotification = notify({
+				message: 'Failed to load blogs!',
+				type: 'error',
+				autoClose: false
+			});
 			error = e;
 		} finally {
 			isLoaded = true;
 		}
+	});
+
+	onDestroy(() => {
+		unNotify(errorNotification);
 	});
 </script>
 
@@ -77,8 +95,6 @@
 			<div class="body">
 				<BlogList {blogs} allowBookmark />
 			</div>
-		{:else if error}
-			<p>Failed loading blogs!</p>
 		{:else}
 			<Spinner />
 		{/if}

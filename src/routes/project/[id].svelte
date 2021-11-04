@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import api from '$lib/api';
 	import { auth } from '$lib/auth';
@@ -10,6 +10,7 @@
 	import { CourseTypeLabel, ProjectFieldTypeLabel } from '$lib/constant';
 	import type { Project, ProjectMetadata } from '$lib/dtos';
 	import { voteQuota } from '$lib/store';
+	import { notify, unNotify } from '$lib/notification';
 
 	let isAuthenticated = auth.isAuthenticated();
 
@@ -19,6 +20,7 @@
 
 	let isLoaded = false;
 	let error: Error;
+	let errorNotification: number;
 
 	const getProject = async (): Promise<Project> => {
 		return await api.coursework.project.getOne($page.params.id);
@@ -27,7 +29,7 @@
 	const handleVote = () => {
 		// TODO: impl vote
 		isVoted = !isVoted;
-		voteQuota.set({ ...$voteQuota, project: $voteQuota.project - 1 });
+		voteQuota.set({ ...$voteQuota, project: $voteQuota.project - (isVoted ? 1 : -1) });
 	};
 
 	$: if ($isAuthenticated) {
@@ -43,10 +45,19 @@
 			metadata = JSON.parse(project.metadata || '') as ProjectMetadata;
 		} catch (e) {
 			console.error(e);
+			errorNotification = notify({
+				message: 'Failed to load project details!',
+				type: 'error',
+				autoClose: false
+			});
 			error = e;
 		} finally {
 			isLoaded = true;
 		}
+	});
+
+	onDestroy(() => {
+		unNotify(errorNotification);
 	});
 </script>
 
@@ -132,10 +143,6 @@
 						</div>
 					{/if}
 				</div>
-			</div>
-		{:else if error}
-			<div class="head">
-				<h1>Failed loading project!</h1>
 			</div>
 		{:else}
 			<div class="head">

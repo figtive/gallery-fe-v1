@@ -5,6 +5,7 @@
 	import { assets } from '$app/paths';
 	import { auth, Response } from '$lib/auth';
 	import NavLink from './NavLink.svelte';
+	import { notify } from '$lib/notification';
 
 	let isAuthenticated = auth.isAuthenticated();
 
@@ -13,7 +14,13 @@
 		google.accounts.id.initialize({
 			client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
 			callback: (response: Response) => {
-				auth.authenticate(response).catch((e) => console.error(e));
+				auth.authenticate(response).catch((e) => {
+					console.error(e);
+					notify({
+						message: 'Failed to sign in!',
+						type: 'error'
+					});
+				});
 			}
 		});
 		auth.isAuthenticated().subscribe((authed) => {

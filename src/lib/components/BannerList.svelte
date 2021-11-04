@@ -4,6 +4,7 @@
 	import { auth } from '$lib/auth';
 	import { voteQuota } from '$lib/store';
 	import BannerItem from './BannerItem.svelte';
+	import { notificationItems } from '$lib/notification';
 
 	let isAuthenticated = auth.isAuthenticated();
 </script>
@@ -25,6 +26,15 @@
 			</div>
 		{/if}
 	{/if}
+	<div transition:slide>
+		{#each $notificationItems as item}
+			<div transition:slide>
+				<BannerItem color={item.type}>
+					{item.message}
+				</BannerItem>
+			</div>
+		{/each}
+	</div>
 </div>
 
 <style lang="css">
@@ -33,5 +43,6 @@
 		display: flex;
 		flex-direction: column;
 		width: 100%;
+		z-index: 2;
 	}
 </style>

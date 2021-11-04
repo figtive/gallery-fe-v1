@@ -13,7 +13,8 @@
 		ProjectFieldTypeLabel
 	} from '$lib/constant';
 	import type { Project } from '$lib/dtos';
-	import { onMount } from 'svelte';
+	import { notify, unNotify } from '$lib/notification';
+	import { onDestroy, onMount } from 'svelte';
 
 	let projects: Project[];
 
@@ -23,6 +24,7 @@
 
 	let isLoaded = false;
 	let error: Error;
+	let errorNotification: number;
 
 	const getProjects = async (query, course, field): Promise<Project[]> => {
 		return await api.coursework.project.getAll(query, course, field);
@@ -31,6 +33,7 @@
 	const handleSearch = async () => {
 		isLoaded = false;
 		error = undefined;
+		unNotify(errorNotification);
 		goto(
 			`?${new URLSearchParams({ query: searchQuery, course: searchCourse, field: searchField })}`,
 			{ replaceState: true, noscroll: true }
@@ -38,6 +41,12 @@
 		try {
 			projects = await getProjects(searchQuery, searchCourse, searchField);
 		} catch (e) {
+			console.error(e);
+			errorNotification = notify({
+				message: 'Failed to load projects!',
+				type: 'error',
+				autoClose: false
+			});
 			error = e;
 		} finally {
 			isLoaded = true;
@@ -50,10 +59,19 @@
 			// TODO: refresh voteQuota
 		} catch (e) {
 			console.error(e);
+			errorNotification = notify({
+				message: 'Failed to load projects!',
+				type: 'error',
+				autoClose: false
+			});
 			error = e;
 		} finally {
 			isLoaded = true;
 		}
+	});
+
+	onDestroy(() => {
+		unNotify(errorNotification);
 	});
 </script>
 
@@ -87,8 +105,6 @@
 			<div class="body">
 				<ProjectList {projects} />
 			</div>
-		{:else if error}
-			<p>Failed loading projects!</p>
 		{:else}
 			<Spinner />
 		{/if}

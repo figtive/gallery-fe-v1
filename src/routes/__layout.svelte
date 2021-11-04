@@ -83,7 +83,7 @@
 	}
 
 	:global(.head) {
-		margin-top: 5rem;
+		margin-top: 6rem;
 		margin-bottom: 3rem;
 	}
 
