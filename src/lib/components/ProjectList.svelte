@@ -6,9 +6,11 @@
 </script>
 
 <div class="list">
-	{#each projects as project (project.id)}
-		<ProjectItem {project} />
-	{/each}
+	{#if projects}
+		{#each projects as project (project.id)}
+			<ProjectItem {project} />
+		{/each}
+	{/if}
 </div>
 
 <style lang="css">

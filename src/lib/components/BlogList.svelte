@@ -7,9 +7,11 @@
 </script>
 
 <div class="list">
-	{#each blogs as blog (blog.id)}
-		<BlogItem {blog} {allowBookmark} />
-	{/each}
+	{#if blogs}
+		{#each blogs as blog (blog.id)}
+			<BlogItem {blog} {allowBookmark} />
+		{/each}
+	{/if}
 </div>
 
 <style lang="css">
