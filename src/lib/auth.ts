@@ -1,41 +1,71 @@
+import { derived, get } from 'svelte/store';
+import type { Readable, Writable } from 'svelte/store';
 import { goto } from '$app/navigation';
 import api from '$lib/api';
+import jwtDecode from 'jwt-decode';
+import { persistentStore } from './store';
+import { browser } from '$app/env';
 
-const PATH_KEY = 'galleryppl:path';
-const TOKEN_KEY = 'galleryppl:token';
+const PATH_KEY = 'gallery:path';
+const TOKEN_KEY = 'gallery:token';
 
-export class AuthManager {
-	authenticate(auth: Response): Promise<void> {
-		this.setToken(auth.credential);
+export interface Response {
+	credential: string;
+}
+
+export interface UserInfo {
+	sub: string;
+	name: string;
+	given_name: string;
+	family_name: string;
+	email: string;
+	avatar: string;
+}
+class AuthManager {
+	private token: Writable<string>;
+	private authState: Readable<boolean>;
+
+	constructor() {
+		this.token = persistentStore(TOKEN_KEY, undefined);
+		this.authState = derived(this.token, (token) => !!token);
+	}
+
+	authenticate(auth: Response, redirect?: string): Promise<void> {
 		return api.auth
-			.login()
+			.login(auth.credential)
 			.then(() => {
-				const path = localStorage.getItem(PATH_KEY);
+				this.token.set(auth.credential);
+				const prevPath = localStorage.getItem(PATH_KEY);
 				localStorage.removeItem(PATH_KEY);
-				if (path) {
-					goto(path, { replaceState: true });
-				} else {
-					goto('/courses', { replaceState: true });
-				}
+				if (prevPath || redirect) goto(prevPath || redirect, { replaceState: true });
 				return Promise.resolve();
 			})
-			.catch(() => {
-				this.setToken('');
-				alert('/');
-				return Promise.reject();
+			.catch((e) => {
+				this.token.set(undefined);
+				return Promise.reject(e);
 			});
 	}
 
-	getToken(): string {
-		return localStorage.getItem(TOKEN_KEY);
+	getToken(): Readable<string> {
+		return this.token;
 	}
 
-	private setToken(token: string): void {
-		localStorage.setItem(TOKEN_KEY, token);
+	getUserInfo(): UserInfo {
+		const token = get(this.token);
+		return token
+			? jwtDecode<UserInfo>(token)
+			: {
+					sub: '',
+					name: '',
+					given_name: '',
+					family_name: '',
+					email: '',
+					avatar: ''
+			  };
 	}
 
-	isAuthenticated(): boolean {
-		return !!this.getToken();
+	isAuthenticated(): Readable<boolean> {
+		return this.authState;
 	}
 
 	reauthenticate(): void {
@@ -44,11 +74,14 @@ export class AuthManager {
 	}
 
 	deauthenticate(): void {
-		this.setToken('');
-		goto('/', { replaceState: true });
+		this.token.set(undefined);
 	}
 }
 
-export type Response = {
-	credential: string;
+export const auth = new AuthManager();
+
+export const requireAuth = (path?: string): void => {
+	if (browser && !get(auth.isAuthenticated())) {
+		goto(path || '/', { replaceState: true });
+	}
 };

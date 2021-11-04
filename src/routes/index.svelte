@@ -1,39 +1,134 @@
 <script lang="ts">
-	/* eslint-disable @typescript-eslint/ban-ts-comment */
-	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { AuthManager, Response } from '$lib/auth';
+	import { assets } from '$app/paths';
+	import { auth } from '$lib/auth';
+	import Button from '$lib/components/Button.svelte';
+	import Title from '$lib/components/Title.svelte';
 
-	const auth = new AuthManager();
-
-	onMount(() => {
-		// @ts-ignore
-		window.authCallback = (response: Response) => {
-			auth.authenticate(response);
-		};
-		if (auth.isAuthenticated()) goto('/courses', { replaceState: true });
-	});
+	let isAuthenticated = auth.isAuthenticated();
 </script>
 
-<h1>Gallery PPL 2021</h1>
+<Title />
+<main>
+	<div class="content">
+		<div class="image">
+			<img src="{assets}/key-art.png" alt="Gallery Fasilkom UI" />
+			<div class="glow-1" />
+			<div class="glow-2" />
+			<div class="glow-3" />
+		</div>
+		<div class="text">
+			<h1 class="title">Gallery Karya Fasilkom UI</h1>
+			<div class="glow-4" />
+			<p class="description">
+				PPL dan Propensi adalah contoh teks atau dummy dalam industri percetakan dan penataan huruf
+				atau typesetting. Lorem Ipsum telah menjadi standar contoh teks sejak tahun 1500an.
+			</p>
+			<div class="navs">
+				<Button onClick={() => goto('/project')}>Lihat Proyek</Button>
+				{#if $isAuthenticated}
+					<Button onClick={() => auth.deauthenticate()} color="error">Logout</Button>
+				{/if}
+			</div>
+		</div>
+	</div>
+</main>
 
-<div>
-	<script src="https://accounts.google.com/gsi/client" async defer></script>
-	<div
-		id="g_id_onload"
-		data-client_id={import.meta.env.VITE_GOOGLE_CLIENT_ID}
-		data-context="signin"
-		data-ux_mode="popup"
-		data-callback="authCallback"
-	/>
+<style lang="css">
+	.content {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		height: 100vh;
+	}
 
-	<div
-		class="g_id_signin"
-		data-type="standard"
-		data-shape="pill"
-		data-theme="outline"
-		data-text="signin_with"
-		data-size="large"
-		data-logo_alignment="left"
-	/>
-</div>
+	.image {
+		position: relative;
+		width: 50%;
+		height: auto;
+		padding: 96px;
+	}
+
+	.image img {
+		max-width: 100%;
+	}
+
+	.text {
+		position: relative;
+		width: 50%;
+		height: auto;
+		padding: 96px;
+	}
+
+	.text .title {
+		font-size: 96px;
+		font-weight: bold;
+		margin-bottom: 2rem;
+		filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+	}
+
+	.text .description {
+		font-size: 18px;
+		margin-bottom: 2rem;
+	}
+
+	.text .navs {
+		position: absolute;
+		display: flex;
+	}
+
+	.text .navs > :global(*) {
+		margin-right: 16px;
+	}
+
+	.text .navs > :global(*):last-child {
+		margin-right: 0;
+	}
+
+	.glow-1 {
+		position: absolute;
+		z-index: -1;
+		width: 285px;
+		height: 285px;
+		left: 30%;
+		top: 10%;
+		border-radius: 285px 285px 0px 285px;
+		background: linear-gradient(314.04deg, #a981ff 11.12%, #ffffff 100%);
+		transform: rotate(41.48deg);
+	}
+
+	.glow-2 {
+		position: absolute;
+		z-index: -1;
+		width: 302px;
+		height: 302px;
+		left: 10%;
+		top: 50%;
+		background: #bebbff;
+		filter: blur(120px);
+	}
+
+	.glow-3 {
+		position: absolute;
+		z-index: -1;
+		width: 287px;
+		height: 287px;
+		right: 10%;
+		top: 50%;
+		background: #f9eab3;
+		filter: blur(120px);
+	}
+
+	.glow-4 {
+		position: absolute;
+		z-index: -1;
+		width: 330px;
+		height: 330px;
+		left: 0px;
+		top: 0px;
+		border-radius: 330px;
+		background: linear-gradient(180deg, #fc94d8 17.19%, rgba(248, 229, 158, 0) 100%);
+		transform: rotate(-23.91deg);
+	}
+</style>
