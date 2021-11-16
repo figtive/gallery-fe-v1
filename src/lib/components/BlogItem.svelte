@@ -41,20 +41,22 @@
 		</div>
 	</div>
 	<div class="actions">
-		{#if $isAuthenticated && isVoted !== undefined}
-			<Button
-				beforeIcon="how_to_vote"
-				style="outline"
-				color={isVoted ? 'error' : 'success'}
-				onClick={handleVote}
-			>
-				{isVoted ? 'Unvote' : 'Vote'}
-			</Button>
-		{/if}
-		{#if allowBookmark}
-			<button class="bookmark" on:click={bookmark} tabindex="0">
-				<span class="material-icons">bookmark_border</span>
-			</button>
+		{#if $isAuthenticated}
+			{#if isVoted !== undefined}
+				<Button
+					beforeIcon="how_to_vote"
+					style="outline"
+					color={isVoted ? 'error' : 'success'}
+					onClick={handleVote}
+				>
+					{isVoted ? 'Unvote' : 'Vote'}
+				</Button>
+			{/if}
+			{#if allowBookmark}
+				<button class="bookmark" on:click={bookmark} tabindex="0">
+					<span class="material-icons">bookmark_border</span>
+				</button>
+			{/if}
 		{/if}
 	</div>
 </div>
