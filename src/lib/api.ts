@@ -1,7 +1,7 @@
 import { get } from 'svelte/store';
 import { auth } from './auth';
 import type { BlogCategoryType, CourseType, ProjectFieldType } from './constant';
-import type { APIResponse, Blog, Project } from './dtos';
+import type { APIResponse, Blog, Project, VoteQuota } from './dtos';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL || '';
 
@@ -67,6 +67,16 @@ const api = {
 					}
 				).then((resp) => handleResponse<Blog[]>(resp));
 			}
+		}
+	},
+	vote: {
+		getQuota(): Promise<VoteQuota> {
+			return fetch(`${BASE_URL}/api/v1/vote/quota`, {
+				method: 'GET',
+				headers: {
+					...withAuth()
+				}
+			}).then((resp) => handleResponse<VoteQuota>(resp));
 		}
 	}
 };

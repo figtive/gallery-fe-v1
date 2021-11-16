@@ -6,6 +6,8 @@
 	import { auth, Response } from '$lib/auth';
 	import NavLink from './NavLink.svelte';
 	import { notify } from '$lib/notification';
+	import api from '$lib/api';
+	import { voteQuota } from '$lib/store';
 
 	let isAuthenticated = auth.isAuthenticated();
 
@@ -35,6 +37,17 @@
 			google.accounts.id.prompt();
 		});
 	});
+
+	$: if ($isAuthenticated) {
+		api.vote
+			.getQuota()
+			.then((quota) => {
+				voteQuota.set(quota);
+			})
+			.catch((e) => {
+				console.error(e);
+			});
+	}
 </script>
 
 <nav>

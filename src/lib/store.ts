@@ -26,4 +26,4 @@ export const persistentStore = (key: string, initValue: string): Writable<string
 	return store;
 };
 
-export const voteQuota: Writable<VoteQuota> = writable({ blog: 3, project: 3 });
+export const voteQuota: Writable<VoteQuota> = writable({ blog: 0, project: 0 });
