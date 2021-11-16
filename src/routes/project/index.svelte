@@ -14,7 +14,7 @@
 	} from '$lib/constant';
 	import type { Project } from '$lib/dtos';
 	import { notify, unNotify } from '$lib/notification';
-	import { onDestroy, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 
 	let projects: Project[];
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import api from '$lib/api';
 	import { auth } from '$lib/auth';
@@ -10,7 +10,7 @@
 	import { CourseTypeLabel, ProjectFieldTypeLabel } from '$lib/constant';
 	import type { Project, ProjectMetadata } from '$lib/dtos';
 	import { voteQuota } from '$lib/store';
-	import { notify, unNotify } from '$lib/notification';
+	import { notify } from '$lib/notification';
 
 	let isAuthenticated = auth.isAuthenticated();
 

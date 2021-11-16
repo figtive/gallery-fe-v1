@@ -1,7 +1,6 @@
 import { derived, writable } from 'svelte/store';
 import type { Writable } from 'svelte/store';
 import type { Color } from './color';
-import { page } from '$app/stores';
 
 const DEFAULT_TIMEOUT = 5000;
 
