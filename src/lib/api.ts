@@ -29,7 +29,7 @@ const handleResponse = async <T>(response: Response): Promise<T> => {
 const api = {
 	auth: {
 		login(token: string): Promise<void> {
-			return fetch(`${BASE_URL}/api/v1/auth/login`, {
+			return fetch(`${BASE_URL}/api/v1/auth/login/`, {
 				method: 'POST',
 				headers: {
 					...withAuth(token)
@@ -46,7 +46,7 @@ const api = {
 			},
 			getAll(query: string, course: CourseType, field: ProjectFieldType): Promise<Project[]> {
 				return fetch(
-					`${BASE_URL}/api/v1/coursework/project?${new URLSearchParams({ query, course, field })}`,
+					`${BASE_URL}/api/v1/coursework/project/?${new URLSearchParams({ query, course, field })}`,
 					{
 						method: 'GET'
 					}
@@ -61,7 +61,7 @@ const api = {
 			},
 			getAll(query: string, category: BlogCategoryType): Promise<Blog[]> {
 				return fetch(
-					`${BASE_URL}/api/v1/coursework/blog?${new URLSearchParams({ query, category })}`,
+					`${BASE_URL}/api/v1/coursework/blog/?${new URLSearchParams({ query, category })}`,
 					{
 						method: 'GET'
 					}
