@@ -25,9 +25,6 @@
 	}
 
 	const bookmark: () => void = () => console.log(blog.id);
-	console.log(blog.category);
-	console.log(BlogCategoryTypeLabel[blog.category]);
-	console.log(BlogCategoryTypeLabel);
 </script>
 
 <div class="row">
@@ -141,6 +138,7 @@
 
 	.bookmark > span {
 		font-size: 1.5rem;
+		user-select: none;
 		-moz-user-select: none;
 		-webkit-user-select: none;
 	}
