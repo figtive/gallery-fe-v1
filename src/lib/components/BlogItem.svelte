@@ -1,7 +1,10 @@
 <script lang="ts">
+	import api from '$lib/api';
+
 	import { auth } from '$lib/auth';
 	import { BlogCategoryTypeLabel } from '$lib/constant';
 	import type { Blog } from '$lib/dtos';
+	import { voteQuota } from '$lib/store';
 	import Button from './Button.svelte';
 	import Tag from './Tag.svelte';
 
@@ -13,15 +16,33 @@
 	let isVoted: boolean = undefined;
 
 	const handleVote = () => {
-		// TODO: impl vote
-		isVoted = !isVoted;
+		api.vote
+			.cast(blog.id, !isVoted)
+			.then(() => {
+				isVoted = !isVoted;
+				api.vote
+					.getQuota()
+					.then((quota) => {
+						voteQuota.set(quota);
+					})
+					.catch((e) => {
+						console.error(e);
+					});
+			})
+			.catch((e) => {
+				console.error(e);
+			});
 	};
 
 	$: if ($isAuthenticated) {
-		//TODO: fetch vote status
-		setTimeout(() => {
-			isVoted = false;
-		}, 1000);
+		api.vote
+			.getStatus(blog.id)
+			.then((status) => {
+				isVoted = status;
+			})
+			.catch((e) => {
+				console.error(e);
+			});
 	}
 
 	const bookmark: () => void = () => console.log(blog.id);

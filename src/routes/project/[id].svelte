@@ -14,6 +14,7 @@
 
 	let isAuthenticated = auth.isAuthenticated();
 
+	let projectId = $page.params.id;
 	let project: Project;
 	let metadata: ProjectMetadata;
 	let isVoted: boolean = undefined;
@@ -23,20 +24,37 @@
 	let errorNotification: number;
 
 	const getProject = async (): Promise<Project> => {
-		return await api.coursework.project.getOne($page.params.id);
+		return await api.coursework.project.getOne(projectId);
 	};
 
 	const handleVote = () => {
-		// TODO: impl vote
-		isVoted = !isVoted;
-		voteQuota.set({ ...$voteQuota, project: $voteQuota.project - (isVoted ? 1 : -1) });
+		api.vote
+			.cast(projectId, !isVoted)
+			.then(() => {
+				isVoted = !isVoted;
+				api.vote
+					.getQuota()
+					.then((quota) => {
+						voteQuota.set(quota);
+					})
+					.catch((e) => {
+						console.error(e);
+					});
+			})
+			.catch((e) => {
+				console.error(e);
+			});
 	};
 
 	$: if ($isAuthenticated) {
-		//TODO: fetch vote status
-		setTimeout(() => {
-			isVoted = false;
-		}, 1000);
+		api.vote
+			.getStatus(projectId)
+			.then((status) => {
+				isVoted = status;
+			})
+			.catch((e) => {
+				console.error(e);
+			});
 	}
 
 	onMount(async () => {

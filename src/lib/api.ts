@@ -19,7 +19,7 @@ const handleResponse = async <T>(response: Response): Promise<T> => {
 	if (!response.ok) {
 		if (response.status === 401) {
 			auth.deauthenticate();
-			throw new Error('Please sign in again');
+			throw new Error('Token expired');
 		}
 		throw new Error(jsonResponse.error || response.statusText || response.status.toString());
 	}
@@ -77,6 +77,23 @@ const api = {
 					...withAuth()
 				}
 			}).then((resp) => handleResponse<VoteQuota>(resp));
+		},
+		cast(id: string, vote: boolean): Promise<void> {
+			return fetch(`${BASE_URL}/api/v1/vote/${id}`, {
+				method: 'POST',
+				body: JSON.stringify({ vote }),
+				headers: {
+					...withAuth()
+				}
+			}).then((resp) => handleResponse<void>(resp));
+		},
+		getStatus(id: string): Promise<boolean> {
+			return fetch(`${BASE_URL}/api/v1/vote/${id}`, {
+				method: 'GET',
+				headers: {
+					...withAuth()
+				}
+			}).then((resp) => handleResponse<boolean>(resp));
 		}
 	}
 };
