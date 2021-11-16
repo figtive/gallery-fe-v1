@@ -22,7 +22,7 @@
 			<Tag color={project.active ? 'success' : 'disabled'}>
 				{project.active ? 'Active' : 'Archived'}
 			</Tag>
-			<Tag color="warning">{CourseTypeLabel[project.course]}</Tag>
+			<Tag color="warning">{CourseTypeLabel[project.courseId]}</Tag>
 			<Tag color="info">{ProjectFieldTypeLabel[project.field]}</Tag>
 		</div>
 		<p class="description">{project.description}</p>

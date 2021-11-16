@@ -25,6 +25,9 @@
 	}
 
 	const bookmark: () => void = () => console.log(blog.id);
+	console.log(blog.category);
+	console.log(BlogCategoryTypeLabel[blog.category]);
+	console.log(BlogCategoryTypeLabel);
 </script>
 
 <div class="row">
@@ -37,7 +40,10 @@
 		<p class="author">by {blog.author}</p>
 		<div class="tags">
 			<Tag color="secondary">{new Date(blog.createdAt).getFullYear()}</Tag>
-			<Tag color="info">{BlogCategoryTypeLabel[blog.category]}</Tag>
+			<Tag color="info">
+				{BlogCategoryTypeLabel[blog.category] ||
+					blog.category.charAt(0).toUpperCase() + blog.category.slice(1)}
+			</Tag>
 		</div>
 	</div>
 	<div class="actions">

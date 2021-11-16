@@ -13,7 +13,7 @@ export interface Project {
 	description: string;
 	thumbnail: string;
 	active: boolean;
-	course: CourseType;
+	courseId: CourseType;
 	field: ProjectFieldType;
 	metadata?: string; // stringified JSON of ProjectMetadata
 	createdAt: string;
