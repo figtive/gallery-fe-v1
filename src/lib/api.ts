@@ -70,6 +70,18 @@ const api = {
 			}
 		}
 	},
+	leaderboard: {
+		getProject(course: CourseType): Promise<Project[]> {
+			return fetch(`${BASE_URL}/api/v1/leaderboard/${course}/project`, {
+				method: 'GET'
+			}).then((resp) => handleResponse<Project[]>(resp));
+		},
+		getBlog(course: CourseType): Promise<Blog[]> {
+			return fetch(`${BASE_URL}/api/v1/leaderboard/${course}/blog`, {
+				method: 'GET'
+			}).then((resp) => handleResponse<Blog[]>(resp));
+		}
+	},
 	vote: {
 		getQuota(): Promise<AggregatedVoteQuota> {
 			return fetch(`${BASE_URL}/api/v1/vote/quota`, {
