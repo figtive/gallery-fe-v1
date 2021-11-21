@@ -144,6 +144,22 @@ const api = {
 					return aggregatedVoteQuota;
 				});
 		},
+		getVotedBlogs(): Promise<Blog[]> {
+			return fetch(`${BASE_URL}/api/v1/vote/blog`, {
+				method: 'GET',
+				headers: {
+					...withAuth()
+				}
+			}).then((resp) => handleResponse<Blog[]>(resp));
+		},
+		getVotedProjects(): Promise<Project[]> {
+			return fetch(`${BASE_URL}/api/v1/vote/project`, {
+				method: 'GET',
+				headers: {
+					...withAuth()
+				}
+			}).then((resp) => handleResponse<Project[]>(resp));
+		},
 		cast(id: string, vote: boolean): Promise<void> {
 			return fetch(`${BASE_URL}/api/v1/vote/${id}`, {
 				method: 'POST',

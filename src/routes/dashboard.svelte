@@ -1,15 +1,51 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import api from '$lib/api';
 	import { auth, requireAuth } from '$lib/auth';
 	import BlogList from '$lib/components/BlogList.svelte';
 	import CourseworkTab from '$lib/components/CourseworkTab.svelte';
 	import ProjectList from '$lib/components/ProjectList.svelte';
+	import Spinner from '$lib/components/Spinner.svelte';
 	import Tag from '$lib/components/Tag.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import { CourseType, CourseTypeLabel } from '$lib/constant';
-	import { blogs, projects } from '$lib/dummy';
+	import type { Blog, Project } from '$lib/dtos';
+	import { notify } from '$lib/notification';
 	import { aggregatedVoteQuota } from '$lib/store';
 
 	let name = auth.getUserInfo().given_name;
+
+	let projects: Project[];
+	let blogs: Blog[];
+
+	let isLoaded = false;
+	let error: Error;
+	let errorNotification: number;
+
+	const getProjects = async (): Promise<Project[]> => {
+		return await api.vote.getVotedProjects();
+	};
+
+	const getBlogs = async (): Promise<Blog[]> => {
+		return await api.vote.getVotedBlogs();
+	};
+
+	onMount(async () => {
+		try {
+			projects = await getProjects();
+			blogs = await getBlogs();
+		} catch (e) {
+			console.error(e);
+			errorNotification = notify({
+				message: 'Failed to load voted courseworks!',
+				type: 'error',
+				autoClose: false
+			});
+			error = e;
+		} finally {
+			isLoaded = true;
+		}
+	});
 
 	requireAuth();
 </script>
@@ -56,11 +92,15 @@
 					</div>
 				</div>
 			</div>
-			<h2>My Votes</h2>
-			<CourseworkTab>
-				<ProjectList slot="project" {projects} />
-				<BlogList slot="blog" {blogs} />
-			</CourseworkTab>
+			{#if isLoaded && !error}
+				<h2>My Votes</h2>
+				<CourseworkTab>
+					<ProjectList slot="project" emptyMessage="You have not voted any projects!" {projects} />
+					<BlogList slot="blog" emptyMessage="You have not voted any blogs!" {blogs} />
+				</CourseworkTab>
+			{:else if !isLoaded}
+				<Spinner />
+			{/if}
 		</div>
 		<div class="glow-left glow-yellow" />
 	</div>
