@@ -49,8 +49,8 @@
 				{#if blogs.length}
 					<BlogList {blogs} />
 				{:else}
-					<div class="empty">
-						<p>You haven't bookmarked any blogs from {CourseTypeLabel[CourseType.PPL]} yet.</p>
+					<div>
+						<p>You have not bookmarked any blogs from {CourseTypeLabel[CourseType.PPL]} yet!</p>
 					</div>
 				{/if}
 			</div>
