@@ -1,7 +1,7 @@
 <script lang="ts">
 	import api from '$lib/api';
 	import { auth } from '$lib/auth';
-	import { BlogCategoryTypeLabel } from '$lib/constant';
+	import { BlogCategoryTypeLabel, CourseType } from '$lib/constant';
 	import type { Blog } from '$lib/dtos';
 	import { aggregatedVoteQuota } from '$lib/store';
 	import Button from './Button.svelte';
@@ -87,6 +87,7 @@
 				<Button
 					beforeIcon="how_to_vote"
 					style="outline"
+					disabled={!isVoted && $aggregatedVoteQuota[CourseType.PPL].blogs <= 0}
 					color={isVoted ? 'error' : 'success'}
 					onClick={handleVote}
 				>

@@ -109,6 +109,7 @@
 							<Button
 								beforeIcon="how_to_vote"
 								style="outline"
+								disabled={!isVoted && $aggregatedVoteQuota[project.courseId].projects <= 0}
 								color={isVoted ? 'error' : 'success'}
 								onClick={handleVote}
 							>
