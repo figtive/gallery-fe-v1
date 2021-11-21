@@ -57,6 +57,17 @@
 
 	onMount(async () => {
 		try {
+			if (!Object.values(CourseType).includes(searchCourse)) {
+				searchCourse = CourseType.PPL;
+				goto(
+					`?${new URLSearchParams({
+						query: searchQuery,
+						course: searchCourse,
+						field: searchField
+					})}`,
+					{ replaceState: true, noscroll: true }
+				);
+			}
 			projects = await getProjects(searchQuery, searchCourse, searchField);
 		} catch (e) {
 			console.error(e);
