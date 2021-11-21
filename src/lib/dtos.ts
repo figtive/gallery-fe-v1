@@ -12,6 +12,8 @@ export interface Project {
 	team: string;
 	description: string;
 	thumbnail: string;
+	link: string;
+	video: string;
 	active: boolean;
 	courseId: CourseType;
 	field: ProjectFieldType;

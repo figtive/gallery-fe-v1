@@ -95,17 +95,28 @@
 			</div>
 			<div class="body">
 				<div class="image">
-					<img src={project.thumbnail} alt="project thumbnail" />
+					<img
+						src={project.thumbnail || 'https://picsum.photos/seed/asd1/200/256'}
+						alt="project thumbnail"
+					/>
 					<div class="placeholder">
 						<Spinner />
 					</div>
 				</div>
 				<div class="detail">
 					<div class="actions">
-						<a href="https://figtive.dev" target="_blank" rel="noopener noreferrer">
-							<Button beforeIcon="link" style="outline">Link to Project</Button>
-						</a>
-						<Button beforeIcon="share" style="outline" color="info">Share</Button>
+						{#if project.link}
+							<a href={project.link} target="_blank" rel="noopener noreferrer">
+								<Button beforeIcon="link" style="outline">Link to Project</Button>
+							</a>
+						{/if}
+						{#if project.video}
+							<a href={project.video} target="_blank" rel="noopener noreferrer">
+								<Button beforeIcon="ondemand_video_icon_outline" style="outline" color="secondary">
+									View Video
+								</Button>
+							</a>
+						{/if}
 						{#if $isAuthenticated && isVoted !== undefined}
 							<Button
 								beforeIcon="how_to_vote"

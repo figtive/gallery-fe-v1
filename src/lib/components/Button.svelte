@@ -101,6 +101,7 @@
 		padding-left: 1rem;
 		margin-right: -0.75rem;
 		font-size: 20px;
+		width: 20px;
 	}
 
 	.content {
@@ -112,5 +113,6 @@
 		padding-right: 1rem;
 		margin-left: -0.75rem;
 		font-size: 20px;
+		width: 20px;
 	}
 </style>
