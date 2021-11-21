@@ -1,19 +1,21 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 	import api from '$lib/api';
 	import { auth } from '$lib/auth';
 	import Button from '$lib/components/Button.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import Tag from '$lib/components/Tag.svelte';
 	import Title from '$lib/components/Title.svelte';
-	import { CourseTypeLabel, ProjectFieldTypeLabel } from '$lib/constant';
+	import { CourseType, CourseTypeLabel, ProjectFieldTypeLabel } from '$lib/constant';
 	import type { Project, ProjectMetadata } from '$lib/dtos';
 	import { aggregatedVoteQuota } from '$lib/store';
 	import { notify } from '$lib/notification';
 
 	let isAuthenticated = auth.isAuthenticated();
 
+	let courseId = $page.params.courseId as CourseType;
 	let projectId = $page.params.id;
 	let project: Project;
 	let metadata: ProjectMetadata;
@@ -58,9 +60,16 @@
 	}
 
 	onMount(async () => {
+		if (!Object.values(CourseType).includes(courseId)) {
+			goto(`/project/${CourseType.PPL}`, { replaceState: true, noscroll: true });
+			return;
+		}
 		try {
 			project = await getProject();
 			metadata = JSON.parse(project.metadata || '') as ProjectMetadata;
+			if (project.courseId !== courseId) {
+				throw Error('Failed to load project details!');
+			}
 		} catch (e) {
 			console.error(e);
 			errorNotification = notify({

@@ -20,7 +20,7 @@
 	let projects: Project[];
 
 	let searchQuery: string = $page.query.get('query') || '';
-	let searchCourse: CourseType = ($page.query.get('course') || CourseType.PPL) as CourseType;
+	let searchCourse: CourseType = $page.params.courseId as CourseType;
 	let searchField: ProjectFieldType = ($page.query.get('field') || '') as ProjectFieldType;
 
 	let isLoaded = false;
@@ -37,8 +37,11 @@
 		error = undefined;
 		unNotify(errorNotification);
 		goto(
-			`?${new URLSearchParams({ query: searchQuery, course: searchCourse, field: searchField })}`,
-			{ replaceState: true, noscroll: true }
+			`/project/${searchCourse}?${new URLSearchParams({ query: searchQuery, field: searchField })}`,
+			{
+				replaceState: true,
+				noscroll: true
+			}
 		);
 		try {
 			projects = await getProjects(searchQuery, searchCourse, searchField);
@@ -56,18 +59,18 @@
 	};
 
 	onMount(async () => {
+		if (!Object.values(CourseType).includes(searchCourse)) {
+			searchCourse = CourseType.PPL;
+			goto(
+				`/project/${searchCourse}?${new URLSearchParams({
+					query: searchQuery,
+					field: searchField
+				})}`,
+				{ replaceState: true, noscroll: true }
+			);
+			return;
+		}
 		try {
-			if (!Object.values(CourseType).includes(searchCourse)) {
-				searchCourse = CourseType.PPL;
-				goto(
-					`?${new URLSearchParams({
-						query: searchQuery,
-						course: searchCourse,
-						field: searchField
-					})}`,
-					{ replaceState: true, noscroll: true }
-				);
-			}
 			projects = await getProjects(searchQuery, searchCourse, searchField);
 		} catch (e) {
 			console.error(e);
