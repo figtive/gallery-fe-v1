@@ -5,7 +5,7 @@
 	import { aggregatedVoteQuota, currentCourseType } from '$lib/store';
 	import BannerItem from './BannerItem.svelte';
 	import { notificationItems, unNotify } from '$lib/notification';
-	import { CourseType, CourseTypeLabel } from '$lib/constant';
+	import { CourseTypeLabel } from '$lib/constant';
 
 	let isAuthenticated = auth.isAuthenticated();
 
