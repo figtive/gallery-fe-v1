@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import api from '$lib/api';
-
 	import CourseworkTab from '$lib/components/CourseworkTab.svelte';
 	import LeaderboardList from '$lib/components/LeaderboardList.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
@@ -8,8 +8,6 @@
 	import { CourseType } from '$lib/constant';
 	import type { Blog, Project } from '$lib/dtos';
 	import { notify } from '$lib/notification';
-	import { currentCourseType } from '$lib/store';
-	import { onMount } from 'svelte';
 
 	let projects: Project[];
 	let blogs: Blog[];
