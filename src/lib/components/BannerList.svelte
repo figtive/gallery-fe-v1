@@ -30,7 +30,7 @@
 				</BannerItem>
 			</div>
 		{/if}
-		{#if $page.path.includes('/blog') && $aggregatedVoteQuota[$currentCourseType].blogs > 0}
+		{#if ($page.path.includes('/blog') || $page.path.includes('/bookmark')) && $aggregatedVoteQuota[$currentCourseType].blogs > 0}
 			<div transition:slide>
 				<BannerItem color="success">
 					You have {$aggregatedVoteQuota[$currentCourseType].blogs}
