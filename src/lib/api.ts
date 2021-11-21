@@ -75,14 +75,17 @@ const api = {
 	},
 	coursework: {
 		project: {
-			getOne(id: string): Promise<Project> {
-				return fetch(`${BASE_URL}/api/v1/coursework/project/${id}`, {
+			getOne(course: CourseType, id: string): Promise<Project> {
+				return fetch(`${BASE_URL}/api/v1/coursework/project/${course}/${id}`, {
 					method: 'GET'
 				}).then((resp) => handleResponse<Project>(resp));
 			},
 			getAll(query: string, course: CourseType, field: ProjectFieldType): Promise<Project[]> {
 				return fetch(
-					`${BASE_URL}/api/v1/coursework/project?${new URLSearchParams({ query, course, field })}`,
+					`${BASE_URL}/api/v1/coursework/project/${course}?${new URLSearchParams({
+						query,
+						field
+					})}`,
 					{
 						method: 'GET'
 					}
@@ -91,13 +94,16 @@ const api = {
 		},
 		blog: {
 			getOne(id: string): Promise<Blog> {
-				return fetch(`${BASE_URL}/api/v1/coursework/blog/${id}`, {
+				return fetch(`${BASE_URL}/api/v1/coursework/blog/${CourseType.PPL}/${id}`, {
 					method: 'GET'
 				}).then((resp) => handleResponse<Blog>(resp));
 			},
 			getAll(query: string, category: BlogCategoryType): Promise<Blog[]> {
 				return fetch(
-					`${BASE_URL}/api/v1/coursework/blog?${new URLSearchParams({ query, category })}`,
+					`${BASE_URL}/api/v1/coursework/blog/${CourseType.PPL}?${new URLSearchParams({
+						query,
+						category
+					})}`,
 					{
 						method: 'GET'
 					}
