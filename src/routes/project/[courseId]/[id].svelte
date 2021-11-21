@@ -10,7 +10,7 @@
 	import Title from '$lib/components/Title.svelte';
 	import { CourseType, CourseTypeLabel, ProjectFieldTypeLabel } from '$lib/constant';
 	import type { Project, ProjectMetadata } from '$lib/dtos';
-	import { aggregatedVoteQuota } from '$lib/store';
+	import { aggregatedVoteQuota, currentCourseType } from '$lib/store';
 	import { notify } from '$lib/notification';
 
 	let isAuthenticated = auth.isAuthenticated();
@@ -26,6 +26,7 @@
 	let errorNotification: number;
 
 	const getProject = async (): Promise<Project> => {
+		currentCourseType.set(courseId);
 		return await api.coursework.project.getOne(courseId, projectId);
 	};
 
