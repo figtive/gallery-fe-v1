@@ -7,7 +7,7 @@
 	export let project: Project;
 </script>
 
-<a class="card" href="/project/{project.id}">
+<a class="card" href="/project/{project.courseId}/{project.id}">
 	<div class="image">
 		<img src={project.thumbnail} alt={project.name} />
 		<div class="placeholder">

@@ -2,8 +2,9 @@
 	import { page } from '$app/stores';
 
 	export let link: string;
+	export let matcher: string = link;
 
-	$: active = $page.path.includes(link);
+	$: active = $page.path.includes(matcher);
 </script>
 
 <a href={link} data-active={active}><slot /></a>

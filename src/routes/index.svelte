@@ -4,6 +4,7 @@
 	import { auth } from '$lib/auth';
 	import Button from '$lib/components/Button.svelte';
 	import Title from '$lib/components/Title.svelte';
+	import { CourseType } from '$lib/constant';
 
 	let isAuthenticated = auth.isAuthenticated();
 </script>
@@ -25,7 +26,7 @@
 				atau typesetting. Lorem Ipsum telah menjadi standar contoh teks sejak tahun 1500an.
 			</p>
 			<div class="navs">
-				<Button onClick={() => goto('/project')}>Lihat Proyek</Button>
+				<Button onClick={() => goto(`/project/${CourseType.PPL}`)}>Lihat Proyek</Button>
 				{#if $isAuthenticated}
 					<Button onClick={() => auth.deauthenticate()} color="error">Logout</Button>
 				{/if}

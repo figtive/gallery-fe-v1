@@ -8,6 +8,7 @@
 	import { notify } from '$lib/notification';
 	import api from '$lib/api';
 	import { aggregatedVoteQuota } from '$lib/store';
+	import { CourseType } from '$lib/constant';
 
 	let isAuthenticated = auth.isAuthenticated();
 
@@ -63,7 +64,7 @@
 				<NavLink link="/bookmark">Bookmark</NavLink>
 			{/if}
 			<NavLink link="/leaderboard">Leaderboard</NavLink>
-			<NavLink link="/project">Project</NavLink>
+			<NavLink link="/project/{CourseType.PPL}" matcher="/project">Project</NavLink>
 			<NavLink link="/blog">Blog</NavLink>
 			<div id="google-signin" class={$isAuthenticated && 'hidden'} />
 		</div>
