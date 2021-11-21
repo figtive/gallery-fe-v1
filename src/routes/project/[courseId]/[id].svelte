@@ -26,7 +26,7 @@
 	let errorNotification: number;
 
 	const getProject = async (): Promise<Project> => {
-		return await api.coursework.project.getOne(projectId);
+		return await api.coursework.project.getOne(courseId, projectId);
 	};
 
 	const handleVote = () => {
