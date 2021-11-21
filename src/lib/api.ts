@@ -38,6 +38,41 @@ const api = {
 			}).then((resp) => handleResponse<void>(resp));
 		}
 	},
+	bookmark: {
+		getBlog(): Promise<Blog[]> {
+			return fetch(`${BASE_URL}/api/v1/bookmark/blog`, {
+				method: 'GET',
+				headers: {
+					...withAuth()
+				}
+			}).then((resp) => handleResponse<Blog[]>(resp));
+		},
+		getProject(): Promise<Project[]> {
+			return fetch(`${BASE_URL}/api/v1/bookmark/project`, {
+				method: 'GET',
+				headers: {
+					...withAuth()
+				}
+			}).then((resp) => handleResponse<Project[]>(resp));
+		},
+		mark(id: string, mark: boolean): Promise<void> {
+			return fetch(`${BASE_URL}/api/v1/bookmark/${id}`, {
+				method: 'POST',
+				body: JSON.stringify({ mark }),
+				headers: {
+					...withAuth()
+				}
+			}).then((resp) => handleResponse<void>(resp));
+		},
+		getStatus(id: string): Promise<boolean> {
+			return fetch(`${BASE_URL}/api/v1/bookmark/${id}`, {
+				method: 'GET',
+				headers: {
+					...withAuth()
+				}
+			}).then((resp) => handleResponse<boolean>(resp));
+		}
+	},
 	coursework: {
 		project: {
 			getOne(id: string): Promise<Project> {

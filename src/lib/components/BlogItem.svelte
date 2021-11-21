@@ -1,6 +1,5 @@
 <script lang="ts">
 	import api from '$lib/api';
-
 	import { auth } from '$lib/auth';
 	import { BlogCategoryTypeLabel } from '$lib/constant';
 	import type { Blog } from '$lib/dtos';
@@ -14,6 +13,7 @@
 	export let blog: Blog;
 
 	let isVoted: boolean = undefined;
+	let isBookmarked: boolean = undefined;
 
 	const handleVote = () => {
 		api.vote
@@ -34,6 +34,17 @@
 			});
 	};
 
+	const handleBookmark = () => {
+		api.bookmark
+			.mark(blog.id, !isBookmarked)
+			.then(() => {
+				isBookmarked = !isBookmarked;
+			})
+			.catch((e) => {
+				console.error(e);
+			});
+	};
+
 	$: if ($isAuthenticated) {
 		api.vote
 			.getStatus(blog.id)
@@ -43,9 +54,15 @@
 			.catch((e) => {
 				console.error(e);
 			});
+		api.bookmark
+			.getStatus(blog.id)
+			.then((status) => {
+				isBookmarked = status;
+			})
+			.catch((e) => {
+				console.error(e);
+			});
 	}
-
-	const bookmark: () => void = () => console.log(blog.id);
 </script>
 
 <div class="row">
@@ -77,9 +94,11 @@
 				</Button>
 			{/if}
 			{#if allowBookmark}
-				<button class="bookmark" on:click={bookmark} tabindex="0">
-					<span class="material-icons">bookmark_border</span>
-				</button>
+				{#if isBookmarked !== undefined}
+					<button class="bookmark" on:click={handleBookmark} tabindex="0">
+						<span class="material-icons">{isBookmarked ? 'bookmark' : 'bookmark_border'}</span>
+					</button>
+				{/if}
 			{/if}
 		{/if}
 	</div>
