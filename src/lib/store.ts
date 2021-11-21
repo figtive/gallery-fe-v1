@@ -1,7 +1,8 @@
 import { get, writable } from 'svelte/store';
 import type { Writable } from 'svelte/store';
 import { browser } from '$app/env';
-import type { VoteQuota } from './dtos';
+import type { AggregatedVoteQuota } from './dtos';
+import { CourseType } from './constant';
 
 export const persistentStore = (key: string, initValue: string): Writable<string> => {
 	const store = writable(initValue);
@@ -26,4 +27,15 @@ export const persistentStore = (key: string, initValue: string): Writable<string
 	return store;
 };
 
-export const voteQuota: Writable<VoteQuota> = writable({ blog: 0, project: 0 });
+export const aggregatedVoteQuota: Writable<AggregatedVoteQuota> = writable({
+	[CourseType.PPL]: {
+		blogs: 0,
+		projects: 0
+	},
+	[CourseType.Propensi]: {
+		blogs: 0,
+		projects: 0
+	}
+});
+
+export const currentCourseType: Writable<CourseType> = writable(CourseType.PPL);

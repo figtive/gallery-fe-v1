@@ -14,6 +14,7 @@
 	} from '$lib/constant';
 	import type { Project } from '$lib/dtos';
 	import { notify, unNotify } from '$lib/notification';
+	import { currentCourseType } from '$lib/store';
 	import { onMount } from 'svelte';
 
 	let projects: Project[];
@@ -27,6 +28,7 @@
 	let errorNotification: number;
 
 	const getProjects = async (query, course, field): Promise<Project[]> => {
+		currentCourseType.set(course);
 		return await api.coursework.project.getAll(query, course, field);
 	};
 
@@ -56,7 +58,6 @@
 	onMount(async () => {
 		try {
 			projects = await getProjects(searchQuery, searchCourse, searchField);
-			// TODO: refresh voteQuota
 		} catch (e) {
 			console.error(e);
 			errorNotification = notify({

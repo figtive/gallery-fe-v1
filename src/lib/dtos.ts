@@ -35,6 +35,8 @@ export interface Blog {
 }
 
 export interface VoteQuota {
-	blog: number;
-	project: number;
+	blogs: number;
+	projects: number;
 }
+
+export type AggregatedVoteQuota = Record<CourseType, VoteQuota>;

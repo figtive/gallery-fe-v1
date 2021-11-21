@@ -7,7 +7,7 @@
 	import NavLink from './NavLink.svelte';
 	import { notify } from '$lib/notification';
 	import api from '$lib/api';
-	import { voteQuota } from '$lib/store';
+	import { aggregatedVoteQuota } from '$lib/store';
 
 	let isAuthenticated = auth.isAuthenticated();
 
@@ -42,7 +42,7 @@
 		api.vote
 			.getQuota()
 			.then((quota) => {
-				voteQuota.set(quota);
+				aggregatedVoteQuota.set(quota);
 			})
 			.catch((e) => {
 				console.error(e);

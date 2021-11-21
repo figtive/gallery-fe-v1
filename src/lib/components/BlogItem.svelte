@@ -4,7 +4,7 @@
 	import { auth } from '$lib/auth';
 	import { BlogCategoryTypeLabel } from '$lib/constant';
 	import type { Blog } from '$lib/dtos';
-	import { voteQuota } from '$lib/store';
+	import { aggregatedVoteQuota } from '$lib/store';
 	import Button from './Button.svelte';
 	import Tag from './Tag.svelte';
 
@@ -23,7 +23,7 @@
 				api.vote
 					.getQuota()
 					.then((quota) => {
-						voteQuota.set(quota);
+						aggregatedVoteQuota.set(quota);
 					})
 					.catch((e) => {
 						console.error(e);

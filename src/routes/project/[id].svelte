@@ -9,7 +9,7 @@
 	import Title from '$lib/components/Title.svelte';
 	import { CourseTypeLabel, ProjectFieldTypeLabel } from '$lib/constant';
 	import type { Project, ProjectMetadata } from '$lib/dtos';
-	import { voteQuota } from '$lib/store';
+	import { aggregatedVoteQuota } from '$lib/store';
 	import { notify } from '$lib/notification';
 
 	let isAuthenticated = auth.isAuthenticated();
@@ -35,7 +35,7 @@
 				api.vote
 					.getQuota()
 					.then((quota) => {
-						voteQuota.set(quota);
+						aggregatedVoteQuota.set(quota);
 					})
 					.catch((e) => {
 						console.error(e);
