@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CourseTypeLabel, ProjectFieldTypeLabel } from '$lib/constant';
+	import { CDN_BASE_URL, CourseTypeLabel, ProjectFieldTypeLabel } from '$lib/constant';
 	import type { Project } from '$lib/dtos';
 	import Spinner from './Spinner.svelte';
 	import Tag from './Tag.svelte';
@@ -9,7 +9,7 @@
 
 <a class="card" href="/project/{project.courseId}/{project.id}">
 	<div class="image">
-		<img src={project.thumbnail && project.thumbnail[0]} alt={project.name} />
+		<img src="{CDN_BASE_URL}{project.thumbnail && project.thumbnail[0]}" alt={project.name} />
 		<div class="placeholder">
 			<Spinner />
 		</div>
