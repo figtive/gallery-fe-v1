@@ -121,7 +121,7 @@
 									chevron_left
 								</span>
 								<div class="counter">
-									{#each project.thumbnail as thumbnail, i}
+									{#each project.thumbnail as _, i}
 										<div class={activeThumbnail === i ? 'active' : ''} />
 									{/each}
 								</div>
@@ -285,6 +285,7 @@
 		align-items: center;
 		justify-content: space-between;
 		color: #fff;
+		user-select: none;
 	}
 
 	.image > .item > .controls > span {
