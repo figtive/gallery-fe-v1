@@ -11,7 +11,7 @@ export interface Project {
 	name: string;
 	team: string;
 	description: string;
-	thumbnail: string;
+	thumbnail: string[];
 	link: string;
 	video: string;
 	active: boolean;

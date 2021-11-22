@@ -12,6 +12,7 @@
 	import type { Project, ProjectMetadata } from '$lib/dtos';
 	import { aggregatedVoteQuota, currentCourseType } from '$lib/store';
 	import { notify } from '$lib/notification';
+	import { fade } from 'svelte/transition';
 
 	let isAuthenticated = auth.isAuthenticated();
 
@@ -24,6 +25,9 @@
 	let isLoaded = false;
 	let error: Error;
 	let errorNotification: number;
+
+	let activeThumbnail = 0;
+	let haltThumbnail = false;
 
 	const getProject = async (): Promise<Project> => {
 		currentCourseType.set(courseId);
@@ -82,6 +86,11 @@
 		} finally {
 			isLoaded = true;
 		}
+		setInterval(() => {
+			if (!haltThumbnail) {
+				activeThumbnail = (activeThumbnail + 1) % project.thumbnail.length;
+			}
+		}, 5000);
 	});
 </script>
 
@@ -95,26 +104,64 @@
 			</div>
 			<div class="body">
 				<div class="image">
-					<img
-						src={project.thumbnail || 'https://picsum.photos/seed/asd1/200/256'}
-						alt="project thumbnail"
-					/>
-					<div class="placeholder">
-						<Spinner />
+					<div
+						class="item"
+						on:mouseenter={() => (haltThumbnail = true)}
+						on:mouseleave={() => (haltThumbnail = false)}
+					>
+						{#if haltThumbnail}
+							<div transition:fade={{ duration: 200 }} class="controls">
+								<span
+									class="prev material-icons"
+									on:click={() => {
+										activeThumbnail =
+											(activeThumbnail - 1 + project.thumbnail.length) % project.thumbnail.length;
+									}}
+								>
+									chevron_left
+								</span>
+								<div class="counter">
+									{#each project.thumbnail as thumbnail, i}
+										<div class={activeThumbnail === i ? 'active' : ''} />
+									{/each}
+								</div>
+								<span
+									class="next material-icons"
+									on:click={() => {
+										activeThumbnail = (activeThumbnail + 1) % project.thumbnail.length;
+									}}
+								>
+									navigate_next
+								</span>
+							</div>
+						{/if}
+						{#each project.thumbnail as thumbnail, i}
+							{#if activeThumbnail === i}
+								<img
+									transition:fade={{ duration: 200 }}
+									class="thumbnail"
+									src={thumbnail}
+									alt={thumbnail}
+								/>
+							{/if}
+						{/each}
+					</div>
+					<div class="item">
+						<iframe
+							title="Video"
+							type="text/html"
+							width="1920"
+							height="1080"
+							src="https://www.youtube.com/embed/TNiRzMzQAm4"
+							frameborder="0"
+						/>
 					</div>
 				</div>
 				<div class="detail">
 					<div class="actions">
 						{#if project.link}
 							<a href={project.link} target="_blank" rel="noopener noreferrer">
-								<Button beforeIcon="link" style="outline">Link to Project</Button>
-							</a>
-						{/if}
-						{#if project.video}
-							<a href={project.video} target="_blank" rel="noopener noreferrer">
-								<Button beforeIcon="ondemand_video_icon_outline" style="outline" color="secondary">
-									View Video
-								</Button>
+								<Button beforeIcon="link" style="outline">View Project</Button>
 							</a>
 						{/if}
 						{#if $isAuthenticated && isVoted !== undefined}
@@ -200,31 +247,89 @@
 	}
 
 	.image {
-		flex-shrink: 0;
 		width: 60%;
-		height: 50vh;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.image > .item {
+		flex-shrink: 0;
 		border-radius: 1.5rem;
 		overflow: hidden;
 		background-color: #eee;
 		position: relative;
 		display: flex;
+		margin-bottom: 2rem;
+		aspect-ratio: 16/9;
+		box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.15);
 	}
 
-	.image img {
+	.image > .item:last-child {
+		margin-bottom: 0;
+	}
+
+	.image > .item > img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
 		z-index: 1;
+		position: absolute;
 	}
 
-	.image .placeholder {
+	.image > .item > .controls {
+		width: 100%;
+		height: 100%;
+		z-index: 2;
 		position: absolute;
 		display: flex;
-		justify-content: center;
 		align-items: center;
-		height: 100%;
+		justify-content: space-between;
+		color: #fff;
+	}
+
+	.image > .item > .controls > span {
+		font-size: 4rem;
+		padding: 0.5rem;
+		margin: 1rem;
+		border-radius: 100%;
+		background-color: #fff0;
+		transition: background-color 0.2s ease;
+		cursor: pointer;
+	}
+
+	.image > .item > .controls > span:hover {
+		background-color: #fff4;
+	}
+
+	.image > .item > .controls > .counter {
+		display: flex;
+		flex-direction: row;
+		align-self: flex-end;
+		margin: 1rem;
+	}
+
+	.image > .item > .controls > .counter > div {
+		margin: 0.5rem;
+		height: 12px;
+		width: 12px;
+		border-radius: 100%;
+		background-color: #fff4;
+		transition: background-color 0.4s ease;
+	}
+
+	.image > .item > .controls > .counter > .active {
+		margin: 0.5rem;
+		height: 12px;
+		width: 12px;
+		background-color: #fff;
+	}
+
+	.image > .item > iframe {
 		width: 100%;
-		z-index: 0;
+		height: 100%;
+		object-fit: cover;
+		z-index: 1;
+		position: absolute;
 	}
 
 	.detail {
