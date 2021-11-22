@@ -334,6 +334,7 @@
 
 	.detail {
 		display: block;
+		flex-basis: 0;
 		flex-grow: 1;
 	}
 
