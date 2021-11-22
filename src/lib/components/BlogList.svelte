@@ -3,14 +3,19 @@
 	import BlogItem from './BlogItem.svelte';
 
 	export let blogs: Blog[];
+	export let emptyMessage = '';
 	export let allowBookmark = false;
 </script>
 
 <div class="list">
-	{#if blogs}
+	{#if blogs.length}
 		{#each blogs as blog (blog.id)}
 			<BlogItem {blog} {allowBookmark} />
 		{/each}
+	{:else}
+		<div class="empty">
+			<p>{emptyMessage}</p>
+		</div>
 	{/if}
 </div>
 
@@ -26,5 +31,9 @@
 
 	.list > :global(*):last-child {
 		border-bottom: none;
+	}
+
+	.empty {
+		margin-right: auto;
 	}
 </style>

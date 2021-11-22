@@ -3,13 +3,18 @@
 	import ProjectItem from './ProjectItem.svelte';
 
 	export let projects: Project[];
+	export let emptyMessage = '';
 </script>
 
 <div class="list">
-	{#if projects}
+	{#if projects.length}
 		{#each projects as project (project.id)}
 			<ProjectItem {project} />
 		{/each}
+	{:else}
+		<div class="empty">
+			<p>{emptyMessage}</p>
+		</div>
 	{/if}
 </div>
 
@@ -23,5 +28,9 @@
 
 	.list > :global(*) {
 		margin: 1rem;
+	}
+
+	.empty {
+		margin-right: auto;
 	}
 </style>

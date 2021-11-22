@@ -1,7 +1,9 @@
 <script lang="ts">
+	import api from '$lib/api';
 	import { auth } from '$lib/auth';
-	import { BlogCategoryTypeLabel } from '$lib/constant';
+	import { BlogCategoryTypeLabel, CourseType } from '$lib/constant';
 	import type { Blog } from '$lib/dtos';
+	import { aggregatedVoteQuota } from '$lib/store';
 	import Button from './Button.svelte';
 	import Tag from './Tag.svelte';
 
@@ -11,20 +13,56 @@
 	export let blog: Blog;
 
 	let isVoted: boolean = undefined;
+	let isBookmarked: boolean = undefined;
 
 	const handleVote = () => {
-		// TODO: impl vote
-		isVoted = !isVoted;
+		api.vote
+			.cast(blog.id, !isVoted)
+			.then(() => {
+				isVoted = !isVoted;
+				api.vote
+					.getQuota()
+					.then((quota) => {
+						aggregatedVoteQuota.set(quota);
+					})
+					.catch((e) => {
+						console.error(e);
+					});
+			})
+			.catch((e) => {
+				console.error(e);
+			});
+	};
+
+	const handleBookmark = () => {
+		api.bookmark
+			.mark(blog.id, !isBookmarked)
+			.then(() => {
+				isBookmarked = !isBookmarked;
+			})
+			.catch((e) => {
+				console.error(e);
+			});
 	};
 
 	$: if ($isAuthenticated) {
-		//TODO: fetch vote status
-		setTimeout(() => {
-			isVoted = false;
-		}, 1000);
+		api.vote
+			.getStatus(blog.id)
+			.then((status) => {
+				isVoted = status;
+			})
+			.catch((e) => {
+				console.error(e);
+			});
+		api.bookmark
+			.getStatus(blog.id)
+			.then((status) => {
+				isBookmarked = status;
+			})
+			.catch((e) => {
+				console.error(e);
+			});
 	}
-
-	const bookmark: () => void = () => console.log(blog.id);
 </script>
 
 <div class="row">
@@ -37,7 +75,10 @@
 		<p class="author">by {blog.author}</p>
 		<div class="tags">
 			<Tag color="secondary">{new Date(blog.createdAt).getFullYear()}</Tag>
-			<Tag color="info">{BlogCategoryTypeLabel[blog.category]}</Tag>
+			<Tag color="info">
+				{BlogCategoryTypeLabel[blog.category] ||
+					blog.category.charAt(0).toUpperCase() + blog.category.slice(1)}
+			</Tag>
 		</div>
 	</div>
 	<div class="actions">
@@ -46,6 +87,7 @@
 				<Button
 					beforeIcon="how_to_vote"
 					style="outline"
+					disabled={!isVoted && $aggregatedVoteQuota[CourseType.PPL].blogs <= 0}
 					color={isVoted ? 'error' : 'success'}
 					onClick={handleVote}
 				>
@@ -53,9 +95,11 @@
 				</Button>
 			{/if}
 			{#if allowBookmark}
-				<button class="bookmark" on:click={bookmark} tabindex="0">
-					<span class="material-icons">bookmark_border</span>
-				</button>
+				{#if isBookmarked !== undefined}
+					<button class="bookmark" on:click={handleBookmark} tabindex="0">
+						<span class="material-icons">{isBookmarked ? 'bookmark' : 'bookmark_border'}</span>
+					</button>
+				{/if}
 			{/if}
 		{/if}
 	</div>
@@ -135,6 +179,7 @@
 
 	.bookmark > span {
 		font-size: 1.5rem;
+		user-select: none;
 		-moz-user-select: none;
 		-webkit-user-select: none;
 	}

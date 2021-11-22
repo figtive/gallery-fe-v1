@@ -7,9 +7,9 @@
 	export let project: Project;
 </script>
 
-<a class="card" href="/project/{project.id}">
+<a class="card" href="/project/{project.courseId}/{project.id}">
 	<div class="image">
-		<img src={project.thumbnail} alt={project.name} />
+		<img src={project.thumbnail && project.thumbnail[0]} alt={project.name} />
 		<div class="placeholder">
 			<Spinner />
 		</div>
@@ -22,7 +22,7 @@
 			<Tag color={project.active ? 'success' : 'disabled'}>
 				{project.active ? 'Active' : 'Archived'}
 			</Tag>
-			<Tag color="warning">{CourseTypeLabel[project.course]}</Tag>
+			<Tag color="warning">{CourseTypeLabel[project.courseId]}</Tag>
 			<Tag color="info">{ProjectFieldTypeLabel[project.field]}</Tag>
 		</div>
 		<p class="description">{project.description}</p>

@@ -6,10 +6,11 @@
 	import BlogList from '$lib/components/BlogList.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Title from '$lib/components/Title.svelte';
-	import { BlogCategoryType, BlogCategoryTypeLabel } from '$lib/constant';
+	import { BlogCategoryType, BlogCategoryTypeLabel, CourseType } from '$lib/constant';
 	import type { Blog } from '$lib/dtos';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import { notify, unNotify } from '$lib/notification';
+	import { currentCourseType } from '$lib/store';
 
 	let blogs: Blog[];
 
@@ -21,6 +22,7 @@
 	let errorNotification: number;
 
 	const getBlogs = async (query, category): Promise<Blog[]> => {
+		currentCourseType.set(CourseType.PPL);
 		return await api.coursework.blog.getAll(query, category);
 	};
 

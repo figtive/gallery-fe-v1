@@ -1,18 +1,53 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import api from '$lib/api';
 	import { auth, requireAuth } from '$lib/auth';
 	import BlogList from '$lib/components/BlogList.svelte';
 	import CourseworkTab from '$lib/components/CourseworkTab.svelte';
 	import ProjectList from '$lib/components/ProjectList.svelte';
+	import Spinner from '$lib/components/Spinner.svelte';
 	import Tag from '$lib/components/Tag.svelte';
 	import Title from '$lib/components/Title.svelte';
-	import { blogs, projects } from '$lib/dummy';
-	import { voteQuota } from '$lib/store';
+	import { CourseType, CourseTypeLabel } from '$lib/constant';
+	import type { Blog, Project } from '$lib/dtos';
+	import { notify } from '$lib/notification';
+	import { aggregatedVoteQuota } from '$lib/store';
 
 	let name = auth.getUserInfo().given_name;
 
-	requireAuth();
+	let projects: Project[];
+	let blogs: Blog[];
 
-	// TODO: refresh voteQuota
+	let isLoaded = false;
+	let error: Error;
+	let errorNotification: number;
+
+	const getProjects = async (): Promise<Project[]> => {
+		return await api.vote.getVotedProjects();
+	};
+
+	const getBlogs = async (): Promise<Blog[]> => {
+		return await api.vote.getVotedBlogs();
+	};
+
+	onMount(async () => {
+		try {
+			projects = await getProjects();
+			blogs = await getBlogs();
+		} catch (e) {
+			console.error(e);
+			errorNotification = notify({
+				message: 'Failed to load voted courseworks!',
+				type: 'error',
+				autoClose: false
+			});
+			error = e;
+		} finally {
+			isLoaded = true;
+		}
+	});
+
+	requireAuth();
 </script>
 
 <Title title="Dashboard" />
@@ -22,52 +57,93 @@
 			<h1 class="page-title">Hi{name && ', '}{name}!</h1>
 		</div>
 		<div class="body">
-			<div class="vote">
-				<h2>My Votes</h2>
-				<div>
-					<h2>Remaining Votes</h2>
-					<div class="vote-group">
-						<div class="vote-count">
-							<p>Project</p>
-							<Tag color="success">{$voteQuota.project}</Tag>
-						</div>
-						<div class="vote-count">
-							<p>Blog</p>
-							<Tag color="success">{$voteQuota.blog}</Tag>
-						</div>
+			<h2>Remaining Votes</h2>
+			<div class="vote-list">
+				<div class="vote-group">
+					<h3>{CourseTypeLabel[CourseType.PPL]}</h3>
+					<div class="vote-count">
+						<p>Project</p>
+						<Tag color={$aggregatedVoteQuota[CourseType.PPL].projects > 0 ? 'success' : 'error'}>
+							{$aggregatedVoteQuota[CourseType.PPL].projects}
+						</Tag>
+					</div>
+					<div class="vote-count">
+						<p>Blog</p>
+						<Tag color={$aggregatedVoteQuota[CourseType.PPL].blogs > 0 ? 'success' : 'error'}>
+							{$aggregatedVoteQuota[CourseType.PPL].blogs}
+						</Tag>
+					</div>
+				</div>
+				<div class="vote-group">
+					<h3>{CourseTypeLabel[CourseType.Propensi]}</h3>
+					<div class="vote-count">
+						<p>Project</p>
+						<Tag
+							color={$aggregatedVoteQuota[CourseType.Propensi].projects > 0 ? 'success' : 'error'}
+						>
+							{$aggregatedVoteQuota[CourseType.Propensi].projects}
+						</Tag>
+					</div>
+					<div class="vote-count">
+						<p>Blog</p>
+						<Tag color={$aggregatedVoteQuota[CourseType.Propensi].blogs > 0 ? 'success' : 'error'}>
+							{$aggregatedVoteQuota[CourseType.Propensi].blogs}
+						</Tag>
 					</div>
 				</div>
 			</div>
-			<CourseworkTab>
-				<ProjectList slot="project" {projects} />
-				<BlogList slot="blog" {blogs} />
-			</CourseworkTab>
+			{#if isLoaded && !error}
+				<h2>My Votes</h2>
+				<CourseworkTab>
+					<ProjectList slot="project" emptyMessage="You have not voted any projects!" {projects} />
+					<BlogList slot="blog" emptyMessage="You have not voted any blogs!" {blogs} />
+				</CourseworkTab>
+			{:else if !isLoaded}
+				<Spinner />
+			{/if}
 		</div>
 		<div class="glow-left glow-yellow" />
 	</div>
 </main>
 
 <style lang="css">
-	.vote {
+	h2 {
+		margin-top: 0;
+		margin-bottom: 1rem;
+	}
+
+	.vote-list {
 		display: flex;
 		flex-direction: row;
-		justify-content: space-between;
-		align-items: flex-end;
-		margin-bottom: 1rem;
-		text-align: center;
+		align-items: center;
+		margin-bottom: 2rem;
 	}
 
 	.vote-group {
 		display: flex;
-		flex-direction: row;
-		justify-content: center;
 		align-items: center;
+		padding: 1rem 1.25rem;
+		border: 2px solid #ddd;
+		border-radius: 32px;
+		margin-right: 1rem;
+	}
+
+	.vote-group:last-child {
+		margin-right: 0;
+	}
+
+	.vote-group > h3 {
+		margin-right: 1rem;
 	}
 
 	.vote-count {
 		display: flex;
 		flex-direction: row;
-		margin: 0.5rem;
+		margin-right: 1rem;
+	}
+
+	.vote-count:last-child {
+		margin-right: 0;
 	}
 
 	.vote-count > p {

@@ -2,9 +2,10 @@
 	import { page } from '$app/stores';
 	import { slide } from 'svelte/transition';
 	import { auth } from '$lib/auth';
-	import { voteQuota } from '$lib/store';
+	import { aggregatedVoteQuota, currentCourseType } from '$lib/store';
 	import BannerItem from './BannerItem.svelte';
 	import { notificationItems, unNotify } from '$lib/notification';
+	import { CourseTypeLabel } from '$lib/constant';
 
 	let isAuthenticated = auth.isAuthenticated();
 
@@ -17,17 +18,26 @@
 
 <div class="list">
 	{#if $isAuthenticated}
-		{#if $page.path.includes('/project') && $voteQuota.project > 0}
+		{#if $page.path.includes('/project') && $aggregatedVoteQuota[$currentCourseType].projects > 0}
 			<div transition:slide>
 				<BannerItem color="success">
-					You have {$voteQuota.project} project vote{$voteQuota.project > 1 ? 's' : ''} remaining!
+					You have {$aggregatedVoteQuota[$currentCourseType].projects}
+					{CourseTypeLabel[$currentCourseType]} project vote{$aggregatedVoteQuota[
+						$currentCourseType
+					].projects > 1
+						? 's'
+						: ''} remaining!
 				</BannerItem>
 			</div>
 		{/if}
-		{#if $page.path.includes('/blog') && $voteQuota.blog > 0}
+		{#if ($page.path.includes('/blog') || $page.path.includes('/bookmark')) && $aggregatedVoteQuota[$currentCourseType].blogs > 0}
 			<div transition:slide>
 				<BannerItem color="success">
-					You have {$voteQuota.blog} blog vote{$voteQuota.blog > 1 ? 's' : ''} remaining!
+					You have {$aggregatedVoteQuota[$currentCourseType].blogs}
+					{CourseTypeLabel[$currentCourseType]} blog vote{$aggregatedVoteQuota[$currentCourseType]
+						.blogs > 1
+						? 's'
+						: ''} remaining!
 				</BannerItem>
 			</div>
 		{/if}

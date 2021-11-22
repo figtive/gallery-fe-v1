@@ -30,7 +30,7 @@ export enum BlogCategoryType {
 	All = '',
 	Agile = 'agile',
 	UIUX = 'uiux',
-	Engineering = 'enineering',
+	Engineering = 'engineering',
 	Deployment = 'idebaru',
 	Team = 'team'
 }

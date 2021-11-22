@@ -11,9 +11,11 @@ export interface Project {
 	name: string;
 	team: string;
 	description: string;
-	thumbnail: string;
+	thumbnail: string[];
+	link: string;
+	video: string;
 	active: boolean;
-	course: CourseType;
+	courseId: CourseType;
 	field: ProjectFieldType;
 	metadata?: string; // stringified JSON of ProjectMetadata
 	createdAt: string;
@@ -35,6 +37,8 @@ export interface Blog {
 }
 
 export interface VoteQuota {
-	blog: number;
-	project: number;
+	blogs: number;
+	projects: number;
 }
+
+export type AggregatedVoteQuota = Record<CourseType, VoteQuota>;
