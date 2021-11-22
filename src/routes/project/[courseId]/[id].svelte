@@ -8,7 +8,7 @@
 	import Spinner from '$lib/components/Spinner.svelte';
 	import Tag from '$lib/components/Tag.svelte';
 	import Title from '$lib/components/Title.svelte';
-	import { CourseType, CourseTypeLabel, ProjectFieldTypeLabel } from '$lib/constant';
+	import { CDN_BASE_URL, CourseType, CourseTypeLabel, ProjectFieldTypeLabel } from '$lib/constant';
 	import type { Project, ProjectMetadata } from '$lib/dtos';
 	import { aggregatedVoteQuota, currentCourseType } from '$lib/store';
 	import { notify } from '$lib/notification';
@@ -140,7 +140,7 @@
 								<img
 									transition:fade={{ duration: 200 }}
 									class="thumbnail"
-									src={thumbnail}
+									src="{CDN_BASE_URL}{thumbnail}"
 									alt={thumbnail}
 								/>
 							{/if}
