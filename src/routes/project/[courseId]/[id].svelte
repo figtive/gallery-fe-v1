@@ -152,7 +152,7 @@
 							type="text/html"
 							width="1920"
 							height="1080"
-							src="https://www.youtube.com/embed/TNiRzMzQAm4"
+							src={project.video}
 							frameborder="0"
 						/>
 					</div>
@@ -196,21 +196,13 @@
 							{#if metadata.productOwner}
 								<div>
 									<h3>Product Owner</h3>
-									<ul>
-										{#each metadata.productOwner as name}
-											<li>{name}</li>
-										{/each}
-									</ul>
+									<p>{metadata.productOwner}</p>
 								</div>
 							{/if}
 							{#if metadata.scrumMaster}
 								<div>
 									<h3>Scrum Master</h3>
-									<ul>
-										{#each metadata.scrumMaster as name}
-											<li>{name}</li>
-										{/each}
-									</ul>
+									<p>{metadata.scrumMaster}</p>
 								</div>
 							{/if}
 							{#if metadata.developmentTeam}
