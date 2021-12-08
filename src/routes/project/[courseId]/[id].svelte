@@ -197,9 +197,7 @@
 								<div>
 									<h3>Product Owner</h3>
 									<ul>
-										{#each metadata.productOwner as name}
-											<li>{name}</li>
-										{/each}
+										<li>{metadata.productOwner}</li>
 									</ul>
 								</div>
 							{/if}
@@ -207,9 +205,7 @@
 								<div>
 									<h3>Scrum Master</h3>
 									<ul>
-										{#each metadata.scrumMaster as name}
-											<li>{name}</li>
-										{/each}
+										<li>{metadata.scrumMaster}</li>
 									</ul>
 								</div>
 							{/if}

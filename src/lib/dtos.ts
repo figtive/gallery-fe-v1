@@ -23,8 +23,8 @@ export interface Project {
 
 export interface ProjectMetadata {
 	partner: string;
-	productOwner: string[];
-	scrumMaster: string[];
+	productOwner: string;
+	scrumMaster: string;
 	developmentTeam: string[];
 }
 
