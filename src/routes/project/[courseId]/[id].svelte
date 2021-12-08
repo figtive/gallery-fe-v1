@@ -152,7 +152,7 @@
 							type="text/html"
 							width="1920"
 							height="1080"
-							src="https://www.youtube.com/embed/TNiRzMzQAm4"
+							src={project.video}
 							frameborder="0"
 						/>
 					</div>
