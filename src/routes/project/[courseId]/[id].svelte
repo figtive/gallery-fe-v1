@@ -196,17 +196,13 @@
 							{#if metadata.productOwner}
 								<div>
 									<h3>Product Owner</h3>
-									<ul>
-										<li>{metadata.productOwner}</li>
-									</ul>
+									<p>{metadata.productOwner}</p>
 								</div>
 							{/if}
 							{#if metadata.scrumMaster}
 								<div>
 									<h3>Scrum Master</h3>
-									<ul>
-										<li>{metadata.scrumMaster}</li>
-									</ul>
+									<p>{metadata.scrumMaster}</p>
 								</div>
 							{/if}
 							{#if metadata.developmentTeam}
