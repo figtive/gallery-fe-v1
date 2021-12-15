@@ -105,6 +105,8 @@
 	}
 
 	.content {
+		display: flex;
+		flex-shrink: 0;
 		padding: 0 1.5rem;
 		font-size: 1rem;
 	}
