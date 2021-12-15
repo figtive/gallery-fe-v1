@@ -46,18 +46,17 @@
 
 	.image {
 		position: relative;
-		width: 50%;
 		height: auto;
 		padding: 96px;
 	}
 
 	.image img {
 		max-width: 100%;
+		max-height: 100%;
 	}
 
 	.text {
 		position: relative;
-		width: 50%;
 		height: auto;
 		padding: 96px;
 	}
@@ -87,40 +86,6 @@
 		margin-right: 0;
 	}
 
-	.glow-1 {
-		position: absolute;
-		z-index: -1;
-		width: 285px;
-		height: 285px;
-		left: 30%;
-		top: 10%;
-		border-radius: 285px 285px 0px 285px;
-		background: linear-gradient(314.04deg, #a981ff 11.12%, #ffffff 100%);
-		transform: rotate(41.48deg);
-	}
-
-	.glow-2 {
-		position: absolute;
-		z-index: -1;
-		width: 302px;
-		height: 302px;
-		left: 10%;
-		top: 50%;
-		background: #bebbff;
-		filter: blur(120px);
-	}
-
-	.glow-3 {
-		position: absolute;
-		z-index: -1;
-		width: 287px;
-		height: 287px;
-		right: 10%;
-		top: 50%;
-		background: #f9eab3;
-		filter: blur(120px);
-	}
-
 	.glow-4 {
 		position: absolute;
 		z-index: -1;
@@ -131,5 +96,39 @@
 		border-radius: 330px;
 		background: linear-gradient(180deg, #fc94d8 17.19%, rgba(248, 229, 158, 0) 100%);
 		transform: rotate(-23.91deg);
+	}
+
+	@media (max-width: 1025px) {
+		.content {
+			flex-direction: column;
+		}
+
+		.image {
+			display: none;
+		}
+
+		.text .title {
+			font-size: 72px;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.text {
+			padding: 16px;
+		}
+
+		.text .title {
+			font-size: 48px;
+		}
+	}
+
+	@media (max-width: 320px) {
+		.text .title {
+			font-size: 32px;
+		}
+
+		.text .description {
+			font-size: 16px;
+		}
 	}
 </style>

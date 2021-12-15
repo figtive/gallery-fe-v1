@@ -88,7 +88,7 @@
 	}
 
 	:global(.hidden) {
-		display: none;
+		display: none !important;
 	}
 
 	:global(.page-title) {
@@ -170,5 +170,27 @@
 
 	:global(.glow-yellow) {
 		background-color: #f9eab3;
+	}
+
+	@media (max-width: 1025px) {
+	}
+
+	@media (max-width: 768px) {
+		:global(.container) {
+			max-width: 90%;
+			padding: 0 0.5rem;
+		}
+
+		:global(.page-title) {
+			font-size: 2rem;
+		}
+
+		:global(.head) {
+			margin-top: 3rem;
+			margin-bottom: 1rem;
+		}
+	}
+
+	@media (max-width: 320px) {
 	}
 </style>
