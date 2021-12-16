@@ -130,6 +130,7 @@
 		-moz-box-sizing: border-box;
 		box-sizing: border-box;
 	}
+
 	:global(select) {
 		padding-right: 2.4rem;
 		background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
@@ -186,8 +187,8 @@
 		}
 
 		:global(.head) {
-			margin-top: 3rem;
-			margin-bottom: 1rem;
+			margin-top: 4rem;
+			margin-bottom: 2rem;
 		}
 	}
 
