@@ -88,7 +88,7 @@
 	}
 
 	:global(.hidden) {
-		display: none;
+		display: none !important;
 	}
 
 	:global(.page-title) {
@@ -124,12 +124,13 @@
 		margin: 0;
 		border: none;
 		border-radius: 40px;
-		background: #f8f8f8ee;
+		background: #fafafa88;
 		border: 3px solid #ddde;
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing: border-box;
 		box-sizing: border-box;
 	}
+
 	:global(select) {
 		padding-right: 2.4rem;
 		background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
@@ -170,5 +171,27 @@
 
 	:global(.glow-yellow) {
 		background-color: #f9eab3;
+	}
+
+	@media (max-width: 1025px) {
+	}
+
+	@media (max-width: 768px) {
+		:global(.container) {
+			max-width: 90%;
+			padding: 0 0.5rem;
+		}
+
+		:global(.page-title) {
+			font-size: 2rem;
+		}
+
+		:global(.head) {
+			margin-top: 4rem;
+			margin-bottom: 2rem;
+		}
+	}
+
+	@media (max-width: 320px) {
 	}
 </style>

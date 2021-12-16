@@ -47,7 +47,7 @@
 		}
 	});
 
-	requireAuth();
+	// requireAuth();
 </script>
 
 <Title title="Dashboard" />
@@ -115,6 +115,7 @@
 	.vote-list {
 		display: flex;
 		flex-direction: row;
+		flex-wrap: wrap;
 		align-items: center;
 		margin-bottom: 2rem;
 	}
@@ -123,9 +124,10 @@
 		display: flex;
 		align-items: center;
 		padding: 1rem 1.25rem;
-		border: 2px solid #ddd;
+		border: 3px solid #ddde;
 		border-radius: 32px;
-		margin-right: 1rem;
+		background: #fafafa88;
+		margin: 0.25rem 1rem 0.25rem 0;
 	}
 
 	.vote-group:last-child {

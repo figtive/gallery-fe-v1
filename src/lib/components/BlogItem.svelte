@@ -110,7 +110,6 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-		width: 100%;
 		padding: 1.2rem;
 	}
 
@@ -143,7 +142,8 @@
 
 	.actions {
 		display: flex;
-		justify-content: center;
+		flex-wrap: wrap;
+		justify-content: flex-end;
 		align-items: center;
 	}
 

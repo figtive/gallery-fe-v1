@@ -24,7 +24,6 @@
 	.row {
 		display: flex;
 		flex-direction: row;
-		width: 100%;
 		padding: 2rem;
 		border-radius: 1.5rem;
 		overflow: hidden;
@@ -56,5 +55,18 @@
 
 	.row .content .author {
 		color: var(--color-text-secondary);
+	}
+
+	@media (max-width: 1025px) {
+	}
+
+	@media (max-width: 768px) {
+		.row .position {
+			font-size: 1rem;
+			margin-right: 1rem;
+		}
+	}
+
+	@media (max-width: 320px) {
 	}
 </style>

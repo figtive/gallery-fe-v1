@@ -33,7 +33,7 @@
 	.card {
 		display: flex;
 		flex-direction: column;
-		width: 440px;
+		width: 380px;
 		padding: 0;
 		border-radius: 1.5rem;
 		overflow: hidden;

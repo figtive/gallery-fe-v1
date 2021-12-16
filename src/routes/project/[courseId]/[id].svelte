@@ -351,4 +351,33 @@
 	.metadata > :global(*) {
 		margin-bottom: 16px;
 	}
+
+	@media (max-width: 1025px) {
+	}
+
+	@media (max-width: 768px) {
+		.body {
+			flex-direction: column;
+		}
+
+		.body > :global(*) {
+			margin: 0;
+		}
+
+		.image {
+			width: 100%;
+			margin-bottom: 2rem;
+		}
+
+		.image > .item {
+			margin-bottom: 2rem;
+		}
+
+		.detail {
+			flex-basis: 100%;
+		}
+	}
+
+	@media (max-width: 320px) {
+	}
 </style>
