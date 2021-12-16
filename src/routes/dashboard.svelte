@@ -47,7 +47,7 @@
 		}
 	});
 
-	// requireAuth();
+	requireAuth();
 </script>
 
 <Title title="Dashboard" />
