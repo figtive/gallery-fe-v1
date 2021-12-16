@@ -124,7 +124,7 @@
 		margin: 0;
 		border: none;
 		border-radius: 40px;
-		background: #f8f8f8ee;
+		background: #fafafa88;
 		border: 3px solid #ddde;
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing: border-box;
