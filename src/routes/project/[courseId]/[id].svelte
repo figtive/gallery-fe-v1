@@ -152,7 +152,7 @@
 							type="text/html"
 							width="1920"
 							height="1080"
-							src={project.video}
+							src="https://www.youtube.com/embed/{project.video}"
 							frameborder="0"
 						/>
 					</div>
