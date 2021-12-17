@@ -3,17 +3,27 @@
 	import { auth } from '$lib/auth';
 	import { BlogCategoryTypeLabel, CourseType } from '$lib/constant';
 	import type { Blog } from '$lib/dtos';
+	import { notify, unNotify } from '$lib/notification';
 	import { aggregatedVoteQuota } from '$lib/store';
 	import Button from './Button.svelte';
 	import Tag from './Tag.svelte';
 
 	let isAuthenticated = auth.isAuthenticated();
+	let authNotification: number;
 
 	export let allowBookmark = false;
 	export let blog: Blog;
 
 	let isVoted: boolean = undefined;
 	let isBookmarked: boolean = undefined;
+
+	const promptAuth = (): void => {
+		unNotify(authNotification);
+		authNotification = notify({
+			message: 'You need to sign in to vote this blog!',
+			type: 'info'
+		});
+	};
 
 	const handleVote = () => {
 		api.vote
@@ -101,6 +111,16 @@
 					</button>
 				{/if}
 			{/if}
+		{:else}
+			<Button
+				slot="content"
+				beforeIcon="how_to_vote"
+				style="outline"
+				color="success"
+				onClick={promptAuth}
+			>
+				Vote
+			</Button>
 		{/if}
 	</div>
 </div>

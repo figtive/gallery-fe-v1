@@ -10,11 +10,12 @@
 	import Title from '$lib/components/Title.svelte';
 	import { CDN_BASE_URL, CourseType, CourseTypeLabel, ProjectFieldTypeLabel } from '$lib/constant';
 	import type { Project, ProjectMetadata } from '$lib/dtos';
+	import { notify, unNotify } from '$lib/notification';
 	import { aggregatedVoteQuota, currentCourseType } from '$lib/store';
-	import { notify } from '$lib/notification';
 	import { fade } from 'svelte/transition';
 
 	let isAuthenticated = auth.isAuthenticated();
+	let authNotification: number;
 
 	let courseId = $page.params.courseId as CourseType;
 	let projectId = $page.params.id;
@@ -28,6 +29,14 @@
 
 	let activeThumbnail = 0;
 	let haltThumbnail = false;
+
+	const promptAuth = (): void => {
+		unNotify(authNotification);
+		authNotification = notify({
+			message: 'You need to sign in to vote this project!',
+			type: 'info'
+		});
+	};
 
 	const getProject = async (): Promise<Project> => {
 		currentCourseType.set(courseId);
@@ -164,15 +173,27 @@
 								<Button beforeIcon="link" style="outline">View Project</Button>
 							</a>
 						{/if}
-						{#if $isAuthenticated && isVoted !== undefined}
+						{#if $isAuthenticated}
+							{#if isVoted !== undefined}
+								<Button
+									beforeIcon="how_to_vote"
+									style="outline"
+									disabled={!isVoted && $aggregatedVoteQuota[project.courseId].projects <= 0}
+									color={isVoted ? 'error' : 'success'}
+									onClick={handleVote}
+								>
+									{isVoted ? 'Unvote' : 'Vote'}
+								</Button>
+							{/if}
+						{:else}
 							<Button
+								slot="content"
 								beforeIcon="how_to_vote"
 								style="outline"
-								disabled={!isVoted && $aggregatedVoteQuota[project.courseId].projects <= 0}
-								color={isVoted ? 'error' : 'success'}
-								onClick={handleVote}
+								color="success"
+								onClick={promptAuth}
 							>
-								{isVoted ? 'Unvote' : 'Vote'}
+								Vote
 							</Button>
 						{/if}
 					</div>

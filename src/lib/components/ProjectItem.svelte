@@ -40,6 +40,8 @@
 		cursor: pointer;
 		box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.15);
 		transition: box-shadow 120ms ease-in-out;
+		transform: translate3d(0, 0, 0);
+		-webkit-transform: translate3d(0, 0, 0);
 	}
 
 	.card:hover,
