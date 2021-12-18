@@ -11,6 +11,7 @@
 	import Spinner from '$lib/components/Spinner.svelte';
 	import { notify, unNotify } from '$lib/notification';
 	import { currentCourseType } from '$lib/store';
+	import { shuffle } from '$lib/utils';
 
 	let blogs: Blog[];
 
@@ -38,7 +39,7 @@
 			{ replaceState: true, noscroll: true }
 		);
 		try {
-			blogs = await getBlogs(searchQuery, searchCategory);
+			blogs = shuffle(await getBlogs(searchQuery, searchCategory));
 		} catch (e) {
 			console.error(e);
 			errorNotification = notify({

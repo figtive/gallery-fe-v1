@@ -15,6 +15,7 @@
 	import type { Project } from '$lib/dtos';
 	import { notify, unNotify } from '$lib/notification';
 	import { currentCourseType } from '$lib/store';
+	import { shuffle } from '$lib/utils';
 	import { onMount } from 'svelte';
 
 	let projects: Project[];
@@ -44,7 +45,7 @@
 			}
 		);
 		try {
-			projects = await getProjects(searchQuery, searchCourse, searchField);
+			projects = shuffle(await getProjects(searchQuery, searchCourse, searchField));
 		} catch (e) {
 			console.error(e);
 			errorNotification = notify({
