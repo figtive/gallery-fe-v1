@@ -1,7 +1,7 @@
 <script lang="ts">
 	import api from '$lib/api';
 	import { auth } from '$lib/auth';
-	import { BlogCategoryTypeLabel, CourseType } from '$lib/constant';
+	import { BlogCategoryTypeLabel, CourseType, CourseTypeLabel } from '$lib/constant';
 	import type { Blog } from '$lib/dtos';
 	import { notify, unNotify } from '$lib/notification';
 	import { aggregatedVoteQuota } from '$lib/store';
@@ -77,14 +77,13 @@
 
 <div class="row">
 	<div class="content">
-		<a href="https://figtive.dev" target="_blank" rel="noopener noreferrer">
-			<p class="title">
-				{blog.title}
-			</p>
-		</a>
+		<p class="title">
+			{blog.title}
+		</p>
 		<p class="author">by {blog.author}</p>
 		<div class="tags">
 			<Tag color="secondary">{new Date(blog.createdAt).getFullYear()}</Tag>
+			<Tag color="warning">{CourseTypeLabel[blog.courseId]}</Tag>
 			<Tag color="info">
 				{BlogCategoryTypeLabel[blog.category] ||
 					blog.category.charAt(0).toUpperCase() + blog.category.slice(1)}
@@ -92,6 +91,11 @@
 		</div>
 	</div>
 	<div class="actions">
+		{#if blog.link}
+			<a href={blog.link} target="_blank" rel="noopener noreferrer">
+				<Button beforeIcon="link" style="outline">View Blog</Button>
+			</a>
+		{/if}
 		{#if $isAuthenticated}
 			{#if isVoted !== undefined}
 				<Button
@@ -142,7 +146,6 @@
 		font-size: 1.5rem;
 		font-weight: 600;
 		margin-bottom: 4px;
-		cursor: pointer;
 	}
 
 	.author {
@@ -168,11 +171,11 @@
 	}
 
 	.actions > :global(*) {
-		margin-right: 16px;
+		margin-left: 16px;
 	}
 
-	.actions > :global(*):last-child {
-		margin-right: 0;
+	.actions > :global(*):first-child {
+		margin-left: 0;
 	}
 
 	.bookmark {

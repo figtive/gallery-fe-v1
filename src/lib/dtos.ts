@@ -32,6 +32,8 @@ export interface Blog {
 	id: string;
 	title: string;
 	author: string;
+	link: string;
+	courseId: CourseType;
 	category: BlogCategoryType;
 	createdAt: string;
 }
