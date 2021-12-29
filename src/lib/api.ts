@@ -98,10 +98,10 @@ const api = {
 					method: 'GET'
 				}).then((resp) => handleResponse<Blog>(resp));
 			},
-			getAll(name: string, category: BlogCategoryType): Promise<Blog[]> {
+			getAll(title: string, category: BlogCategoryType): Promise<Blog[]> {
 				return fetch(
 					`${BASE_URL}/api/v1/coursework/blog/${CourseType.PPL}?${new URLSearchParams({
-						name,
+						title,
 						category
 					})}`,
 					{
