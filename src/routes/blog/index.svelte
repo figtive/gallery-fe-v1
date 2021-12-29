@@ -15,16 +15,16 @@
 
 	let blogs: Blog[];
 
-	let searchQuery: string = $page.query.get('query') || '';
+	let searchName: string = $page.query.get('name') || '';
 	let searchCategory: BlogCategoryType = ($page.query.get('category') || '') as BlogCategoryType;
 
 	let isLoaded = false;
 	let error: Error;
 	let errorNotification: number;
 
-	const getBlogs = async (query, category): Promise<Blog[]> => {
+	const getBlogs = async (name, category): Promise<Blog[]> => {
 		currentCourseType.set(CourseType.PPL);
-		return await api.coursework.blog.getAll(query, category);
+		return await api.coursework.blog.getAll(name, category);
 	};
 
 	const handleSearch = async () => {
@@ -33,13 +33,13 @@
 		unNotify(errorNotification);
 		goto(
 			`?${new URLSearchParams({
-				query: searchQuery,
+				name: searchName,
 				category: searchCategory
 			})}`,
 			{ replaceState: true, noscroll: true }
 		);
 		try {
-			blogs = shuffle(await getBlogs(searchQuery, searchCategory));
+			blogs = shuffle(await getBlogs(searchName, searchCategory));
 		} catch (e) {
 			console.error(e);
 			errorNotification = notify({
@@ -55,7 +55,7 @@
 
 	onMount(async () => {
 		try {
-			blogs = await getBlogs(searchQuery, searchCategory);
+			blogs = await getBlogs(searchName, searchCategory);
 			// TODO: refresh voteQuota
 		} catch (e) {
 			console.error(e);
@@ -79,7 +79,7 @@
 		</div>
 		<div class="head">
 			<form on:submit|preventDefault={handleSearch}>
-				<input bind:value={searchQuery} placeholder="Title" />
+				<input bind:value={searchName} placeholder="Title" />
 				<select bind:value={searchCategory}>
 					{#each Object.values(BlogCategoryType) as c}
 						<option value={c}>

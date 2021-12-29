@@ -20,7 +20,7 @@
 
 	let projects: Project[];
 
-	let searchQuery: string = $page.query.get('query') || '';
+	let searchName: string = $page.query.get('name') || '';
 	let searchCourse: CourseType = $page.params.courseId as CourseType;
 	let searchField: ProjectFieldType = ($page.query.get('field') || '') as ProjectFieldType;
 
@@ -28,9 +28,9 @@
 	let error: Error;
 	let errorNotification: number;
 
-	const getProjects = async (query, course, field): Promise<Project[]> => {
+	const getProjects = async (name, course, field): Promise<Project[]> => {
 		currentCourseType.set(course);
-		return await api.coursework.project.getAll(query, course, field);
+		return await api.coursework.project.getAll(name, course, field);
 	};
 
 	const handleSearch = async () => {
@@ -38,14 +38,14 @@
 		error = undefined;
 		unNotify(errorNotification);
 		goto(
-			`/project/${searchCourse}?${new URLSearchParams({ query: searchQuery, field: searchField })}`,
+			`/project/${searchCourse}?${new URLSearchParams({ name: searchName, field: searchField })}`,
 			{
 				replaceState: true,
 				noscroll: true
 			}
 		);
 		try {
-			projects = shuffle(await getProjects(searchQuery, searchCourse, searchField));
+			projects = shuffle(await getProjects(searchName, searchCourse, searchField));
 		} catch (e) {
 			console.error(e);
 			errorNotification = notify({
@@ -64,7 +64,7 @@
 			searchCourse = CourseType.PPL;
 			goto(
 				`/project/${searchCourse}?${new URLSearchParams({
-					query: searchQuery,
+					name: searchName,
 					field: searchField
 				})}`,
 				{ replaceState: true, noscroll: true }
@@ -72,7 +72,7 @@
 			return;
 		}
 		try {
-			projects = await getProjects(searchQuery, searchCourse, searchField);
+			projects = await getProjects(searchName, searchCourse, searchField);
 		} catch (e) {
 			console.error(e);
 			errorNotification = notify({
@@ -95,7 +95,7 @@
 		</div>
 		<div class="head">
 			<form on:submit|preventDefault={handleSearch}>
-				<input bind:value={searchQuery} placeholder="Name" />
+				<input bind:value={searchName} placeholder="Name" />
 				<select bind:value={searchCourse}>
 					{#each Object.values(CourseType) as c}
 						<option value={c}>
