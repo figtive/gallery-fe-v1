@@ -226,6 +226,12 @@
 									<p>{metadata.scrumMaster}</p>
 								</div>
 							{/if}
+							{#if metadata.devOps}
+								<div>
+									<h3>DevOps</h3>
+									<p>{metadata.devOps}</p>
+								</div>
+							{/if}
 							{#if metadata.developmentTeam}
 								<div>
 									<h3>Development Team</h3>
