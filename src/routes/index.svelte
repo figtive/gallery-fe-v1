@@ -64,11 +64,6 @@
 		filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
 	}
 
-	.text .description {
-		font-size: 18px;
-		margin-bottom: 2rem;
-	}
-
 	.text .navs {
 		position: absolute;
 		display: flex;
