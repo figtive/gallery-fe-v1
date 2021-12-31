@@ -21,10 +21,6 @@
 		<div class="text">
 			<h1 class="title">Gallery Karya Fasilkom UI</h1>
 			<div class="glow-4" />
-			<p class="description">
-				PPL dan Propensi adalah contoh teks atau dummy dalam industri percetakan dan penataan huruf
-				atau typesetting. Lorem Ipsum telah menjadi standar contoh teks sejak tahun 1500an.
-			</p>
 			<div class="navs">
 				<Button onClick={() => goto(`/project/${CourseType.PPL}`)}>Lihat Proyek</Button>
 				{#if $isAuthenticated}
@@ -66,11 +62,6 @@
 		font-weight: bold;
 		margin-bottom: 2rem;
 		filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
-	}
-
-	.text .description {
-		font-size: 18px;
-		margin-bottom: 2rem;
 	}
 
 	.text .navs {

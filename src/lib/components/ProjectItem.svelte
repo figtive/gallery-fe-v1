@@ -103,4 +103,8 @@
 	.tags > :global(*) {
 		margin: 4px;
 	}
+
+	.description {
+		white-space: pre-wrap;
+	}
 </style>
