@@ -373,6 +373,7 @@
 
 	.description {
 		margin-bottom: 16px;
+		white-space: pre-wrap;
 	}
 
 	.metadata > :global(*) {
