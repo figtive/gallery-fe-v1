@@ -51,8 +51,16 @@
 		{#if isLoaded && !error}
 			<div class="body">
 				<CourseworkTab>
-					<LeaderboardList slot="project" courseworks={projects} />
-					<LeaderboardList slot="blog" courseworks={blogs} />
+					<LeaderboardList
+						slot="project"
+						courseworks={projects}
+						emptyMessage="Start voting projects to see them here!"
+					/>
+					<LeaderboardList
+						slot="blog"
+						courseworks={blogs}
+						emptyMessage="Start voting blogs to see them here!"
+					/>
 				</CourseworkTab>
 			</div>
 		{:else if !isLoaded}

@@ -117,7 +117,7 @@
 		</div>
 		{#if isLoaded && !error}
 			<div class="body">
-				<ProjectList {projects} />
+				<ProjectList {projects} emptyMessage="No projects found!" />
 			</div>
 		{:else if !isLoaded}
 			<Spinner />

@@ -94,7 +94,7 @@
 		</div>
 		{#if isLoaded && !error}
 			<div class="body">
-				<BlogList {blogs} allowBookmark />
+				<BlogList {blogs} allowBookmark emptyMessage="No blogs found!" />
 			</div>
 		{:else if !isLoaded}
 			<Spinner />
