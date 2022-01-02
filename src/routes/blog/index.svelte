@@ -24,7 +24,7 @@
 
 	const getBlogs = async (query, category): Promise<Blog[]> => {
 		currentCourseType.set(CourseType.PPL);
-		return await api.coursework.blog.getAll(query, category);
+		return shuffle(await api.coursework.blog.getAll(query, category));
 	};
 
 	const handleSearch = async () => {
@@ -39,7 +39,7 @@
 			{ replaceState: true, noscroll: true }
 		);
 		try {
-			blogs = shuffle(await getBlogs(searchQuery, searchCategory));
+			blogs = await getBlogs(searchQuery, searchCategory);
 		} catch (e) {
 			console.error(e);
 			errorNotification = notify({

@@ -30,7 +30,7 @@
 
 	const getProjects = async (query, course, field): Promise<Project[]> => {
 		currentCourseType.set(course);
-		return await api.coursework.project.getAll(query, course, field);
+		return shuffle(await api.coursework.project.getAll(query, course, field));
 	};
 
 	const handleSearch = async () => {
@@ -45,7 +45,7 @@
 			}
 		);
 		try {
-			projects = shuffle(await getProjects(searchQuery, searchCourse, searchField));
+			projects = await getProjects(searchQuery, searchCourse, searchField);
 		} catch (e) {
 			console.error(e);
 			errorNotification = notify({
