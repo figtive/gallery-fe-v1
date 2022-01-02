@@ -16,6 +16,8 @@
 	let width;
 	let menuOpen = false;
 
+	const onNavigate = () => (menuOpen = width >= 768);
+
 	onMount(() => {
 		// @ts-ignore
 		google.accounts.id.initialize({
@@ -41,6 +43,7 @@
 			// @ts-ignore
 			google.accounts.id.prompt();
 		});
+		onNavigate(); // reset menuOpen
 	});
 
 	$: if ($isAuthenticated) {
@@ -54,11 +57,7 @@
 			});
 	}
 
-	$: menuOpen = width >= 768;
-
-	page.subscribe(() => {
-		menuOpen = false;
-	});
+	$: width, onNavigate(); // reset menuOpen on window resize
 </script>
 
 <nav bind:clientWidth={width}>
@@ -70,12 +69,14 @@
 		<div class="spacer" />
 		<div class={`links ${!menuOpen && 'hidden'}`}>
 			{#if $isAuthenticated}
-				<NavLink link="/dashboard">Dashboard</NavLink>
-				<NavLink link="/bookmark">Bookmark</NavLink>
+				<NavLink onClick={onNavigate} link="/dashboard">Dashboard</NavLink>
+				<NavLink onClick={onNavigate} link="/bookmark">Bookmark</NavLink>
 			{/if}
-			<NavLink link="/leaderboard">Leaderboard</NavLink>
-			<NavLink link="/project/{CourseType.PPL}" matcher="/project">Project</NavLink>
-			<NavLink link="/blog">Blog</NavLink>
+			<NavLink onClick={onNavigate} link="/leaderboard">Leaderboard</NavLink>
+			<NavLink onClick={onNavigate} link="/project/{CourseType.PPL}" matcher="/project">
+				Project
+			</NavLink>
+			<NavLink onClick={onNavigate} link="/blog">Blog</NavLink>
 			<div id="google-signin" class={$isAuthenticated && 'hidden'} />
 		</div>
 		<div

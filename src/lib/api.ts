@@ -80,10 +80,10 @@ const api = {
 					method: 'GET'
 				}).then((resp) => handleResponse<Project>(resp));
 			},
-			getAll(query: string, course: CourseType, field: ProjectFieldType): Promise<Project[]> {
+			getAll(name: string, course: CourseType, field: ProjectFieldType): Promise<Project[]> {
 				return fetch(
 					`${BASE_URL}/api/v1/coursework/project/${course}?${new URLSearchParams({
-						query,
+						name,
 						field
 					})}`,
 					{
@@ -98,10 +98,10 @@ const api = {
 					method: 'GET'
 				}).then((resp) => handleResponse<Blog>(resp));
 			},
-			getAll(query: string, category: BlogCategoryType): Promise<Blog[]> {
+			getAll(title: string, category: BlogCategoryType): Promise<Blog[]> {
 				return fetch(
 					`${BASE_URL}/api/v1/coursework/blog/${CourseType.PPL}?${new URLSearchParams({
-						query,
+						title,
 						category
 					})}`,
 					{

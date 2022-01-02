@@ -3,11 +3,12 @@
 
 	export let link: string;
 	export let matcher: string = link;
+	export let onClick: (e: MouseEvent) => void = undefined;
 
 	$: active = $page.path.includes(matcher);
 </script>
 
-<a href={link} data-active={active}><slot /></a>
+<a href={link} data-active={active} on:click={onClick}><slot /></a>
 
 <style lang="css">
 	a {

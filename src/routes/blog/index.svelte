@@ -6,25 +6,25 @@
 	import BlogList from '$lib/components/BlogList.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Title from '$lib/components/Title.svelte';
+	import Spinner from '$lib/components/Spinner.svelte';
 	import { BlogCategoryType, BlogCategoryTypeLabel, CourseType } from '$lib/constant';
 	import type { Blog } from '$lib/dtos';
-	import Spinner from '$lib/components/Spinner.svelte';
 	import { notify, unNotify } from '$lib/notification';
 	import { currentCourseType } from '$lib/store';
 	import { shuffle } from '$lib/utils';
 
 	let blogs: Blog[];
 
-	let searchQuery: string = $page.query.get('query') || '';
+	let searchTitle: string = $page.query.get('title') || '';
 	let searchCategory: BlogCategoryType = ($page.query.get('category') || '') as BlogCategoryType;
 
 	let isLoaded = false;
 	let error: Error;
 	let errorNotification: number;
 
-	const getBlogs = async (query, category): Promise<Blog[]> => {
+	const getBlogs = async (title, category): Promise<Blog[]> => {
 		currentCourseType.set(CourseType.PPL);
-		return shuffle(await api.coursework.blog.getAll(query, category));
+		return shuffle(await api.coursework.blog.getAll(title, category));
 	};
 
 	const handleSearch = async () => {
@@ -33,13 +33,13 @@
 		unNotify(errorNotification);
 		goto(
 			`?${new URLSearchParams({
-				query: searchQuery,
+				title: searchTitle,
 				category: searchCategory
 			})}`,
 			{ replaceState: true, noscroll: true }
 		);
 		try {
-			blogs = await getBlogs(searchQuery, searchCategory);
+			blogs = await getBlogs(searchTitle, searchCategory);
 		} catch (e) {
 			console.error(e);
 			errorNotification = notify({
@@ -55,7 +55,7 @@
 
 	onMount(async () => {
 		try {
-			blogs = await getBlogs(searchQuery, searchCategory);
+			blogs = await getBlogs(searchTitle, searchCategory);
 			// TODO: refresh voteQuota
 		} catch (e) {
 			console.error(e);
@@ -79,7 +79,7 @@
 		</div>
 		<div class="head">
 			<form on:submit|preventDefault={handleSearch}>
-				<input bind:value={searchQuery} placeholder="Title" />
+				<input bind:value={searchTitle} placeholder="Title" />
 				<select bind:value={searchCategory}>
 					{#each Object.values(BlogCategoryType) as c}
 						<option value={c}>
