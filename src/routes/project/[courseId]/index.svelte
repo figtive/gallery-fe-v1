@@ -30,7 +30,7 @@
 
 	const getProjects = async (name, course, field): Promise<Project[]> => {
 		currentCourseType.set(course);
-		return await api.coursework.project.getAll(name, course, field);
+		return shuffle(await api.coursework.project.getAll(name, course, field));
 	};
 
 	const handleSearch = async () => {
@@ -45,7 +45,7 @@
 			}
 		);
 		try {
-			projects = shuffle(await getProjects(searchName, searchCourse, searchField));
+			projects = await getProjects(searchName, searchCourse, searchField);
 		} catch (e) {
 			console.error(e);
 			errorNotification = notify({
@@ -117,7 +117,7 @@
 		</div>
 		{#if isLoaded && !error}
 			<div class="body">
-				<ProjectList {projects} />
+				<ProjectList {projects} emptyMessage="No projects found!" />
 			</div>
 		{:else if !isLoaded}
 			<Spinner />

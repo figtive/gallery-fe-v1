@@ -3,12 +3,19 @@
 	import LeaderboardItem from './LeaderboardItem.svelte';
 
 	export let courseworks: Blog[] | Project[];
+	export let emptyMessage = '';
 </script>
 
 <div class="list">
-	{#each courseworks as coursework, position (coursework.id)}
-		<LeaderboardItem {coursework} position={position + 1} />
-	{/each}
+	{#if courseworks.length}
+		{#each courseworks as coursework, position (coursework.id)}
+			<LeaderboardItem {coursework} position={position + 1} />
+		{/each}
+	{:else}
+		<div class="empty">
+			<p>{emptyMessage}</p>
+		</div>
+	{/if}
 </div>
 
 <style lang="css">

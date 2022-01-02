@@ -24,7 +24,7 @@
 
 	const getBlogs = async (title, category): Promise<Blog[]> => {
 		currentCourseType.set(CourseType.PPL);
-		return await api.coursework.blog.getAll(title, category);
+		return shuffle(await api.coursework.blog.getAll(title, category));
 	};
 
 	const handleSearch = async () => {
@@ -39,7 +39,7 @@
 			{ replaceState: true, noscroll: true }
 		);
 		try {
-			blogs = shuffle(await getBlogs(searchTitle, searchCategory));
+			blogs = await getBlogs(searchTitle, searchCategory);
 		} catch (e) {
 			console.error(e);
 			errorNotification = notify({
@@ -94,7 +94,7 @@
 		</div>
 		{#if isLoaded && !error}
 			<div class="body">
-				<BlogList {blogs} allowBookmark />
+				<BlogList {blogs} allowBookmark emptyMessage="No blogs found!" />
 			</div>
 		{:else if !isLoaded}
 			<Spinner />
